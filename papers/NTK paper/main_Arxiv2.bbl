@@ -1,0 +1,138 @@
+\begin{thebibliography}{10}
+
+\bibitem{Belkin}
+M.~Belkin, S.~Ma, and S.~Mandal.
+\newblock {To understand deep learning we need to understand kernel learning}.
+\newblock {\em arXiv preprint}, Feb 2018.
+
+\bibitem{Cho2009}
+Y.~Cho and L.~K. Saul.
+\newblock Kernel methods for deep learning.
+\newblock In {\em Advances in Neural Information Processing Systems 22}, pages
+  342--350. Curran Associates, Inc., 2009.
+
+\bibitem{Choromanska}
+A.~Choromanska, M.~Henaff, M.~Mathieu, G.~B. Arous, and Y.~LeCun.
+\newblock {The Loss Surfaces of Multilayer Networks}.
+\newblock {\em Journal of Machine Learning Research}, 38:192--204, nov 2015.
+
+\bibitem{Daniely}
+A.~Daniely, R.~Frostig, and Y.~Singer.
+\newblock Toward deeper understanding of neural networks: The power of
+  initialization and a dual view on expressivity.
+\newblock In D.~D. Lee, M.~Sugiyama, U.~V. Luxburg, I.~Guyon, and R.~Garnett,
+  editors, {\em Advances in Neural Information Processing Systems 29}, pages
+  2253--2261. Curran Associates, Inc., 2016.
+
+\bibitem{Dauphin2014}
+Y.~N. Dauphin, R.~Pascanu, C.~Gulcehre, K.~Cho, S.~Ganguli, and Y.~Bengio.
+\newblock Identifying and attacking the saddle point problem in
+  high-dimensional non-convex optimization.
+\newblock In {\em Proceedings of the 27th International Conference on Neural
+  Information Processing Systems - Volume 2}, NIPS'14, pages 2933--2941,
+  Cambridge, MA, USA, 2014. MIT Press.
+
+\bibitem{Matthews2018GaussianProcess}
+A.~G. de~G.~Matthews, J.~Hron, M.~Rowland, R.~E. Turner, and Z.~Ghahramani.
+\newblock Gaussian process behaviour in wide deep neural networks.
+\newblock In {\em International Conference on Learning Representations}, 2018.
+
+\bibitem{Matthews2017GaussianProcess}
+A.~G. de~G.~Matthews, J.~Hron, R.~E. Turner, and Z.~Ghahramani.
+\newblock Sample-then-optimize posterior sampling for bayesian linear models.
+\newblock In {\em NIPS workshop on Advances in Approximate Bayesian Inference},
+  2017.
+
+\bibitem{dragomir}
+S.~S. Dragomir.
+\newblock {\em Some Gronwall Type Inequalities and Applications}.
+\newblock Nova Science Publishers, 2003.
+
+\bibitem{Gneiting}
+T.~Gneiting.
+\newblock Strictly and non-strictly positive definite functions on spheres.
+\newblock {\em Bernoulli}, 19(4):1327--1349, 2013.
+
+\bibitem{Goodfellow2014}
+I.~J. Goodfellow, J.~Pouget-Abadie, M.~Mirza, B.~Xu, D.~Warde-Farley, S.~Ozair,
+  A.~Courville, and Y.~Bengio.
+\newblock {Generative Adversarial Networks}.
+\newblock {\em NIPS'14 Proceedings of the 27th International Conference on
+  Neural Information Processing Systems - Volume 2}, pages 2672--2680, jun
+  2014.
+
+\bibitem{Hornik1989}
+K.~Hornik, M.~Stinchcombe, and H.~White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock {\em Neural Networks}, 2(5):359 -- 366, 1989.
+
+\bibitem{Karakida2018}
+R.~Karakida, S.~Akaho, and S.-i. Amari.
+\newblock {Universal Statistics of Fisher Information in Deep Neural Networks:
+  Mean Field Approach}.
+\newblock jun 2018.
+
+\bibitem{Lee2017}
+J.~H. Lee, Y.~Bahri, R.~Novak, S.~S. Schoenholz, J.~Pennington, and
+  J.~Sohl-Dickstein.
+\newblock Deep neural networks as gaussian processes.
+\newblock {\em ICLR}, 2018.
+
+\bibitem{Leshno}
+M.~Leshno, V.~Lin, A.~Pinkus, and S.~Schocken.
+\newblock Multilayer feedforward networks with a non-polynomial activation
+  function can approximate any function.
+\newblock {\em Neural Networks}, 6(6):861--867, 1993.
+
+\bibitem{Mei2018}
+S.~Mei, A.~Montanari, and P.-M. Nguyen.
+\newblock A mean field view of the landscape of two-layer neural networks.
+\newblock {\em Proceedings of the National Academy of Sciences},
+  115(33):E7665--E7671, 2018.
+
+\bibitem{Neal1996}
+R.~M. Neal.
+\newblock {\em Bayesian Learning for Neural Networks}.
+\newblock Springer-Verlag New York, Inc., Secaucus, NJ, USA, 1996.
+
+\bibitem{Pascanu2014}
+R.~Pascanu, Y.~N. Dauphin, S.~Ganguli, and Y.~Bengio.
+\newblock {On the saddle point problem for non-convex optimization}.
+\newblock {\em arXiv preprint}, 2014.
+
+\bibitem{Pennington2017}
+J.~Pennington and Y.~Bahri.
+\newblock Geometry of neural network loss surfaces via random matrix theory.
+\newblock In {\em Proceedings of the 34th International Conference on Machine
+  Learning}, volume~70 of {\em Proceedings of Machine Learning Research}, pages
+  2798--2806, International Convention Centre, Sydney, Australia, 06--11 Aug
+  2017. PMLR.
+
+\bibitem{Rahimi2007}
+A.~Rahimi and B.~Recht.
+\newblock Random features for large-scale kernel machines.
+\newblock In {\em Advances in Neural Information Processing Systems 20}, pages
+  1177--1184. Curran Associates, Inc., 2008.
+
+\bibitem{Sagun}
+L.~Sagun, U.~Evci, V.~U. G{\"u}ney, Y.~Dauphin, and L.~Bottou.
+\newblock Empirical analysis of the hessian of over-parametrized neural
+  networks.
+\newblock {\em CoRR}, abs/1706.04454, 2017.
+
+\bibitem{Scholkopf}
+B.~Schölkopf, A.~Smola, and K.-R. Müller.
+\newblock Nonlinear component analysis as a kernel eigenvalue problem.
+\newblock {\em Neural Computation}, 10(5):1299--1319, 1998.
+
+\bibitem{Shawe-Taylor}
+J.~Shawe-Taylor and N.~Cristianini.
+\newblock {\em Kernel Methods for Pattern Analysis}.
+\newblock Cambridge University Press, New York, NY, USA, 2004.
+
+\bibitem{Zhang}
+C.~Zhang, S.~Bengio, M.~Hardt, B.~Recht, and O.~Vinyals.
+\newblock {Understanding deep learning requires rethinking generalization}.
+\newblock {\em ICLR 2017 proceedings}, Feb 2017.
+
+\end{thebibliography}

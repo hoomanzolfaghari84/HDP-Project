@@ -1,0 +1,40 @@
+\begin{thebibliography}{1}
+
+\bibitem{weng2022ntk}
+L.~Weng, ``Some math behind neural tangent kernel,'' {\em Lil'Log}, Sep 2022.
+
+\bibitem{jacot2018neural}
+A.~Jacot, F.~Gabriel, and C.~Hongler, ``Neural tangent kernel: Convergence and
+  generalization in neural networks,'' {\em Advances in Neural Information
+  Processing Systems (NeurIPS)}, vol.~31, 2018.
+
+\bibitem{lee2018exact}
+J.~Lee, L.~Xiao, S.~S. Schoenholz, Y.~Bahri, R.~Novak, J.~Sohl-Dickstein, and
+  J.~Pennington, ``On exact computation with an infinitely wide neural net,''
+  {\em Advances in Neural Information Processing Systems (NeurIPS)}, vol.~31,
+  2018.
+
+\bibitem{cao2019fine}
+Y.~Cao and Q.~Gu, ``Fine-grained analysis of optimization and generalization
+  for overparameterized two-layer neural networks,'' {\em Proceedings of the
+  36th International Conference on Machine Learning (ICML)}, vol.~97,
+  pp.~1047--1055, 2019.
+
+\bibitem{rahaman2019spectral}
+N.~Rahaman, D.~Arpit, F.~Draxler, M.~Lin, F.~A. Hamprecht, Y.~Bengio, and
+  A.~Courville, ``Spectral bias outside the training set for deep networks in
+  the kernel regime,'' {\em International Conference on Learning
+  Representations (ICLR)}, 2019.
+
+\bibitem{meanti2020scaling}
+G.~Meanti, L.~Rosasco, A.~Rudi, and L.~Carratino, ``Scaling neural tangent
+  kernels via sketching and random features,'' {\em Advances in Neural
+  Information Processing Systems (NeurIPS)}, vol.~33, pp.~14536--14546, 2020.
+
+\bibitem{arora2019overparametrized}
+S.~Arora, S.~S. Du, W.~Hu, Z.~Li, and R.~Wang, ``Overparametrized multi-layer
+  neural networks: Uniform concentration of neural tangent kernel and
+  convergence of stochastic gradient descent,'' {\em Advances in Neural
+  Information Processing Systems (NeurIPS)}, vol.~32, 2019.
+
+\end{thebibliography}
