@@ -96,26 +96,6 @@ subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
 
-\begin{frame}{Problem Definition}
-		
-	
-		  A single hidden-layer neural network with i.i.d. random parameters, in the limit
-		of infinite width, is a function drawn from a Gaussian process (GP) [Neal, 1996].
-	
-		\[
-		\begin{aligned}
-		\Sigma^{(1)}(\mathbf{x}, \mathbf{x}') &= \frac{1}{n_0}\mathbf{x}^\top{\mathbf{x}'} + \beta^2 \\
-		\lambda^{(l+1)}(\mathbf{x}, \mathbf{x}') &= \begin{bmatrix}
-			\Sigma^{(l)}(\mathbf{x}, \mathbf{x}) & \Sigma^{(l)}(\mathbf{x}, \mathbf{x}') \\
-			\Sigma^{(l)}(\mathbf{x}', \mathbf{x}) & \Sigma^{(l)}(\mathbf{x}', \mathbf{x}')
-		\end{bmatrix} \\
-		\Sigma^{(l+1)}(\mathbf{x}, \mathbf{x}') &= \mathbb{E}_{f \sim \mathcal{N}(0, \lambda^{(l)})}[\sigma(f(\mathbf{x})) \sigma(f(\mathbf{x}'))] + \beta^2
-	\end{aligned}
-		\]
-	
-
-\end{frame}
-
 
 
 \begin{frame}{Problem Definition}
@@ -124,7 +104,7 @@ subsubsectionstyle=show/shaded/hide]
 		
 		
 		
-		\item The NTK is different from this Gaussian process kernels, and is defined using the gradient of the output of the randomly initialized net
+		\item The NTK is defined using the gradient of the output of the randomly initialized net
 		with respect to its parameters
 		
 		
@@ -205,11 +185,33 @@ subsubsectionstyle=show/shaded/hide]
 	\end{itemize}
 \end{frame}
 
+
+\begin{frame}{Problem Definition}
+	
+	
+	A single hidden-layer neural network with i.i.d. random parameters, in the limit
+	of infinite width, is a function drawn from a Gaussian process (GP) [Neal, 1996].
+	
+	\[
+	\begin{aligned}
+		\Sigma^{(1)}(\mathbf{x}, \mathbf{x}') &= \frac{1}{n_0}\mathbf{x}^\top{\mathbf{x}'} + \beta^2 \\
+		\Lambda^{(l+1)}(\mathbf{x}, \mathbf{x}') &= \begin{bmatrix}
+			\Sigma^{(l)}(\mathbf{x}, \mathbf{x}) & \Sigma^{(l)}(\mathbf{x}, \mathbf{x}') \\
+			\Sigma^{(l)}(\mathbf{x}', \mathbf{x}) & \Sigma^{(l)}(\mathbf{x}', \mathbf{x}')
+		\end{bmatrix} \\
+		\Sigma^{(l+1)}(\mathbf{x}, \mathbf{x}') &= \mathbb{E}_{f \sim \mathcal{N}(0, \Lambda^{(l)})}[\sigma(f(\mathbf{x})) \sigma(f(\mathbf{x}'))] + \beta^2
+	\end{aligned}
+	\]
+	
+	
+\end{frame}
+
+
 \begin{frame}
 
  \begin{itemize}
  	
- \item To give the formula of NTK, we also need to define a derivative covariance:
+ \item To give the formula of NTK with this GP, we also need to define a derivative covariance:
  \[
  \dot{\Sigma}^{(h)}(x, x') = c_\sigma \mathbb{E}_{(u, v) \sim \mathcal{N}(0, \Lambda^{(h)})} \left[ \dot{\sigma}(u) \dot{\sigma}(v) \right].
  \]
