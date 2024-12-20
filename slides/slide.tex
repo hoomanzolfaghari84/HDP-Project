@@ -365,6 +365,104 @@ deterministic function uniformly for all layers as the number of neurons tends t
 \end{frame}
 
 
+\begin{frame}{Sensitivity Analysis}
+    \begin{itemize}
+        \item \textbf{Sensitivity Definition:}
+            \begin{align*}                
+                \mathcal{S}_{f_{\theta}}(z) = \mathbb{E}_{z, \hat{z}, \theta} | \nabla_{z} f(z, \theta)^{\top} (z - \hat{z}) |
+            \end{align*}
+        \item \textbf{NTK Sensitivity:}
+        \begin{align*}
+            \mathcal{S}_{NTK}(z) = \|z\|_{2} \| \| \nabla_{z} \Phi_{NTK}(z)^{\top} \Phi_{NTK}^{\top} K_{NTK}^{-1} Y \|_{2}
+        \end{align*}\\
+        Which results in:
+        \begin{align*}
+            \mathcal{S}_{NTK}(z) = \mathcal{O}\left(log k \sqrt{\frac{ND}{p}}\right) \sim \mathcal{O}(1)
+        \end{align*}
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{Future Research Directions}
+    \begin{itemize}
+        \item \textbf{Relax Assumptions:}
+            \begin{itemize}
+                \item \textbf{High-dimensional regime: }
+                \begin{align*}
+                    N log^{3} N \mathcal{o}(d^{\frac{3}{2}})
+                \end{align*}
+                It's an open question whether this can be relaxed or not.
+                \item \textbf{Data distibution: }
+                $P_X$ satisfies the \textit{Lipschitz concentration property}. Namely, there exists an absolute constant $c > 0$ such that, for every Lipschitz continuous function $\varphi : \mathbb{R}^d \to \mathbb{R}$, we have for all $t > 0$,
+                \begin{align*}
+                    \mathbb{P}\left( \left| \varphi(x) - \mathbb{E}_X[\varphi(x)] \right| > t \right) \leq 2e^{-ct^2 / \|\varphi\|_{\text{Lip}}^2}
+                \end{align*}
+                Some distributions that satisfy this property include the Gaussian distribution and the uniform distribution, or data obtianed be GANs.
+                \item \textbf{Even Activation Functions: }
+                Even activation functions are used to prove the upper bound of the NTK by Bombari et al. (2022).  
+            \end{itemize}
+    \end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Spurious Data Memorization}
+    \begin{itemize}
+        \item \textbf{Spurious Data :}
+            \begin{itemize}
+                \item \textbf{Definition: }
+                Spurious data is data that is not relevant to the task at hand, but is still memorized by the model.
+                \item \textbf{Formulation: }
+                \begin{align*}
+                    z_i = \begin{bmatrix}
+                        x_i \\ y_i
+                    \end{bmatrix}
+                    \quad \text{and} \quad
+                    z_{i}^{s} = \begin{bmatrix}
+                        x \\ y_i
+                    \end{bmatrix}
+                \end{align*}
+                where $x$ is independent of $x_i$.
+            \end{itemize}
+            \item \textbf{Future Alignment:}
+            \begin{align*}
+                \mathcal{F}_\varphi(z, z_1) := \frac{\varphi(z)^\top P_{\Phi_{-1}}^\perp \varphi(z_1)}{\left\| P_{\Phi_{-1}}^\perp \varphi(z_1) \right\|_2^2}
+            \end{align*}
+            \item \textbf{Satbiblity:}
+            \begin{align*}
+                S_{z_1}(z) = \mathcal{F}_\varphi(z, z_1) S_{z_1}(z_1)
+            \end{align*}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Memorization in NTK Feutures}
+    \[
+    \left| \mathcal{F}_{\text{NTK}}(z_1^s, z_1) - \gamma_{\text{NTK}} \right| = o(1),
+    \]
+    where 
+    \[
+    0 < \gamma_{\text{NTK}} := \alpha \frac{\sum_{l=1}^{+\infty} \mu_l'^2 \alpha^l}{\sum_{l=1}^{+\infty} \mu_l'^2} < 1, \tag{26}
+    \]
+    and $\mu_l'$ is the $l$-th Hermite coefficient of the derivative of the activation $\varphi'$.\\
+    The generalization of the NTK is given by:
+    \[
+        \text{Cov}\left(f_{\text{NTK}}(z_1^s, \theta^*), g_1\right) \leq \gamma_{\text{NTK}} \sqrt{\mathcal{R}_{Z_{-1}}} \sqrt{\text{Var}(g_1)}
+    \]
+\end{frame}
+\begin{frame}{Future Directions}
+	\begin{itemize}
+		\item Fully Connected Neural Networks NTK Generalization and Memorization:
+		\begin{figure*}
+			\centering
+			\includegraphics[width=0.8\textwidth]{pic/FC.png}
+		\end{figure*}
+		\item Convolutional Neural Networks NTK Generalization and Memorization:
+		\begin{figure*}
+			\centering
+			\includegraphics[width=0.8\textwidth]{pic/CNN.png}
+		\end{figure*}
+\end{frame}
+
 \section{Proposal}
 
 %\begin{frame}{Related Possible Areas}
