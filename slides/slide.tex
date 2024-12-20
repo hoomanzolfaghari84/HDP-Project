@@ -91,12 +91,19 @@ subsubsectionstyle=show/shaded/hide]
 		
 		\item NTK explains the evolution of neural networks during gradient descent training.
 		\item Insight into why wide neural networks can consistently converge to a 
-		(?) minimum when minimizing empirical loss.
+		global minimum when minimizing empirical loss.
 	\end{itemize}
 \end{frame}
 
 
-
+\begin{frame}
+\begin{itemize}
+\item The convergence of kernel gradient descent to a critical point of the cost
+C is guaranteed for positive definite kernels
+\item In the case when the dataset is supported on a sphere, the
+positive-definiteness of the limiting NTK can be shown
+\end{itemize}
+\end{frame}
 
 \begin{frame}{Problem Definition}
 	
@@ -226,6 +233,7 @@ subsubsectionstyle=show/shaded/hide]
 \end{frame}
  
  \begin{frame}{Problem Definition}
+ 	(The original paper has an asymptotic expression but this is later proven)
  	
  \textbf{Theorem (Convergence to the NTK at initialization).} Fix $\epsilon > 0$ and $\delta \in (0,1)$. Suppose 
  \[
@@ -249,7 +257,7 @@ subsubsectionstyle=show/shaded/hide]
  
 \section{Literature Review}
 
-\begin{frame}{Exact Computation}
+\begin{frame}{CNTK}
 \begin{itemize}
 	\item The first efficient exact algorithm for computing the extension of NTK to convolutional neural nets, which we call Convolutional NTK
 	\item Theoretically, also
