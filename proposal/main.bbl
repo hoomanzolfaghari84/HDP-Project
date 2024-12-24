@@ -1,0 +1,50 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{URL }
+\providecommand{\doi}[1]{https://doi.org/#1}
+
+\bibitem{arora2019overparametrized}
+Arora, S., Du, S.S., Hu, W., Li, Z., Wang, R.: Overparametrized multi-layer
+  neural networks: Uniform concentration of neural tangent kernel and
+  convergence of stochastic gradient descent. Advances in Neural Information
+  Processing Systems (NeurIPS)  \textbf{32} (2019),
+  \url{https://arxiv.org/abs/1904.11955}
+
+\bibitem{pmlr-v202-bombari23a}
+Bombari, S., Kiyani, S., Mondelli, M.: Beyond the universal law of robustness:
+  Sharper laws for random features and neural tangent kernels. In: Krause, A.,
+  Brunskill, E., Cho, K., Engelhardt, B., Sabato, S., Scarlett, J. (eds.)
+  Proceedings of the 40th International Conference on Machine Learning.
+  Proceedings of Machine Learning Research, vol.~202, pp. 2738--2776. PMLR
+  (23--29 Jul 2023), \url{https://proceedings.mlr.press/v202/bombari23a.html}
+
+\bibitem{bombari2024how}
+Bombari, S., Mondelli, M.: How spurious features are memorized: Precise
+  analysis for random and {NTK} features. In: Forty-first International
+  Conference on Machine Learning (2024),
+  \url{https://openreview.net/forum?id=o6N1Bqay0k}
+
+\bibitem{cao2019fine}
+Cao, Y., Gu, Q.: Fine-grained analysis of optimization and generalization for
+  overparameterized two-layer neural networks. Proceedings of the 36th
+  International Conference on Machine Learning (ICML)  \textbf{97},  1047--1055
+  (2019), \url{https://arxiv.org/abs/1905.11661}
+
+\bibitem{jacot2018neural}
+Jacot, A., Gabriel, F., Hongler, C.: Neural tangent kernel: Convergence and
+  generalization in neural networks. Advances in Neural Information Processing
+  Systems (NeurIPS)  \textbf{31} (2018), \url{https://arxiv.org/abs/1806.07572}
+
+\bibitem{lee2018exact}
+Lee, J., Xiao, L., Schoenholz, S.S., Bahri, Y., Novak, R., Sohl-Dickstein, J.,
+  Pennington, J.: On exact computation with an infinitely wide neural net.
+  Advances in Neural Information Processing Systems (NeurIPS)  \textbf{31}
+  (2018), \url{https://arxiv.org/abs/1902.04760}
+
+\bibitem{rahaman2019spectral}
+Rahaman, N., Arpit, D., Draxler, F., Lin, M., Hamprecht, F.A., Bengio, Y.,
+  Courville, A.: Spectral bias outside the training set for deep networks in
+  the kernel regime. International Conference on Learning Representations
+  (ICLR)  (2019), \url{https://arxiv.org/abs/1906.00719}
+
+\end{thebibliography}

@@ -1,0 +1,106 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{times}
+\usepackage{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{natbib}
+
+% Page layout
+\geometry{
+    a4paper,
+    total={170mm,257mm},
+    left=20mm,
+    top=20mm,
+}
+
+% Title and Author
+\title{Advancing Neural Tangent Kernel Theory: Enhancements and Applications in Modern Deep Learning Architectures}
+\author{
+    Hooman Zolfaghari \\
+    Abdollah Zohrabi \\
+    Amirreza Velae \\
+    \vspace{0.5cm}
+    \textit{Sharif University of Technology}
+}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+	The Neural Tangent Kernel (NTK) has emerged as a pivotal theoretical concept for understanding the training dynamics and generalization properties of Neural Networks. This proposal outlines a research agenda aimed at extending NTK theory to encompass advanced neural network architectures, broader data distributions. By addressing current limitations and exploring novel applications, this research seeks to deepen the theoretical foundations of deep learning and enhance the practical utility of NTK in guiding the design and optimization of modern neural networks.
+\end{abstract}
+
+\section{Introduction}
+The rapid advancement of deep learning has revolutionized various domains, like computer vision and natural language processing. Central to understanding the efficacy of Deep Neural Networks is the \textbf{Neural Tangent Kernel (NTK)} which captures the behavior of fully-connected
+deep nets in the infinite-width limit trained by gradient descent.~\cite{jacot2018neural}
+
+\subsection{Background}
+Introduced by Jacot et al. (2018), NTK captures the dynamics of fully-connected deep networks trained via gradient descent, offering profound insights into their convergence properties and generalization capabilities. By connecting neural networks with kernel methods, NTK leverages the extensive study and well-established theory of kernels, thereby making the analysis of neural networks more accessible and grounded in a rich mathematical foundation.
+
+As deep learning models become more complex and widely used, it is essential to expand NTK theory to cover different network structures. This proposal outlines our research goals to improve NTK theory, address its current limitations, and explore its applications in modern neural network designs.
+
+\subsection{Problem Definition}
+While NTK provides foundational insights into neural network training dynamics in the infinite-width limit, several challenges persist. Current NTK results are limited to Gaussian or bounded data distributions and specific activation functions, restricting their broader applicability. Additionally, NTK theory primarily addresses fully-connected networks, necessitating extensions to modern architectures like Transformers and CNNs. Furthermore, the influence of NTK on generalization bounds, spectral biases, and data memorization, especially concerning spurious data, remains inadequately understood.
+
+\section{Literature Review}
+\newpage
+\section{Research Plan}
+\subsection{Research Objectives}
+Building on existing NTK research, our study aims to:
+
+\begin{enumerate}[label=\arabic*.]
+    \item \textbf{Expand NTK to Advanced Architectures:}
+    \begin{itemize}
+        \item Formulate NTK for Transformers and Kolmogorov-Arnold Networks.
+    \end{itemize}
+    
+    \item \textbf{Broaden NTK to Diverse Data Distributions:}
+    \begin{itemize}
+        \item Extend NTK from Gaussian/bounded to sub-Gaussian/sub-Exponential distributions.
+        \item Examine how data distribution affects NTK convergence and generalization.
+    \end{itemize}
+    
+    \item \textbf{Investigate Spectral and Sensitivity Properties of NTK:}
+    \begin{itemize}
+        \item Analyze NTK's spectral distribution for feature learning and bias.
+        \item Conduct sensitivity analyses to assess model robustness to input changes.
+    \end{itemize}
+    
+    \item \textbf{Study Memorization in NTK Models:}
+    \begin{itemize}
+        \item Examine how NTK models memorize spurious data and factors influencing this behavior.
+        \item Develop methods to reduce overfitting to irrelevant data within the NTK framework.
+    \end{itemize}
+    
+    \item \textbf{Assess Sample Complexity and Model Capacity:}
+    \begin{itemize}
+        \item Derive bounds for sample complexity, VC-Dimension, and Rademacher Complexity in NTK models.
+    \end{itemize}
+\end{enumerate}
+
+
+\subsection{Methodology}
+Our research will leverage high-dimensional probability as the foundational framework to achieve our objectives. This theoretical groundwork will guide the design and implementation of efficient algorithms for computing NTK and CNTK. Additionally, we will investigate memorization phenomena by designing experiments that examine how NTK-enabled models handle spurious data, ensuring our findings are both theoretically sound and practically relevant. 
+
+
+\subsection{Expected Outcomes and Significance}
+Our research aims to advance NTK theory, expanding its applicability to diverse neural network architectures and training methods. Expected outcomes include:
+
+\begin{itemize}
+    \item \textbf{Theoretical Extensions:} Develop NTK formulations for modern architectures and varied data distributions.
+    \item \textbf{Robustness Improvements:} Gain insights into model sensitivity, fostering more robust neural networks.
+    \item \textbf{Memorization Mitigation:} Implement strategies to prevent overfitting and reliance on spurious data.
+\end{itemize}
+
+
+% \section{References}
+% \bibliographystyle{ieeetr}
+% \bibliography{ref}
+
+\end{document}

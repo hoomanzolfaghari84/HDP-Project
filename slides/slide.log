@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.16)  20 DEC 2024 11:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.16)  20 DEC 2024 12:01
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1593,7 +1593,7 @@ Overfull \hbox (20.78085pt too wide) in paragraph at lines 70--70
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-<pic/sharif-main-logo.png, id=100, 200.75pt x 200.75pt>
+<pic/sharif-main-logo.png, id=102, 200.75pt x 200.75pt>
 File: pic/sharif-main-logo.png Graphic file (type png)
 <use pic/sharif-main-logo.png>
 Package pdftex.def Info: pic/sharif-main-logo.png  used on input line 70.
@@ -1693,7 +1693,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [4
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 106--106
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 142--142
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1705,7 +1705,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [5
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 120--120
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 160--160
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1717,7 +1717,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [6
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 141--141
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 178--178
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1729,7 +1729,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [7
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 159--159
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 197--197
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1741,7 +1741,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [8
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 177--177
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 218--218
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1753,7 +1753,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [9
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 193--193
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 237--237
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1765,7 +1765,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [10
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 214--214
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 250--250
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1777,10 +1777,15 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [11
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 233--233
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 257--257
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
+<pic/NTK_paper_exp.png, id=1121, 1072.005pt x 389.455pt>
+File: pic/NTK_paper_exp.png Graphic file (type png)
+<use pic/NTK_paper_exp.png>
+Package pdftex.def Info: pic/NTK_paper_exp.png  used on input line 257.
+(pdftex.def)             Requested size: 398.3386pt x 144.71411pt.
 
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
@@ -1788,37 +1793,8 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [12
 
-]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 246--246
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[13
-
-]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 252--252
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-<pic/NTK_paper_exp.png, id=1269, 1072.005pt x 389.455pt>
-File: pic/NTK_paper_exp.png Graphic file (type png)
-<use pic/NTK_paper_exp.png>
-Package pdftex.def Info: pic/NTK_paper_exp.png  used on input line 252.
-(pdftex.def)             Requested size: 398.3386pt x 144.71411pt.
-
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[14
-
  <./pic/NTK_paper_exp.png>]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 258--258
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 263--263
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1827,10 +1803,34 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
+[13
+
+]
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 271--271
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
+
+Overfull \hbox (20.78085pt too wide) has occurred while \output is active
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
+[14
+
+]
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 308--308
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
+
+Overfull \hbox (20.78085pt too wide) has occurred while \output is active
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
 [15
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 266--266
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 331--331
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1842,7 +1842,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [16
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 279--279
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 349--349
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1854,7 +1854,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [17
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 289--289
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 361--361
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1866,7 +1866,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [18
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 301--301
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 372--372
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1878,7 +1878,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [19
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 324--324
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 390--390
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1890,10 +1890,18 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [20
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 342--342
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 412--412
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 412.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 412.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 412.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 412.
 
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
@@ -1902,7 +1910,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [21
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 354--354
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 442--442
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1914,7 +1922,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [22
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 365--365
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 457--457
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1926,31 +1934,33 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [23
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 368--368
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 467--467
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-(slide.toc)
+<pic/FC.png, id=2184, 246.9225pt x 128.48pt>
+File: pic/FC.png Graphic file (type png)
+<use pic/FC.png>
+Package pdftex.def Info: pic/FC.png  used on input line 467.
+(pdftex.def)             Requested size: 123.46094pt x 64.23984pt.
+<pic/CNN.png, id=2185, 237.88875pt x 116.435pt>
+File: pic/CNN.png Graphic file (type png)
+<use pic/CNN.png>
+Package pdftex.def Info: pic/CNN.png  used on input line 467.
+(pdftex.def)             Requested size: 118.94408pt x 58.21735pt.
+
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
 [24
 
-]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 392--392
+ <./pic/FC.png> <./pic/CNN.png>]
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 470--470
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 392.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 392.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 392.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 392.
-
+(slide.toc)
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1958,7 +1968,19 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [25
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 395--395
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 494--494
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
+
+Overfull \hbox (20.78085pt too wide) has occurred while \output is active
+ [][]  \T1/futs/m/n/6 (Sharif 
+ []
+
+[26
+
+]
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 497--497
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1967,10 +1989,10 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-[26
+[27
 
 ]
-Overfull \hbox (20.78085pt too wide) in paragraph at lines 410--410
+Overfull \hbox (20.78085pt too wide) in paragraph at lines 512--512
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
@@ -1979,14 +2001,14 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-[27
+[28
 
 ]
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
-[28
+[29
 
 
 ]
@@ -2008,11 +2030,11 @@ Package rerunfilecheck Info: File `slide.out' has not changed.
 (rerunfilecheck)             Checksum: 2D4DAAFC3DA2959B80F443871096A241;410.
  ) 
 Here is how much of TeX's memory you used:
- 40098 strings out of 474485
- 925176 string characters out of 5744206
- 1955542 words of memory out of 5000000
- 61528 multiletter control sequences out of 15000+600000
- 663422 words of font info for 132 fonts, out of 8000000 for 9000
+ 40134 strings out of 474485
+ 925680 string characters out of 5744206
+ 1957542 words of memory out of 5000000
+ 61546 multiletter control sequences out of 15000+600000
+ 667203 words of font info for 148 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  101i,20n,107p,741b,831s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Asus/AppData/Local/Programs/MiKTeX/fonts/type1/public/fourier/fouri
@@ -2025,9 +2047,9 @@ rams/MiKTeX/fonts/type1/public/fourier/fourier-ms.pfb><C:/Users/Asus/AppData/Lo
 cal/Programs/MiKTeX/fonts/type1/adobe/utopia/putb8a.pfb><C:/Users/Asus/AppData/
 Local/Programs/MiKTeX/fonts/type1/adobe/utopia/putr8a.pfb><C:/Users/Asus/AppDat
 a/Local/Programs/MiKTeX/fonts/type1/adobe/utopia/putri8a.pfb>
-Output written on slide.pdf (28 pages, 599584 bytes).
+Output written on slide.pdf (29 pages, 677893 bytes).
 PDF statistics:
- 2575 PDF objects out of 2984 (max. 8388607)
- 68 named destinations out of 1000 (max. 500000)
- 115 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 2724 PDF objects out of 2984 (max. 8388607)
+ 70 named destinations out of 1000 (max. 500000)
+ 125 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -1,0 +1,49 @@
+\section{Introduction and Definitions}\label{sec:introduction}
+The rapid advancement of deep learning has revolutionized various domains, like computer vision and natural language processing. Central to understanding the efficacy of Deep Neural Networks (DNN) is the \textbf{Neural Tangent Kernel (NTK)} is a theoretical framework which captures the behavior of fully-connected
+deep nets in the infinite-width limit trained by gradient descent.~\cite{jacot2018neural}
+
+Introduced by Jacot et al. (2018), NTK connects infinite-width neural networks with kernel methods. In this regime, the network's training dynamics under gradient descent become equivalent to those of a kernel machine with the NTK as its kernel function. Consequently, NTK offers profound insights into NNs convergence properties and generalization capabilities. By connecting neural networks with kernel methods, NTK leverages the extensive study and well-established theory of kernels, thereby making the analysis of neural networks more accessible and grounded in a rich mathematical foundation.
+
+As deep learning models become more complex and widely used, it is essential to expand NTK's theory to cover practical and different network structures. This proposal outlines our research goals to analys NTK theory using High-Dimensional Probability concepts, address its current limitations, and explore its possible extensions, improvements and applications in modern neural network designs.
+
+
+\subsection{Preliminaries}
+Consider a fully connected neural network \( f(x; \theta) \) with parameters \( \theta \), trained using gradient descent. For a dataset \(\{(x_i, y_i)\}_{i=1}^n\), the Neural Tangent Kernel (NTK) is defined as:  
+\[
+\Theta(x, x') = \nabla_\theta f(x; \theta)^\top \nabla_\theta f(x'; \theta),
+\]
+where \( \nabla_\theta f(x; \theta) \) is the gradient of the network's output with respect to its parameters.
+The NTK measures how changes in the parameters affect the output similarity between inputs \(x\) and \(x'\).
+
+
+In the infinite-width limit, the training dynamics of the neural network under gradient descent can be described as:
+\[
+\frac{d}{dt} f(x; \theta(t)) = -\eta \sum_{i=1}^n \Theta(x, x_i) \big(f(x_i; \theta(t)) - y_i\big),
+\]
+where \(\eta\) is the learning rate.
+
+In this regime, the NTK remains nearly constant during training, leading to a simplified, linearized dynamics for \(f(x; \theta)\).
+%
+%\subsubsection{Generalization Bounds:}
+%For kernel regression using NTK, the generalization error depends on the eigenvalues \(\lambda_k\) of the kernel matrix \(\Theta\). Specifically:
+%\[
+%\mathcal{E}_{\text{gen}} \sim \frac{1}{n} \sum_{k=1}^n \frac{1}{\lambda_k}.
+%\]
+%This result highlights the role of the spectrum of the NTK in controlling overfitting and generalization.
+%
+%\subsubsection{Applications to High-Dimensional Probability}
+%In high dimensions, understanding NTK involves studying the concentration of random features and eigenvalue distributions. For instance, in the ReLU activation case, the NTK kernel can be approximated by a dot-product kernel with high-dimensional asymptotics:
+%\[
+%\Theta(x, x') \approx C \|x\| \|x'\| \cos(\theta),
+%\]
+%where \(\theta\) is the angle between \(x\) and \(x'\).
+
+%\subsubsection{Conclusion}
+%These results reveal the NTK's critical role in explaining the behavior of over-parameterized neural networks. However, many open questions remain regarding its robustness, eigenstructure, and applicability in practical, high-dimensional settings, motivating further study.
+
+
+
+
+
+
+

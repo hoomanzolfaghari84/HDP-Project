@@ -95,33 +95,34 @@ subsubsectionstyle=show/shaded/hide]
 	\end{itemize}
 \end{frame}
 
+%
+%\begin{frame}
+%	
+%\begin{itemize}
+%\item The convergence of kernel gradient descent to a critical point of the cost
+%C is guaranteed for positive definite kernels
+%\item In the case when the dataset is supported on a sphere, the
+%positive-definiteness of the limiting NTK can be shown
+%\end{itemize}
+%\end{frame}
 
-\begin{frame}
-\begin{itemize}
-\item The convergence of kernel gradient descent to a critical point of the cost
-C is guaranteed for positive definite kernels
-\item In the case when the dataset is supported on a sphere, the
-positive-definiteness of the limiting NTK can be shown
-\end{itemize}
-\end{frame}
-
-\begin{frame}{Problem Definition}
-	
-	\begin{itemize}
-		
-		
-		
-		\item The NTK is defined using the gradient of the output of the randomly initialized net
-		with respect to its parameters
-		
-		
-		\item  At its core, it explains how updating the model parameters on one data sample affects the predictions for other samples.
-	\end{itemize}
-\end{frame}
+%\begin{frame}{Problem Definition}
+%	
+%	\begin{itemize}
+%		
+%		
+%		
+%		\item The NTK is defined using the gradient of the output of the randomly initialized net
+%		with respect to its parameters
+%		
+%		
+%		\item  At its core, it explains how updating the model parameters on one data sample affects the predictions for other samples.
+%	\end{itemize}
+%\end{frame}
 
 
 
-\begin{frame}{Problem Definition}
+\begin{frame}{Derivation}
 	
 	\begin{itemize}
 		\item Model Parameters \(\theta \in \mathbb{R}^P\)
@@ -141,7 +142,7 @@ positive-definiteness of the limiting NTK can be shown
 \end{frame}
 
 
-\begin{frame}{Problem Definition}
+\begin{frame}{Derivation}
 	
 	\begin{itemize}
 		\item Each gradient descent update introduces a small incremental change of an infinitesimal step size
@@ -160,7 +161,7 @@ positive-definiteness of the limiting NTK can be shown
 
 
 
-\begin{frame}{Problem Definition}
+\begin{frame}{Derivation}
 	
 	\begin{itemize}
 		\item Here we find the Neural Tangent Kernel (NTK), as defined in the blue part in the last formula: \(K: \mathbb{R}^{n_0}\times\mathbb{R}^{n_0} \to \mathbb{R}^{n_L \times n_L}\)
@@ -172,20 +173,23 @@ positive-definiteness of the limiting NTK can be shown
 		\[
 		K_{m,n}(\mathbf{x}, \mathbf{x}'; \theta) = \sum_{p=1}^P \frac{\partial f_m(\mathbf{x};\theta)}{\partial \theta_p} \frac{\partial f_n(\mathbf{x}';\theta)}{\partial \theta_p}
 		\]
-		\item The “feature map” form of one input: \(\varphi(\mathbf{x}) = \nabla_\theta f(\mathbf{x};\theta)\)
+		\item The feature map form of one input: \(\varphi(\mathbf{x}) = \nabla_\theta f(\mathbf{x};\theta)\)
 	\end{itemize}
 \end{frame}
 
 
 
-\begin{frame}{Problem Definition}
+\begin{frame}{NTK First Results}
 	
 	\begin{itemize}
 		\item Most critical proposition from the NTK paper
 		\item When \(n_1, \dots, n_L \to \infty\) (network with infinite width), the NTK converges to be:
 		\begin{enumerate}
-				\item deterministic at initialization, meaning that the kernel is irrelevant to the initialization values and only determined by the model architecture; and
-			\item stays constant during training.
+				\item Kernel is irrelevant to the initialization values
+%				Kernel is deterministic at initialization
+				
+%				meaning that the kernel is irrelevant to the initialization values and only determined by the model architecture
+			\item  Kernel stays constant during training.
 		\end{enumerate}
 	
 		
@@ -245,7 +249,8 @@ positive-definiteness of the limiting NTK can be shown
  \]
  \end{frame}
  
- \begin{frame}
+ \begin{frame}{Experiments}
+ 	
   \centering % Center the figure
  \includegraphics[width=\textwidth]{pic/NTK_paper_exp.png} % Path to the image file
 % \caption{} % Caption for the figure
@@ -265,37 +270,39 @@ positive-definiteness of the limiting NTK can be shown
 \end{itemize}
 \end{frame}
 
-\begin{frame}{NTK Sketch}
-	
-	\textbf{Theorem} Given \( x, x' \in \mathbb{R}^d \) and \( \delta \in (0, 1), \epsilon \in (0, 1/L) \), the NTK Sketch computes \( \Phi^{(L)} \in \mathbb{R}^m \), \( m = \mathcal{O}\left(\frac{1}{\epsilon^2} \log \frac{1}{\delta}\right) \) in time
-	\[
-	\tilde{O}\left( \frac{L^{11}}{\epsilon^{6.7}} + \frac{L^3}{\epsilon^2} d \right)
-	\]
-	such that
-	\[
-	\Pr\left[ \left| \left\langle \Phi^{(L)}, \Phi^{(L)'} \right\rangle - K_{\text{NTK}}^{(L)}(x, x') \right| \leq \epsilon \cdot K_{\text{NTK}}^{(L)}(x, x') \right] \geq 1 - \delta.
-	\]
-
-\end{frame}
-
-
-
-\begin{frame}{Finite Width}
-	
-They provide quantitative bounds measuring the \(L_
-2\) difference in function space between the trajectory of a finite-width network trained on finitely many samples from the idealized kernel dynamics
-of infinite width and infinite data.
-	
-\end{frame}
+%\begin{frame}{NTK Sketch}
+%	
+%	\textbf{Theorem} Given \( x, x' \in \mathbb{R}^d \) and \( \delta \in (0, 1), \epsilon \in (0, 1/L) \), the NTK Sketch computes \( \Phi^{(L)} \in \mathbb{R}^m \), \( m = \mathcal{O}\left(\frac{1}{\epsilon^2} \log \frac{1}{\delta}\right) \) in time
+%	\[
+%	\tilde{O}\left( \frac{L^{11}}{\epsilon^{6.7}} + \frac{L^3}{\epsilon^2} d \right)
+%	\]
+%	such that
+%	\[
+%	\Pr\left[ \left| \left\langle \Phi^{(L)}, \Phi^{(L)'} \right\rangle - K_{\text{NTK}}^{(L)}(x, x') \right| \leq \epsilon \cdot K_{\text{NTK}}^{(L)}(x, x') \right] \geq 1 - \delta.
+%	\]
+%
+%\end{frame}
 
 
-\begin{frame}{Spectral Bias}
+%
+%\begin{frame}{}
+%	
+%They provide quantitative bounds measuring the \(L_
+%2\) difference in function space between the trajectory of a finite-width network trained on finitely many samples from the idealized kernel dynamics
+%of infinite width and infinite data.
+%	
+%\end{frame}
+
+
+\begin{frame}{Finite Width and Spectral Bias}
 	\begin{itemize}
+		
+		\item Found some results on finite-width case
 
-	\item As an implication of these bounds, eigenfunctions of the NTK integral operator (not just their empirical approximations) are learned at rates corresponding to their eigenvalues
+	\item consequently, eigenfunctions of the NTK integral operator are learned at rates corresponding to their eigenvalues
 	 
-	\item We demonstrate that the network will inherit the bias of the kernel at the beginning of training
-	even when the width only grows linearly with the number of samples
+%	\item We demonstrate that the network will inherit the bias of the kernel at the beginning of training
+%	even when the width only grows linearly with the number of samples
 	
 	\end{itemize}
 \end{frame}
@@ -347,7 +354,7 @@ of infinite width and infinite data.
 		
 \item Overparametrized Multilayer Neural Networks: Uniform Concentration of Neural Tangent Kernel and Convergence of Stochastic Gradient Descent (2024)
 \item They first show that with random initialization, the NTK function converges to some
-deterministic function uniformly for all layers as the number of neurons tends to infinity
+deterministic function \textbf{uniformly} in input for all layers as the number of neurons tends to infinity
 \item Then they apply the uniform convergence result to further prove that the prediction error of multi-layer neural networks under SGD converges in expectation in the streaming data setting
 	\end{itemize}
 
@@ -362,6 +369,101 @@ deterministic function uniformly for all layers as the number of neurons tends t
 \]
 
 	
+\end{frame}
+
+
+\begin{frame}{Sensitivity Analysis}
+	\begin{itemize}
+		\item \textbf{Sensitivity Definition:}
+		\begin{align*}                
+			\mathcal{S}_{f_{\theta}}(z) = \mathbb{E}_{z, \hat{z}, \theta} | \nabla_{z} f(z, \theta)^{\top} (z - \hat{z}) |
+		\end{align*}
+		\item \textbf{NTK Sensitivity:}
+		\begin{align*}
+			\mathcal{S}_{NTK}(z) = \|z\|_{2} \| \| \nabla_{z} \Phi_{NTK}(z)^{\top} \Phi_{NTK}^{\top} K_{NTK}^{-1} Y \|_{2}
+		\end{align*}\\
+		Which results in:
+		\begin{align*}
+			\mathcal{S}_{NTK}(z) = \mathcal{O}\left(log k \sqrt{\frac{ND}{p}}\right) \sim \mathcal{O}(1)
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Future Research Directions}
+	\begin{itemize}
+		\item \textbf{Relax Assumptions:}
+		\begin{itemize}
+			\item \textbf{High-dimensional regime: }
+			\begin{align*}
+				N log^{3} N \mathcal{o}(d^{\frac{3}{2}})
+			\end{align*}
+			It's an open question whether this can be relaxed or not.
+			\item \textbf{Data distibution: }
+			$P_X$ satisfies the \textit{Lipschitz concentration property}. Namely, there exists an absolute constant $c > 0$ such that, for every Lipschitz continuous function $\varphi : \mathbb{R}^d \to \mathbb{R}$, we have for all $t > 0$,
+			\begin{align*}
+				\mathbb{P}\left( \left| \varphi(x) - \mathbb{E}_X[\varphi(x)] \right| > t \right) \leq 2e^{-ct^2 / \|\varphi\|_{\text{Lip}}^2}
+			\end{align*}
+			Some distributions that satisfy this property include the Gaussian distribution and the uniform distribution, or data obtianed be GANs.
+			\item \textbf{Even Activation Functions: }
+			Even activation functions are used to prove the upper bound of the NTK by Bombari et al. (2022).  
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Spurious Data Memorization}
+	\begin{itemize}
+		\item \textbf{Spurious Data :}
+		\begin{itemize}
+			\item \textbf{Definition: }
+			Spurious data is data that is not relevant to the task at hand, but is still memorized by the model.
+			\item \textbf{Formulation: }
+			\begin{align*}
+				z_i = \begin{bmatrix}
+					x_i \\ y_i
+				\end{bmatrix}
+				\quad \text{and} \quad
+				z_{i}^{s} = \begin{bmatrix}
+					x \\ y_i
+				\end{bmatrix}
+			\end{align*}
+			where $x$ is independent of $x_i$.
+		\end{itemize}
+		\item \textbf{Future Alignment:}
+		\begin{align*}
+			\mathcal{F}_\varphi(z, z_1) := \frac{\varphi(z)^\top P_{\Phi_{-1}}^\perp \varphi(z_1)}{\left\| P_{\Phi_{-1}}^\perp \varphi(z_1) \right\|_2^2}
+		\end{align*}
+		\item \textbf{Satbiblity:}
+		\begin{align*}
+			S_{z_1}(z) = \mathcal{F}_\varphi(z, z_1) S_{z_1}(z_1)
+		\end{align*}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Memorization in NTK Feutures}
+	\[
+	\left| \mathcal{F}_{\text{NTK}}(z_1^s, z_1) - \gamma_{\text{NTK}} \right| = o(1),
+	\]
+	where 
+	\[
+	0 < \gamma_{\text{NTK}} := \alpha \frac{\sum_{l=1}^{+\infty} \mu_l'^2 \alpha^l}{\sum_{l=1}^{+\infty} \mu_l'^2} < 1, \tag{26}
+	\]
+	and $\mu_l'$ is the $l$-th Hermite coefficient of the derivative of the activation $\varphi'$.\\
+	The generalization of the NTK is given by:
+	\[
+	\text{Cov}\left(f_{\text{NTK}}(z_1^s, \theta^*), g_1\right) \leq \gamma_{\text{NTK}} \sqrt{\mathcal{R}_{Z_{-1}}} \sqrt{\text{Var}(g_1)}
+	\]
+\end{frame}
+\begin{frame}{Future Directions}
+	\begin{itemize}
+		\item Fully Connected Neural Networks NTK Generalization and Memorization:
+		\centering
+		\includegraphics[keepaspectratio, scale=0.5]{pic/FC.png}
+		\item Convolutional Neural Networks NTK Generalization and Memorization:
+		\centering
+		\includegraphics[keepaspectratio, scale=0.5]{pic/CNN.png}
+	\end{itemize}
 \end{frame}
 
 

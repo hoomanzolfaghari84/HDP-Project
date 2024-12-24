@@ -1,4 +1,4 @@
 \beamer@sectionintoc {1}{Introduction}{3}{0}{1}
-\beamer@sectionintoc {2}{Literature Review}{15}{0}{2}
-\beamer@sectionintoc {3}{Proposal}{24}{0}{3}
-\beamer@sectionintoc {4}{References}{26}{0}{4}
+\beamer@sectionintoc {2}{Literature Review}{13}{0}{2}
+\beamer@sectionintoc {3}{Proposal}{25}{0}{3}
+\beamer@sectionintoc {4}{References}{27}{0}{4}

@@ -1,0 +1,116 @@
+\section{Related Works}
+\subsubsection{Pointwise Convergence and CNTK:}
+In~\cite{lee2018exact} Aurora et al, give the first non-asymptotic proof showing that a fully-trained sufficiently wide net is indeed equivalent to the kernel regression predictor using NTK.
+
+
+\textbf{Theorem (Convergence to the NTK at initialization).} Fix $\epsilon > 0$ and $\delta \in (0,1)$. Suppose 
+\[
+\sigma(z) = \max(0, z) \quad \text{and} \quad \min_{h \in [L]} d_h \geq \Omega\left(\frac{L^6}{\epsilon^4} \log\left(\frac{L}{\delta}\right)\right).
+\]
+Then for any inputs $x, x' \in \mathbb{R}^{d_0}$ such that $\|x\| \leq 1, \|x'\| \leq 1$, with probability at least $1 - \delta$, we have:
+\[
+\left| \left\langle \frac{\partial f(\theta, x)}{\partial \theta}, \frac{\partial f(\theta, x')}{\partial \theta} \right\rangle - \Theta^{(L)}(x, x') \right| \leq (L + 1)\epsilon.
+\]
+
+They also give an efficient algorithm for exact computation of this kernel on Convolutional NNs, the CNTK.
+
+\subsubsection{Generalization Bound:}
+In~\cite{cao2019fine}, they provide a generalization bound using NTK. Assuming:
+		 Fix failure probability \(\delta \in (0,1)\)
+		 data \(S = \{(x_i,y_i)\}_{i=1}^n\)
+		 Distribution \( D \) is \( (\lambda_0, \delta/3, n) \)-non-degenerate.
+		 \( \kappa = \mathcal{O}\left( \frac{\lambda_0 \delta}{n} \right) \).
+		 Width \( m \geq \kappa^{-2} \text{poly}(n, \lambda_0^{-1}, \delta^{-1}) \).
+		 Loss function \( \ell: \mathbb{R} \times \mathbb{R} \to [0, 1] \) is 1-Lipschitz in the first
+		argument such that \( \ell(y, y) = 0 \).
+		 Gradient descent runs for \( k \geq \Omega\left( \frac{1}{\eta \lambda_0} \log \frac{n}{\delta} \right) \) iterations.
+	
+
+ Then with probability at least  \(1-\delta\) over the random initialization and the training
+		samples,The two-layer neural network \(f_{\mathbf{W}(k), \mathbf{a}}\) has population loss \( L_D(f_{\mathbf{W}(k), \mathbf{a}}) = \mathbb{E}_{(\mathbf{x},y)\sim D}[\ell(f_{\mathbf{W}(k), \mathbf{a}}(\mathbf{x}),y)] \), bounded as: 
+		
+		
+		\[
+		L_D(f_{\mathbf{W}(k), \mathbf{a}}) \leq \sqrt{\frac{2 \mathbf{y}^\top (\mathbf{H}^\infty)^{-1} \mathbf{y}}{n}} + O\left( \sqrt{\frac{\log \frac{n}{\lambda_0 \delta}}{n}} \right).
+		\]
+		
+\subsubsection{Finite Width and Spectral Bias:} In ~\cite{rahaman2019spectral}	They provide quantitative bounds measuring the \(L_2\) difference in function space between the trajectory of a finite-width network trained on finitely many samples from the idealized kernel dynamics
+of infinite width and infinite data. They apply the result and find that eigenfunctions of the NTK integral operator are learned at rates corresponding to their eigenvalues.
+They demonstrate that the network will inherit the bias of the kernel at the beginning of training even when the width only grows linearly with the number of samples
+
+	\subsubsection{Uniform Convergence of Neural Tangent Kernel and Streaming Data:}
+	
+	 In~\cite{arora2019overparametrized}, they create a uniform convergence bound of the Neural Tangent Kernel (NTK) and analyze the convergence of stochastic gradient descent (SGD) in the streaming data setting.
+	
+
+	\begin{itemize}
+		\item  With random initialization, the NTK converges to a deterministic function \textbf{uniformly} over the input space for all layers as the number of neurons tends to infinity.
+		\item Using this uniform convergence, it was further proven that the prediction error of multilayer neural networks under SGD converges in expectation in the streaming data setting.
+	\end{itemize}
+	
+	Under Gaussian initialization, for \( m \geq C d^2 \exp(L^2) \) (for some constant \( C \)), there exist constants \( C_1, C_2, \) and \( C_3 \) such that, with probability at least \( 1 - \exp(-C_1 m^{1/3}) \),
+	\[
+	\left\| H^{(\ell)} - \Phi^{(\ell)} \right\|_{\infty} \leq C_2 \left( \frac{C_3^L}{m^{1/6}} + \sqrt{\frac{d L \log m}{m}} \right), \quad \forall 1 \leq \ell \leq L.
+	\]
+	
+	Here, \( H^{(\ell)} \) represents the empirical NTK matrix at layer \(\ell\), and \( \Phi^{(\ell)} \) is its deterministic counterpart. This result establishes a high-probability bound on the uniform convergence of the NTK, with the error decaying as the number of neurons \( m \) increases.
+	
+\subsubsection{Sensitivity Analysis:}
+The sensitivity of a model \(f_\theta\) is defined as:
+\(
+\mathcal{S}_{f_\theta}(z) = \mathbb{E}_{z, \hat{z}, \theta} \big| \nabla_z f(z, \theta)^\top (z - \hat{z}) \big|.
+\).
+
+For the NTK, the sensitivity is given by:~\cite{pmlr-v202-bombari23a}
+\[
+\mathcal{S}_{\text{NTK}}(z) = \|z\|_2 \big\| \nabla_z \Phi_{\text{NTK}}(z)^\top \Phi_{\text{NTK}}^\top K_{\text{NTK}}^{-1} Y \big\|_2.
+\]
+This simplifies to:
+\(
+\mathcal{S}_{\text{NTK}}(z) = \mathcal{O}\left(\log k \sqrt{\frac{ND}{p}}\right) \sim \mathcal{O}(1)
+\). The results have certain assumptions whose necessity remains an open problem.
+
+%
+%\subsubsection*{Future Research Directions}
+%
+%\paragraph{Relaxing Assumptions:}
+%\begin{itemize}
+%	\item \textbf{High-dimensional regime:} It remains an open question whether assumptions such as \( N \log^3 N = \mathcal{o}(d^{3/2}) \) can be relaxed.
+%	\item \textbf{Data distribution:} Current analysis assumes the data distribution \( P_X \) satisfies the Lipschitz concentration property:
+%	\[
+%	\mathbb{P}\big(|\varphi(x) - \mathbb{E}_X[\varphi(x)]| > t\big) \leq 2e^{-ct^2 / \|\varphi\|_{\text{Lip}}^2},
+%	\]
+%	where \( \varphi \) is Lipschitz continuous. This property is satisfied by Gaussian distributions, uniform distributions, or data generated by GANs.
+%	\item \textbf{Even activation functions:} Even activations have been used to establish NTK upper bounds (e.g., Bombari et al., 2022).
+%\end{itemize}
+%
+%---
+
+\subsubsection{Spurious Data Memorization:}
+Spurious data refers to irrelevant features memorized by the model. For data samples. Spurious memorization impacts generalization.
+Denoting \textit{feature data alignment} as 
+\(
+\mathcal{F}_\varphi(z, z_1) = \frac{\varphi(z)^\top P_{\Phi_{-1}}^\perp \varphi(z_1)}{\big\| P_{\Phi_{-1}}^\perp \varphi(z_1) \big\|_2^2}.
+\) and \textit{model stability} as
+\(
+S_{z_1}(z) = \mathcal{F}_\varphi(z, z_1) S_{z_1}(z_1).
+\), the difference in NTK feature alignment for spurious 
+data satisfies:~\cite{bombari2024how}
+\[
+\big| \mathcal{F}_{\text{NTK}}(z_1^s, z_1) - \gamma_{\text{NTK}} \big| = o(1),
+\]
+where:
+\[
+\gamma_{\text{NTK}} = \alpha \frac{\sum_{l=1}^\infty \mu_l'^2 \alpha^l}{\sum_{l=1}^\infty \mu_l'^2}, \quad 0 < \gamma_{\text{NTK}} < 1.
+\]
+Here, \( \mu_l' \) denotes the \(l\)-th Hermite coefficient of the derivative of the activation function \(\varphi'\). This result is applied to generalization bounds on the NTK model.
+%\[
+%\text{Cov}\big(f_{\text{NTK}}(z_1^s, \theta^*), g_1\big) \leq \gamma_{\text{NTK}} \sqrt{\mathcal{R}_{Z_{-1}}} \sqrt{\text{Var}(g_1)}.
+%\]
+		
+		
+		
+		
+		
+		
+		

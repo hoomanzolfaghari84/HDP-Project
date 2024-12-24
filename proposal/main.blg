@@ -1,0 +1,54 @@
+This is BibTeX, Version 0.99d
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+Reallocating 'name_of_file' (item size: 1) to 22 items.
+The style file: bibliography/splncs04.bst
+Reallocating 'name_of_file' (item size: 1) to 28 items.
+Database file #1: bibliography/references.bib
+You're missing a field name---line 127 of file bibliography/references.bib
+ : 
+ : % title={Scaling Neural Tangent Kernels via Sketching and Random Features},
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+You've used 7 entries,
+            2850 wiz_defined-function locations,
+            641 strings with 6557 characters,
+and the built_in function-call counts, 4287 in all, are:
+= -- 329
+> -- 178
+< -- 7
++ -- 71
+- -- 64
+* -- 310
+:= -- 573
+add.period$ -- 9
+call.type$ -- 7
+change.case$ -- 54
+chr.to.int$ -- 0
+cite$ -- 7
+duplicate$ -- 382
+empty$ -- 354
+format.name$ -- 72
+if$ -- 897
+int.to.chr$ -- 0
+int.to.str$ -- 7
+missing$ -- 86
+newline$ -- 27
+num.names$ -- 16
+pop$ -- 153
+preamble$ -- 1
+purify$ -- 43
+quote$ -- 0
+skip$ -- 89
+stack$ -- 0
+substring$ -- 193
+swap$ -- 205
+text.length$ -- 7
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 28
+warning$ -- 0
+while$ -- 28
+width$ -- 8
+write$ -- 82
+(There was 1 error message)
