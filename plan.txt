@@ -1,0 +1,17 @@
+===============
+Contrastive Loss
+GNN
+Multi-modal
+
+
+==
+Online Optimization Tangent Kernel.
+Even Activations in Supurios (less HDP)
+
+==
+Density Estimation (Likelihood loss) (too simple to be not done already)
+sub-Gaussian (might be too simple or impossible result)  + see if practical possible
+
+==
+VC-dim or Radamacher (already done some), pseudo-dimension
+Some finite-width layers.

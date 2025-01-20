@@ -1,0 +1,345 @@
+\documentclass[11pt, a4paper]{article}
+
+%-----------------------------------------------------------
+% PACKAGES
+%-----------------------------------------------------------
+\usepackage[utf8]{inputenc}           % For UTF-8 encoding
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}   % AMS math packages
+\usepackage{mathtools}                % Extra math symbols and tools
+\usepackage{graphicx}                 % For including images
+\usepackage{hyperref}                 % For hyperlinks
+\usepackage{cleveref}                 % Smart referencing
+\usepackage{enumitem}                 % Customize lists
+\usepackage{geometry}                 % Adjust margins and paper size
+\geometry{margin=1in}
+\usepackage{color}
+\usepackage{bm}                       % Bold math symbols
+
+%-----------------------------------------------------------
+% THEOREM ENVIRONMENTS
+%-----------------------------------------------------------
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}  % Number lemmas with theorems
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+%-----------------------------------------------------------
+% CUSTOM MACROS
+%-----------------------------------------------------------
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\E}{\mathbb{E}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\empnorm}[1]{\|#1\|_{\mu_n}}
+\newcommand{\inner}[2]{\langle #1 , #2 \rangle }
+\newcommand{\tr}{\operatorname{Tr}}
+\newcommand{\bH}{\mathbf{H}}
+
+%-----------------------------------------------------------
+% TITLE INFORMATION
+%-----------------------------------------------------------
+\title{High-Dimensional Probability and the Neural Tangent Kernel}
+\author{Your Name\thanks{Your Affiliation, email@example.com}}
+\date{\today}
+
+%-----------------------------------------------------------
+% DOCUMENT START
+%-----------------------------------------------------------
+\begin{document}
+	
+	\maketitle
+	
+	
+	\begin{abstract}
+		
+	\end{abstract}
+	
+%	\tableofcontents
+	
+	We analyze the convergence and generalization of a coupling based normalizing flow model.
+	
+	\section{Preliminaries}
+	
+	\subsection{Hypothesis set}
+	
+	Define \(\mathcal{F} = \{f :\R^d \to \R^d\}\) as the set of all \textit{Non-Volume Preserving Coupling-Based Normalizing Flows}. And define the \textit{Realization Function} \(F:\R^P \to \mathcal{F}\). Now we have for an \(f_\theta := F(\theta)\) the following structure:
+	
+	Denote the permutation by a matrix $Q \in \mathbb{R}^{d \times d}$ (an orthonormal permutation matrix), 
+	so that
+	\[
+	\tilde{x} = Q x.
+	\]
+	We then split $\tilde{x}$ into two parts, 
+	\[
+	\tilde{x} 
+	\;=\; (\tilde{x}_1, \,\tilde{x}_2)
+	\quad \text{with} \quad
+	\tilde{x}_1 \in \mathbb{R}^{d'}, 
+	\;\tilde{x}_2 \in \mathbb{R}^{d - d'}.
+	\]
+	An \emph{affine coupling} transform $(\tilde{x}_1, \tilde{x}_2) \mapsto (\tilde{y}_1, \tilde{y}_2)$ 
+	is defined by
+	\[
+	\tilde{y}_1 
+	\;=\; \tilde{x}_1,
+	\qquad
+	\tilde{y}_2 
+	\;=\; \tilde{x}_2 \;\odot\; \exp\bigl[s_{\theta_1}(\tilde{x}_1)\bigr]
+	\;+\; t_{\theta_2}(\tilde{x}_1),
+	\]
+	where 
+	\[
+	s_{\theta_1}: \mathbb{R}^{d'} \to \mathbb{R}^{d-d'}, 
+	\quad
+	t_{\theta_2}: \mathbb{R}^{d'} \to \mathbb{R}^{d-d'}.
+%	\quad \theta = \begin{bmatrix}
+%		\theta_1 \\
+%		\theta_2
+%	\end{bmatrix} \in \R^P
+	\]
+	are fully connected neural networks parameterized each by a subspace of $\R^P$. 
+%	Finally we invert the permutation:
+%	\[
+%	y \;=\; Q^{-1}\,\tilde{y} 
+%	\quad \in \mathbb{R}^D.
+%	\]
+	Thus, the overall transformation is 
+	\[
+	T_{\theta_1,\theta_2}(x) \;=\;
+	\Bigl(
+	\tilde{x}_1,\;
+	\tilde{x}_2 \odot \exp[s_{\theta_1}(\tilde{x}_1)] \;+\; t_{\theta_2}(\tilde{x}_1)
+	\Bigr)^\top
+	\quad\text{where}\quad 
+	\tilde{x} = P x.
+	\].
+	
+	A \textit{coupling based normalizing flow model} of depth \(L\) is therefore comprised by:
+	\[
+	f_\theta (x) = T^{(L)} \circ  T^{(L-1)} \circ \cdots \circ  T^{(1)} (x) 
+	 \]
+	
+	\paragraph{Jacobian Determinant.}
+	Because $P$ is a permutation matrix with $\lvert \det P \rvert = 1$, its contribution to the Jacobian determinant is 1.
+	The remaining (affine coupling) block is
+	\[
+	\frac{\partial (\tilde{y}_1, \tilde{y}_2)}{\partial (\tilde{x}_1, \tilde{x}_2)}
+	\;=\;
+	\begin{pmatrix}
+		I_{d} & 0 \\
+		* & \mathrm{diag}\!\bigl(\exp[s_\theta(\tilde{x}_1)]\bigr)
+	\end{pmatrix},
+	\]
+	so the absolute Jacobian determinant is
+	\[
+	\bigl|\det \nabla_x f_\theta(x)\bigr|
+	\;=\;
+	\prod_{j=1}^{\,d-d'} \exp\bigl[s_{\theta,j}(\tilde{x}_1)\bigr]
+	\;=\;
+	\exp\!\Bigl(\sum_{j=1}^{\,d-d'} s_{\theta,j}(\tilde{x}_1)\Bigr).
+	\]
+	
+	\paragraph{Negative Log-Likelihood.}
+	We choose a standard normal base distribution $p_z(z) = \mathcal{N}(z \mid 0, I)$ on $\mathbb{R}^D$. 
+	Then for $y = f_\theta(x)$, 
+	the model's density is 
+	\[
+	p_\theta(x)
+	\;=\;
+	p_z\bigl(y\bigr)
+	\,\bigl|\det \nabla_x f_\theta(x)\bigr|.
+	\]
+	Hence the negative log-likelihood is
+	\[
+	-\log p_\theta(x)
+	\;=\;
+	-\log p_z\!\bigl(y\bigr)
+	\;-\; 
+	\log \bigl|\det \nabla_x f_\theta(x)\bigr|.
+	\]
+	If $p_z$ is standard Gaussian, 
+	\[
+	-\log p_z(y)
+	\;=\;
+	\frac12 \|y\|^2 \;+\; \frac{D}{2}\,\log (2\pi)
+	\quad (\text{ignoring constants in } \theta).
+	\]
+	Using the above determinant,
+	\[
+	-\log \bigl|\det \nabla_x f_\theta(x)\bigr|
+	\;=\;
+	-\,\sum_{j=1}^{\,D-d} s_{\theta,j}\!\bigl(\tilde{x}_1\bigr).
+	\]
+	Thus the single-sample loss becomes
+	\[
+	\ell(\theta; x)
+	\;=\;
+	-\log p_\theta(x)
+	\;=\;
+	\frac12 \|f_\theta(x)\|^2 
+	\;-\;
+	\sum_{j=1}^{\,D-d} s_{\theta,j}\!\bigl(\tilde{x}_1\bigr)
+	\;+\;
+	\text{const.},
+	\]
+	and the \emph{training objective} for a dataset $\{x_i\}_{i=1}^N$ is 
+	\[
+	\mathcal{L}(\theta)
+	\;=\;
+	\frac{1}{N} \sum_{i=1}^N
+	\Bigl[
+	- \log p_z\!\bigl(f_\theta(x_i)\bigr)
+	\;-\;
+	\log \bigl|\det \nabla f_\theta(x_i)\bigr|
+	\Bigr].
+	\]
+	
+	
+	Also denote the probability space \((\Omega,\Sigma,\Prob)\), such that \(X \in \R^d\) has the unknown distribution \(\mu \in \mathcal{M}(\R^d)\) and \(Z \in R^d \sim N(0,I_d)\). Also define the empirical distribution \(\mu_N\) for our dataset \(S=\{X^{(i)}\}_{i=1}^N\), as \(\mu_N(A) = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}_{X_i \in A}\).
+	
+	Define the semi-norm and bi-linear form below:
+	\[
+	\empnorm{f} = \E_{\mu_n}[f], \quad \inner{f}{g}_{\mu_n} = \E_{\mu_{n}}[f^\top g]
+	\]
+	
+	
+	
+	Define the \textbf{Jacobean Functional} \(J:\mathcal{F}\times \mathbb{R}^d \to \mathbb{R}^{d\times d}\) as:
+	\[
+	J(f,x):=
+	\begin{pmatrix}
+		\frac{\partial f_1}{\partial x_1}(x) & \frac{\partial f_1}{\partial x_2}(x) & \cdots & \frac{\partial f_1}{\partial x_d}(x) \\
+		\frac{\partial f_2}{\partial x_1}(x) & \frac{\partial f_2}{\partial x_2}(x) & \cdots & \frac{\partial f_2}{\partial x_d}(x) \\
+		\vdots & \vdots & \ddots & \vdots \\
+		\frac{\partial f_d}{\partial x_1}(x) & \frac{\partial f_d}{\partial x_2}(x) & \cdots & \frac{\partial f_d}{\partial x_d}(x)
+	\end{pmatrix}
+	= 	\begin{pmatrix}
+	    \nabla f_1(x)^\top \\
+		\nabla f_2(x)^\top \\
+		\vdots \\
+		\nabla f_d(x)^\top
+	\end{pmatrix} = \nabla f(x)^\top
+	\],
+	 and the functions \(J_{\mu_n}(f) := \frac{1}{N} \sum_{i=1}^{N} J(f,X_i) \) and \(J(f):=h \implies h(x)=J(f,x)\)
+
+	
+	\section{Generative NTK}
+	
+	Let the normalizing flow be defined as
+	\[
+	\mathbf{z} = f_{\boldsymbol{\theta}}(\mathbf{x}),
+	\]
+	with the base density \( p_Z(\mathbf{z}) \). By the change-of-variables formula, the model density is given by
+	\[
+	\hat{p}_X(\mathbf{x}) = p_Z\bigl(f_{\boldsymbol{\theta}}(\mathbf{x})\bigr) \, \Bigl|\det J(f_\theta,\mathbf{x}) \Bigr|.
+	\]
+	and minimizing the KL-divergence between \(\mu=p_X\)and \(\hat{p}_X\), will be equivalent to minimizing the expectation of the negative log-likelihood of \(\hat{p}_X\) with respect to \(p_X\) and is approximated by the empirical risk as below:
+	\[
+	\mathcal{L}(\mathbf{x}; f) = -\log\hat{p}_X(\mathbf{x}) = -\log p_Z\bigl(f(\mathbf{x})\bigr) - \log \Bigl|\det J(f,\mathbf{x}) \Bigr|
+	\]
+	\[
+	R(f):=\E_\mu[\mathcal{L}(X; f)]
+	\]
+	\[
+	\hat{R}_S(f):=\frac{1}{|S|}\sum_{x\in S} \mathcal{L}(x;f)
+	\]
+	, meaning that our \textbf{Training Cost Functional} can be defined as:
+	\[
+	C^{\mu_N}(f) = \| -\log p_Z\bigl(f \bigr) - \log \Bigl|\det J(f) \Bigr| \|_{\mu_N} =\frac{1}{N} \sum_{i=1}^{N}  -\log p_Z\bigl(f(X_i)\bigr) - \log \Bigl|\det J(f,X_i)\Bigr|
+	\]
+	, which is \(\hat{R}_S\), for our \(S\).
+	Now we take the (functional) derivative of this with respect to a function \(f_\theta\), denoted by:
+	\[
+	\partial^{\mu_N}_{f} C\bigr|_{f_\theta} = \empnorm{ 
+		f - \bigl[ \tr\left( J(f)^{-1} \frac{\partial J(f)}{\partial f_1} \right) \; \cdots \; \tr\left( J(f)^{-1} \frac{\partial J(f)}{\partial f_d} \right) \bigr]^\top
+	}  
+	\]
+	
+		This is a point in \(\mathcal{F}^*\) and so is a function of \(f \in \mathcal{F}\) to \(\R\).,and we can denote it by \(\phi_\theta:\mathcal{F}\to \R\).
+	
+	\subsection{Deriving the Kernel}
+	So denoting \(f_\theta := F(\theta)\) the parameters change as below in gradient descent:
+	\[
+	\frac{d \theta_p}{dt} =  - \eta \partial_{\theta_p} C\circ F(\theta) = -\eta \ \partial^{\mu_N}_{f}C\bigr|_{f_\theta} (\partial_{\theta_p} F(\theta))  = 
+- \eta \ \phi_\theta (\partial_{\theta_p} F(\theta))
+	\]
+, giving us the gradient form:
+
+ \[\nabla_\theta C\circ F(\theta)  = [ \phi_\theta(\partial_{\theta_1}F(\theta)) \; \cdots \phi_\theta(\partial_{\theta_P}F(\theta)) ]^\top 
+ ,\quad
+ \frac{d \theta}{d t} = - \eta \ \nabla_\theta C\circ F(\theta)
+ \]
+
+Defining the Neural Tangent Kernel \(\bH(\theta)\)
+We want to solve the differential equation below:
+\[
+\partial_{t} f_{\theta(t)} = - \frac{1}{N} \sum_{i=1}^{N} 
+\]
+
+
+
+From the blog:
+	\[
+\frac{df(\mathbf{x}';\theta)}{dt} 
+= \frac{df(\mathbf{x}';\theta)}{d\theta}\frac{d\theta}{dt}
+= -\frac{1}{N} \sum_{i=1}^N \color{blue}{\underbrace{\nabla_\theta f(\mathbf{x};\theta)^\top \nabla_\theta f(\mathbf{x}^{(i)}; \theta)}_\text{Neural Tangent Kernel}    } \color{black}{\nabla_f \ell(f, y^{(i)})}
+	\]
+	
+	\[
+	\frac{df(\mathbf{x}';\theta)}{dt} 
+	= \frac{df(\mathbf{x}';\theta)}{d\theta}\frac{d\theta}{dt}
+	= -\frac{\eta}{N} \sum_{i=1}^N \nabla_\theta f(\mathbf{x}';\theta)^\top \nabla_\theta f(\mathbf{x}^{(i)}; \theta) \color{black}{\nabla_f \ell(f, y^{(i)})}
+	\]
+	
+	\section{Random Process View}
+	
+	It is well-known that Neural Networks in the infinite-width output a Gaussian process at their Gaussian initialization.\\
+	But what happens in training to a Neural Network.
+\textbf{In training} the cost function follows a Gaussian process, indexed by the space \(\R^P\) of parameters. we can create some empirical processes according to the empirical risk and statistical risk indexed by the hypothesis \(\mathcal{F}\) or \(\R^P\).
+ 
+We have three probability measures so far: \(N(0,I), \mu, \mu_N\).
+\begin{definition}{\textbf{Learning Processes}}\\
+Take the functions \(C:\mathcal{F}\to \R\) and \(R:= C\circ F : \R^P \to \R\), we can use the laws \(\mu\) and \(\mu_N\) such that:
+\begin{itemize}
+	\item \textbf{Function Processes}: The random variables \(f(X)\) or \(F(\theta)(X)\), respectively indexed on \(\mathcal{F}\) and \(\R^P\), with \(X\sim\mu\) or \(\mu_N\).
+	
+	\item \textbf{Empirical Processes}: The functions \(\mathbb{G}_N(f):=\sqrt{N}(\mu_N - \mu)f\) and  \(\mathbb{G^\theta}_N(\theta):=\sqrt{N}(\mu_N - \mu)F(\theta)\), respectively indexed on \(\mathcal{F}\) and \(\R^P\), with \(X\sim\mu\) or \(\mu_N\).
+	
+	\item \textbf{Training Processes}: The functions \(C(f)\) and \(C \circ F(f)\), when \(S=\{X_i\}_{i=1}^N \sim \mu^N\) or maybe even \(S\sim \mu_N^N\) can be useful.
+	
+	
+\end{itemize}
+\end{definition}
+
+We shall analyze properties of this random process. For example the ultimate goad of machine learning would be characterized as \(\E[\sup_{\theta} R(\theta)]\), which is the statistical risk for the objective learning concept. Our empirical risk is also characterized by \(\E\sup_{\theta} \hat{R}(\theta)\)
+
+What is the covariance function of these processes ? is it NTK ?
+ Can we apply the results of the books on Random Processes to these ?
+
+	
+\section{Sub-Gaussian Investigation}
+	
+		
+	
+	
+	%-----------------------------------------------------------
+	% BIBLIOGRAPHY
+	%-----------------------------------------------------------
+	\bibliographystyle{plain}
+	\bibliography{references}  % Make sure to create a 'references.bib' file
+	
+	\appendix
+	
+	\section{Additional Proofs}
+	\label{sec:appendix}
+	Additional technical proofs, auxiliary lemmas, or numerical experiments may be included here.
+	
+\end{document}

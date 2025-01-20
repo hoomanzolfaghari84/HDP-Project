@@ -1,0 +1,9 @@
+\contentsline {section}{\numberline {1}Generative NTK}{1}{section.1}%
+\contentsline {section}{\numberline {2}Sub-Gaussian Investigation}{2}{section.2}%
+\contentsline {section}{\numberline {3}Introduction}{2}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Motivation and Background}{2}{subsection.3.1}%
+\contentsline {subsection}{\numberline {3.2}Outline of the Paper}{2}{subsection.3.2}%
+\contentsline {section}{\numberline {4}Preliminaries}{2}{section.4}%
+\contentsline {section}{\numberline {5}Main Results}{3}{section.5}%
+\contentsline {section}{\numberline {6}Discussion and Future Work}{3}{section.6}%
+\contentsline {section}{\numberline {A}Additional Proofs}{3}{appendix.A}%
