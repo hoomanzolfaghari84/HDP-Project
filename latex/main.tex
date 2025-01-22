@@ -119,16 +119,19 @@
 	\tilde{x}_2 \odot \exp[s_{\theta_1}(\tilde{x}_1)] \;+\; t_{\theta_2}(\tilde{x}_1)
 	\Bigr)^\top
 	\quad\text{where}\quad 
-	\tilde{x} = P x.
+	\tilde{x} = Q x.
 	\].
+	
+	The Tangent Kernel of \(f_\theta\)
 	
 	A \textit{coupling based normalizing flow model} of depth \(L\) is therefore comprised by:
 	\[
 	f_\theta (x) = T^{(L)} \circ  T^{(L-1)} \circ \cdots \circ  T^{(1)} (x) 
 	 \]
+	 , and we denote \(\theta = (\theta_1^s , \theta_1^t, \theta_2^s , \theta_2^t , \cdots ,\theta_L^s , \theta_L^t) \in \R^P \)
 	
 	\paragraph{Jacobian Determinant.}
-	Because $P$ is a permutation matrix with $\lvert \det P \rvert = 1$, its contribution to the Jacobian determinant is 1.
+	Because $Q$ is a permutation matrix with $\lvert \det Q \rvert = 1$, its contribution to the Jacobian determinant is 1.
 	The remaining (affine coupling) block is
 	\[
 	\frac{\partial (\tilde{y}_1, \tilde{y}_2)}{\partial (\tilde{x}_1, \tilde{x}_2)}
@@ -146,7 +149,16 @@
 	\;=\;
 	\exp\!\Bigl(\sum_{j=1}^{\,d-d'} s_{\theta,j}(\tilde{x}_1)\Bigr).
 	\]
-	
+	\subsection{Loss Criterion}
+	For a CPNF \(z = f_{\theta}(x)\),
+	with the base density \( p_Z(z) \). By the change-of-variables formula, the model density is given by
+	\[
+	\hat{p}_X(\mathbf{x}) = p_Z\bigl(f_{\boldsymbol{\theta}}(\mathbf{x})\bigr) \, \Bigl|\det J(f_\theta,\mathbf{x}) \Bigr|.
+	\]
+	and minimizing the KL-divergence between \(\mu=p_X\)and \(\hat{p}_X\), will be equivalent to minimizing the expectation of the negative log-likelihood of \(\hat{p}_X\) with respect to \(p_X\) and is approximated by the empirical risk as below:
+	\[
+	\mathcal{L}(\mathbf{x}; f) = -\log\hat{p}_X(\mathbf{x}) = -\log p_Z\bigl(f(\mathbf{x})\bigr) - \log \Bigl|\det J(f,\mathbf{x}) \Bigr|
+	\]
 	\paragraph{Negative Log-Likelihood.}
 	We choose a standard normal base distribution $p_z(z) = \mathcal{N}(z \mid 0, I)$ on $\mathbb{R}^D$. 
 	Then for $y = f_\theta(x)$, 
@@ -154,7 +166,7 @@
 	\[
 	p_\theta(x)
 	\;=\;
-	p_z\bigl(y\bigr)
+	p_Z\bigl(y\bigr)
 	\,\bigl|\det \nabla_x f_\theta(x)\bigr|.
 	\]
 	Hence the negative log-likelihood is
@@ -199,59 +211,99 @@
 	- \log p_z\!\bigl(f_\theta(x_i)\bigr)
 	\;-\;
 	\log \bigl|\det \nabla f_\theta(x_i)\bigr|
-	\Bigr].
+	\Bigr] 	= \frac1N \sum_{i=1}^{N} \ell(\theta;x)
+	\].
+
+	\begin{remark}
+		We might be able to show that NLL is equivalent to some supervised loss for some unknown optimal \(f^*\), that \(Z = f^*(X)\)
+	\end{remark}
+
+	\subsection{Probability Space}
+	
+	Denote the probability space \((\Omega,\Sigma,\Prob)\), where \(X: \Omega \to \R^d\) has the unknown distribution \(\mu \in \mathcal{M}(\R^d)\) and \(Z \sim N(0,I_d)\). Also define the empirical distribution \(\mu_N\) for our dataset \(S=\{X^{(i)}\}_{i=1}^N\), as \(\mu_N(A) = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}_{X_i \in A}\), where \(X_i\) are independent copies of \(X\).\\
+	
+	The ultimate learning objective is to minimize the \textit{statistical risk}:
+	\[
+	R(f):=\E_\mu[\ell(\theta;X)]
+	\]
+	, and the \textit{empirical risk} is: 
+	\[
+	\hat{R}_S(f):=\frac{1}{|S|}\sum_{x\in S} \ell(\theta;x)
 	\]
 	
+%	Define the semi-norm and bi-linear form below:
+%	\[
+%	\empnorm{f} = \E_{\mu_n}[f], \quad \inner{f}{g}_{\mu_n} = \E_{\mu_{n}}[f^\top g]
+%	\]
+%	
+%	
 	
-	Also denote the probability space \((\Omega,\Sigma,\Prob)\), such that \(X \in \R^d\) has the unknown distribution \(\mu \in \mathcal{M}(\R^d)\) and \(Z \in R^d \sim N(0,I_d)\). Also define the empirical distribution \(\mu_N\) for our dataset \(S=\{X^{(i)}\}_{i=1}^N\), as \(\mu_N(A) = \frac{1}{N}\sum_{i=1}^{N} \mathbf{1}_{X_i \in A}\).
-	
-	Define the semi-norm and bi-linear form below:
-	\[
-	\empnorm{f} = \E_{\mu_n}[f], \quad \inner{f}{g}_{\mu_n} = \E_{\mu_{n}}[f^\top g]
-	\]
-	
-	
-	
-	Define the \textbf{Jacobean Functional} \(J:\mathcal{F}\times \mathbb{R}^d \to \mathbb{R}^{d\times d}\) as:
-	\[
-	J(f,x):=
-	\begin{pmatrix}
-		\frac{\partial f_1}{\partial x_1}(x) & \frac{\partial f_1}{\partial x_2}(x) & \cdots & \frac{\partial f_1}{\partial x_d}(x) \\
-		\frac{\partial f_2}{\partial x_1}(x) & \frac{\partial f_2}{\partial x_2}(x) & \cdots & \frac{\partial f_2}{\partial x_d}(x) \\
-		\vdots & \vdots & \ddots & \vdots \\
-		\frac{\partial f_d}{\partial x_1}(x) & \frac{\partial f_d}{\partial x_2}(x) & \cdots & \frac{\partial f_d}{\partial x_d}(x)
-	\end{pmatrix}
-	= 	\begin{pmatrix}
-	    \nabla f_1(x)^\top \\
-		\nabla f_2(x)^\top \\
-		\vdots \\
-		\nabla f_d(x)^\top
-	\end{pmatrix} = \nabla f(x)^\top
-	\],
-	 and the functions \(J_{\mu_n}(f) := \frac{1}{N} \sum_{i=1}^{N} J(f,X_i) \) and \(J(f):=h \implies h(x)=J(f,x)\)
+%	Define the \textbf{Jacobean Functional} \(J:\mathcal{F}\times \mathbb{R}^d \to \mathbb{R}^{d\times d}\) as:
+%	\[
+%	J(f,x):=
+%	\begin{pmatrix}
+%		\frac{\partial f_1}{\partial x_1}(x) & \frac{\partial f_1}{\partial x_2}(x) & \cdots & \frac{\partial f_1}{\partial x_d}(x) \\
+%		\frac{\partial f_2}{\partial x_1}(x) & \frac{\partial f_2}{\partial x_2}(x) & \cdots & \frac{\partial f_2}{\partial x_d}(x) \\
+%		\vdots & \vdots & \ddots & \vdots \\
+%		\frac{\partial f_d}{\partial x_1}(x) & \frac{\partial f_d}{\partial x_2}(x) & \cdots & \frac{\partial f_d}{\partial x_d}(x)
+%	\end{pmatrix}
+%	= 	\begin{pmatrix}
+%	    \nabla f_1(x)^\top \\
+%		\nabla f_2(x)^\top \\
+%		\vdots \\
+%		\nabla f_d(x)^\top
+%	\end{pmatrix} = \nabla f(x)^\top
+%	\],
+%	 and the functions \(J_{\mu_n}(f) := \frac{1}{N} \sum_{i=1}^{N} J(f,X_i) \) and \(J(f):=h \implies h(x)=J(f,x)\)
 
 	
-	\section{Generative NTK}
+	\section{The Neural Tangent Kernel}
 	
-	Let the normalizing flow be defined as
+	 H: Maybe we should see the whole \(p_\theta\) as the network ?\\
+	 
+	 
+	 
+	
+	First we compute gradient of a transform \(T^{(i)}=T_{\theta_1,\theta_2}\) as:
+	
 	\[
-	\mathbf{z} = f_{\boldsymbol{\theta}}(\mathbf{x}),
+	\nabla_{(\theta_1,\theta_2)}\,T_{\theta_1,\theta_2}(x)
+	=
+	\begin{bmatrix}
+		\mathbf{0}_{\,\dim(\tilde{x}_1)\times \dim(\theta_1)} 
+		& 
+		\mathbf{0}_{\,\dim(\tilde{x}_1)\times \dim(\theta_2)} 
+		\\[6pt]
+		\tilde{x}_2\,\odot\,\exp\bigl[s_{\theta_1}(\tilde{x}_1)\bigr]
+		\,\odot\,
+		\nabla_{\theta_1}\,s_{\theta_1}\bigl(\tilde{x}_1\bigr)
+		&
+		\nabla_{\theta_2}\,t_{\theta_2}\bigl(\tilde{x}_1\bigr)
+	\end{bmatrix} := \partial T
 	\]
-	with the base density \( p_Z(\mathbf{z}) \). By the change-of-variables formula, the model density is given by
+	
+	and so we have
+	\(
+	\nabla_\theta T_{\theta_1,\theta_2}(x) = (
+		0 ,
+		\cdots ,
+		\partial T ,
+		\cdots,
+		0
+) \in \R^{P \times d}
+	\).\\
+	
+
+	
+	We can define the \textit{Tangent Kernel} of a CBNF \(f_\theta\) as \(H(t)\), which is an \(N\times N\) positive semi-definite matrix whose \((i,j)\)-th entry is \(\inner{\frac{\partial f(\theta(t),x_i)}{\partial \theta}}{\frac{\partial f(\theta(t),x_j)}{\partial \theta}}\).
+	
+	
+	
+	
+	For our \textbf{Training Cost Functional} \(\mathcal{L}(\theta)\), we have:
 	\[
-	\hat{p}_X(\mathbf{x}) = p_Z\bigl(f_{\boldsymbol{\theta}}(\mathbf{x})\bigr) \, \Bigl|\det J(f_\theta,\mathbf{x}) \Bigr|.
+	\nabla_\theta \mathcal{L}(\theta) = \nabla_\theta f
 	\]
-	and minimizing the KL-divergence between \(\mu=p_X\)and \(\hat{p}_X\), will be equivalent to minimizing the expectation of the negative log-likelihood of \(\hat{p}_X\) with respect to \(p_X\) and is approximated by the empirical risk as below:
-	\[
-	\mathcal{L}(\mathbf{x}; f) = -\log\hat{p}_X(\mathbf{x}) = -\log p_Z\bigl(f(\mathbf{x})\bigr) - \log \Bigl|\det J(f,\mathbf{x}) \Bigr|
-	\]
-	\[
-	R(f):=\E_\mu[\mathcal{L}(X; f)]
-	\]
-	\[
-	\hat{R}_S(f):=\frac{1}{|S|}\sum_{x\in S} \mathcal{L}(x;f)
-	\]
-	, meaning that our \textbf{Training Cost Functional} can be defined as:
 	\[
 	C^{\mu_N}(f) = \| -\log p_Z\bigl(f \bigr) - \log \Bigl|\det J(f) \Bigr| \|_{\mu_N} =\frac{1}{N} \sum_{i=1}^{N}  -\log p_Z\bigl(f(X_i)\bigr) - \log \Bigl|\det J(f,X_i)\Bigr|
 	\]

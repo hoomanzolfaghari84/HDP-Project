@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.16)  20 JAN 2025 01:19
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (MiKTeX 24.1) (preloaded format=pdflatex 2024.2.16)  22 JAN 2025 22:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -578,7 +578,22 @@ ta/Local/Programs/MiKTeX/fonts/enc/dvips/lm/lm-ts1.enc}{C:/Users/Asus/AppData/L
 ocal/Programs/MiKTeX/fonts/enc/dvips/lm/lm-mathsy.enc}{C:/Users/Asus/AppData/Lo
 cal/Programs/MiKTeX/fonts/enc/dvips/lm/lm-rm.enc}{C:/Users/Asus/AppData/Local/P
 rograms/MiKTeX/fonts/enc/dvips/lm/lm-mathit.enc}{C:/Users/Asus/AppData/Local/Pr
-ograms/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}] [2] [3] (main.bbl
+ograms/MiKTeX/fonts/enc/dvips/lm/lm-mathex.enc}]
+Underfull \hbox (badness 10000) in paragraph at lines 223--224
+
+ []
+
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 285--295
+
+ []
+
+[3] (main.bbl
 
 LaTeX Warning: Empty `thebibliography' environment on input line 3.
 
@@ -588,16 +603,16 @@ LaTeX2e <2023-11-01> patch level 1
 L3 programming layer <2024-01-04>
  ***********
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 86454E38A5F5C3139E2165A330B68764;964.
+(rerunfilecheck)             Checksum: D929AD7E1FABF75A1547805C4BF4F026;1300.
  ) 
 Here is how much of TeX's memory you used:
- 13424 strings out of 474485
- 222173 string characters out of 5744206
- 1945542 words of memory out of 5000000
- 35480 multiletter control sequences out of 15000+600000
+ 13433 strings out of 474485
+ 222358 string characters out of 5744206
+ 1943542 words of memory out of 5000000
+ 35486 multiletter control sequences out of 15000+600000
  646345 words of font info for 103 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 75i,11n,79p,370b,624s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,11n,79p,410b,449s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Users/Asus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx10.pfb
 ><C:/Users/Asus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmbx12.pfb>
 <C:/Users/Asus/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmex10.pfb><
@@ -616,9 +631,9 @@ a/Local/Programs/MiKTeX/fonts/type1/public/lm/lmri10.pfb><C:/Users/Asus/AppData
 Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy6.pfb><C:/Users/Asus/AppData/Lo
 cal/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/Users/Asus/AppData/Loca
 l/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on main.pdf (4 pages, 325074 bytes).
+Output written on main.pdf (4 pages, 329120 bytes).
 PDF statistics:
- 173 PDF objects out of 1000 (max. 8388607)
- 16 named destinations out of 1000 (max. 500000)
- 57 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 183 PDF objects out of 1000 (max. 8388607)
+ 19 named destinations out of 1000 (max. 500000)
+ 73 words of extra memory for PDF output out of 10000 (max. 10000000)
 
