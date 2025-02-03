@@ -1,0 +1,94 @@
+\begin{proof}[Proof Sketch of Theorem~\ref{thm:traj_u}]
+Here we give a continuous time proof of Theorem~\ref{thm:traj_u}.
+The discrete time proof follows similar ideas but involves more (non-trivial) perturbation analysis so we deferred it to appendix. 
+
+Note for continuous time we have the following differential equations\begin{align*}
+\frac{d \vect{u}(t)}{dt} = &-\mat{H}(t)\left(\vect{u}(t)-\vect{y}\right), \\
+\frac{d \tilde{\vect{u}}(t)}{dt} = &- \mat{H}^{\infty}\left(\tilde{\vect{u}}(t)-\vect{y}\right).
+\end{align*}
+
+First observe that because $\tilde{\vect{u}}(0) = \vect{u}(0)$, we have \[
+\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 \le \int_{\tau = 0}^t \norm{\frac{d\left(\tilde{\vect{u}}(\tau)-\vect{u}(\tau)\right)}{d \tau}}_2 d\tau.
+\]
+Note \begin{align*}
+&\frac{d \left(\tilde{\vect{u}}(t)-\vect{u}(t)\right)}{dt} \\
+= &-\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{y}\right) + \mat{H}(t)\left(\vect{u}(t)-\vect{y}\right) \\
+= &  -\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{u}(t)\right) + \left(\vect{u}(t)-\vect{y}\right)\left(\mat{H}(t)-\mat{H}(0)\right).
+\end{align*}
+Since $\mat{H}(0)$ is positive semidefinite, $-\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{u}(t)\right) $ term only makes $\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2$ smaller.
+Therefore, we have \begin{align*}
+&\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 \\
+\le &\int_{\tau =0}^t \norm{\vect{u}(\tau)-\vect{y}}_2 \norm{\mat{H}(t)-\mat{H}(0)}_2 \\
+\le & t\norm{\vect{u}(0)-\vect{y}}_2 \frac{\poly(n,1/\lambda_0)}{\sqrt{m}} = \frac{t\poly(n,1/\lambda_0)}{\sqrt{m}} .
+\end{align*}
+
+\end{proof}
+
+
+
+
+\begin{proof}[Proof Sketch of Theorem~\ref{thm:traj_W}]
+	To illustrate the main proof idea we give the continuous time analysis below.
+	We first consider the continuous time gradient flow.
+	The key idea is to consider the following auxiliary ODEs\begin{align*}
+	\frac{d\widetilde{\mat{W}}(t)}{dt} = &- \mat{Z}(0) \left(\tilde{\vect{u}}(t)-\vect{y}\right) \text{ with } \widetilde{\mat{W}} = \mat{W}(0) \\
+	\frac{d\tilde{\vect{u}}(t)}{dt} = &- \mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{y}\right) \text{ and }\tilde{\vect{u}}(0) = \vect{u}(0).
+	\end{align*} 
+	
+	Note $\widetilde{\mat{W}}(t)$ is the desired ODE, so we want to bound $\mat{W}-\widetilde{\mat{W}}(t)$.
+	\begin{lem}\label{lem:gf_optimization}
+		With high probability over initialization, we have for all $t\ge 0$\begin{align*}
+		\norm{\mat{W}(t)-\widetilde{\mat{W}}(t)}_F \le \frac{\poly(n,1/\lambda_0,\log m)}{\sqrt{m}}.
+		\end{align*}
+	\end{lem}
+	
+	
+	
+	Also note, both $\vect{u}(t)-\tilde{\vect{u}}(t)$ will converge to $\vect{y}$ by the analysis in \cite{du2018provably}.
+	We can compute \begin{align*}
+	&\frac{d \left(\mat{W}(t)-\widetilde{\mat{W}}(t)\right)}{dt}\\
+	= &-\mat{Z}(t)(\vect{u}(t)-\vect{y}) + \mat{Z}(0)\left(\tilde{\vect{u}}(t)-\vect{y}\right) \\
+	= &\left(\mat{Z}(0)-\mat{Z}(t)\right)\left(\vect{u}(t)-\vect{y}\right) + \mat{Z}(0)\left(\tilde{\vect{u}}(t)-\vect{u}(t)\right).
+	\end{align*}
+	For the first term, recall in \cite{du2018provably}, they showed for all $t >0$ \begin{align*}
+	\norm{\mat{Z}(t) - \mat{Z}(0)}_2 = \frac{\poly(n,1/\lambda_0)}{\sqrt{m}}.
+	\end{align*}
+	Therefore we can bound \begin{align*}
+	&\int \norm{\left(\mat{Z}(0)-\mat{Z}(t)\right)\left(\vect{u}(t)-\vect{y}\right) }_F dt\\
+	\le &\frac{\poly(n,1/\lambda_0)}{\sqrt{m}} \int \norm{\tilde{\vect{u}}(t)-\vect{y}}_2 dt= \frac{\poly(n,1/\lambda_0)}{\sqrt{m}}.
+	\end{align*}
+	For the second term, we thus need to bound\begin{align}
+	\int_{t=0}^{\infty}\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 dt. \label{eqn:u_tilde_u}
+	\end{align}
+	To bound Equation~\eqref{eqn:u_tilde_u}, we observe that $\tilde{\vect{u}}(t) \rightarrow \vect{y}$ and $\vect{u}(t) \rightarrow \vect{y}$.
+	Therefore, we can choose some $t_0$ such that \begin{align*}
+	&\int_{t_0}^\infty\norm{\vect{\tilde{u}}(t)-\vect{u}(t)}_2 dt\\
+	\le &\int_{t_0}^\infty(\norm{\vect{\tilde{u}}(t)-\vect{y}}_2  + \norm{\vect{y}-\vect{u}(t)}_2 )dt
+	\end{align*}
+	Note if we choose $t_0 = \frac{C}{\lambda_0}\left(\frac{m\lambda_0}{n}\right)$ so that \begin{align*}
+	\int_{t_0}^\infty\norm{\vect{\tilde{u}}(t)-\vect{u}(t)}_2 dt \le \frac{2\norm{\vect{u}(t)-\vect{y}}_2}{\lambda_0} \le \frac{\poly(n,1/\lambda_0)}{\sqrt{m}}.
+	\end{align*}
+	Thus it suffices to bound \begin{align*}
+	\int_{t=0}^{t_0}\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 dt \le t_0 \max_{0\le t\le t_0} \norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2.
+	\end{align*}
+	%First observe that \[
+	%\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 \le \int_{\tau = 0}^t \norm{\frac{d\left(\tilde{\vect{u}}(\tau)-\vect{u}(\tau)\right)}{d \tau}}_2 d\tau.
+	%\]
+	%Note \begin{align*}
+	%&\frac{d \left(\tilde{\vect{u}}(t)-\vect{u}(t)\right)}{dt} \\
+	%= &-\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{y}\right) + \mat{H}(t)\left(\vect{u}(t)-\vect{y}\right) \\
+	%= &  -\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{u}(t)\right) + \left(\vect{u}(t)-\vect{y}\right)\left(\mat{H}(t)-\mat{H}(0)\right).
+	%\end{align*}
+	%Since $\mat{H}(0)$ is positive semidefinite, $-\mat{H}(0)\left(\tilde{\vect{u}}(t)-\vect{u}(t)\right) $ term only makes $\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2$ smaller.
+	%Therefore, we have \begin{align*}
+	%&\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 \\
+	%\le &\int_{\tau =0}^t \norm{\vect{u}(\tau)-\vect{y}}_2 \norm{\mat{H}(t)-\mat{H}(0)}_2 \\
+	%\le & t\norm{\vect{u}(0)-\vect{y}}_2 \frac{\poly(n,1/\lambda_0)}{\sqrt{m}} = \frac{t\poly(n,1/\lambda_0)}{\sqrt{m}} .
+	%\end{align*}
+	Therefore, we have \begin{align*}
+	&\int_{t=0}^{t_0}\norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 dt \\
+	\le &t_0 \max_{0\le t\le t_0} \norm{\tilde{\vect{u}}(t)-\vect{u}(t)}_2 \\
+	\le &t_0^2 \frac{\poly(n,1/\lambda_0)}{\sqrt{m}} \\
+	\le &\frac{\poly(n,1/\lambda_0,\log(m))}{\sqrt{m}}.
+	\end{align*}
+\end{proof}

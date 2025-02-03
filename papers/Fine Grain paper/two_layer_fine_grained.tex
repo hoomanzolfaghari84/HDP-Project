@@ -1,0 +1,390 @@
+ %%%%%%%% ICML 2019 EXAMPLE LATEX SUBMISSION FILE %%%%%%%%%%%%%%%%%
+
+\documentclass{article}
+
+\usepackage{fullpage}
+%\usepackage{authblk}
+
+
+% Recommended, but optional, packages for figures and better typesetting:
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{subfigure}
+\usepackage{booktabs} % for professional tables
+
+
+
+
+% hyperref makes hyperlinks in the resulting PDF.
+% If your build breaks (sometimes temporarily if a hyperlink spans a page)
+% please comment out the following usepackage line and replace
+% \usepackage{icml2019} with \usepackage[nohyperref]{icml2019} above.
+\usepackage[breaklinks=true]{hyperref}
+\hypersetup{colorlinks,
+	linkcolor=blue,
+	citecolor=blue,
+	urlcolor=magenta,
+	linktocpage,
+	plainpages=false}
+
+% Attempt to make hyperref and algorithmic work together better:
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
+
+% Use the following line for the initial blind version submitted for review:
+%\usepackage{icml2019}
+
+%for citation
+% For citations
+\usepackage{natbib}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usetikzlibrary{arrows}
+\usepackage{dsfont}
+\usepackage{comment}
+\usepackage{enumerate}
+\usepackage{caption}
+%\usepackage[breaklinks=true]{hyperref}
+\usepackage{breakcites}
+%for convinience
+\newcommand{\calN}{\mathcal{N}}
+\newcommand{\calD}{\mathcal{D}}
+\newcommand{\calR}{\mathcal{R}}
+
+\newcommand{\vct}{\boldsymbol }
+%\newcommand{\mat}{\mathbf}
+\newcommand{\rnd}{\mathsf}
+\newcommand{\ud}{\mathrm d}
+\newcommand{\nml}{\mathcal{N}}
+\newcommand{\loss}{\mathcal{L}}
+\newcommand{\hinge}{\mathcal{R}}
+\newcommand{\kl}{\mathrm{KL}}
+\newcommand{\cov}{\mathrm{cov}}
+\newcommand{\dir}{\mathrm{Dir}}
+\newcommand{\mult}{\mathrm{Mult}}
+\newcommand{\err}{\mathrm{err}}
+\newcommand{\sgn}{\mathrm{sign}}
+%\renewcommand{\span}{\mathrm{span}}
+\newcommand{\argmin}{\mathrm{argmin}}
+\newcommand{\argmax}{\mathrm{argmax}}
+\newcommand{\poly}{\mathrm{poly}}
+\newcommand{\rank}{\mathrm{rank}}
+\newcommand{\conv}{\mathrm{conv}}
+\newcommand{\E}{\mathop\mathbb{E}}
+\newcommand{\diag}{\mat{diag}}
+\newcommand{\acc}{\mathrm{acc}}
+
+\newcommand{\aff}{\mathrm{aff}}
+\newcommand{\range}{\mathrm{Range}}
+\newcommand{\Sgn}{\mathrm{sign}}
+
+\newcommand{\hit}{\mathrm{hit}}
+\newcommand{\cross}{\mathrm{cross}}
+\newcommand{\Left}{\mathrm{left}}
+\newcommand{\Right}{\mathrm{right}}
+\newcommand{\Mid}{\mathrm{mid}}
+\newcommand{\bern}{\mathrm{Bernoulli}}
+\newcommand{\ols}{\mathrm{ols}}
+\newcommand{\tr}{\mathrm{tr}}
+\newcommand{\opt}{\mathrm{opt}}
+\newcommand{\ridge}{\mathrm{ridge}}
+\newcommand{\unif}{\mathrm{unif}}
+\newcommand{\Image}{\mathrm{im}}
+\newcommand{\Kernel}{\mathrm{ker}}
+\newcommand{\supp}{\mathrm{supp}}
+\newcommand{\pred}{\mathrm{pred}}
+\newcommand{\distequal}{\stackrel{\mathbf{P}}{=}}
+%\newcommand{\gege}{\textcircled{1}}
+\newcommand{\gege}{{A(\vect{w},\vect{w}_*)}}
+\newcommand{\gele}{{A(\vect{w},-\vect{w}_*)}}
+\newcommand{\lele}{{A(-\vect{w},-\vect{w}_*)}}
+\newcommand{\lege}{{A(-\vect{w},\vect{w}_*)}}
+\newcommand{\firstlayer}{\mathbf{W}}
+\newcommand{\anglemat}{\mathbf{\Phi}}
+\newcommand{\holder}{H\"{o}lder }
+
+\def\R{\mathbb{R}}
+\def\Z{\mathbb{Z}}
+\def\cA{\mathcal{A}}
+\def\cB{\mathcal{B}}
+\def\cD{\mathcal{D}}
+\def\cE{\mathcal{E}}
+\def\cF{\mathcal{F}}
+\def\cG{\mathcal{G}}
+\def\cH{\mathcal{H}}
+\def\cI{\mathcal{I}}
+\def\cL{\mathcal{L}}
+\def\cM{\mathcal{M}}
+\def\cN{\mathcal{N}}
+\def\cP{\mathcal{P}}
+\def\cS{\mathcal{S}}
+\def\cT{\mathcal{T}}
+\def\cW{\mathcal{W}}
+\def\cZ{\mathcal{Z}}
+\def\bP{\mathbf{P}}
+\def\TV{\mathrm{TV}}
+\def\MSE{\mathrm{MSE}}
+
+\def\vw{\mathbf{w}}
+\def\vW{\mathbf{W}}
+\def\va{\mathbf{a}}
+\def\vZ{\mathbf{Z}}
+\def\vX{\mathbf{X}}
+\def\vx{\mathbf{x}}
+\def\vy{\mathbf{y}}
+\def\vbeta{\bm{\beta}}
+
+\newcommand{\mat}[1]{\mathbf{#1}}
+\newcommand{\vect}[1]{\mathbf{#1}}
+\newcommand{\norm}[1]{\left\|#1\right\|}
+\newcommand{\abs}[1]{\left|#1\right|}
+\newcommand{\expect}{\mathbb{E}}
+\newcommand{\prob}{\mathbb{P}}
+\newcommand{\prox}[2]{\textbf{Prox}_{#1}\left\{#2\right\}}
+\newcommand{\event}[1]{\mathscr{#1}}
+\newcommand{\set}[1]{#1}
+\newcommand{\diff}{\text{d}}
+\newcommand{\difference}{\triangle}
+\newcommand{\inputdist}{\mathcal{Z}}
+\newcommand{\indict}{\mathbb{I}}
+\newcommand{\rotmat}{\mathbf{R}}
+\newcommand{\normalize}[1]{\overline{#1}}
+\newcommand{\vectorize}[1]{\text{vec}\left(#1\right)}
+\newcommand{\vclass}{\mathcal{G}}
+\newcommand{\pclass}{\Pi}
+\newcommand{\qclass}{\mathcal{Q}}
+\newcommand{\rclass}{\mathcal{R}}
+\newcommand{\classComplexity}[2]{N_{class}(#1,#2)}
+\newcommand{\cclass}{\mathcal{F}}
+\newcommand{\gclass}{\mathcal{G}}
+\newcommand{\pthres}{p_{thres}}
+\newcommand{\ethres}{\epsilon_{thres}}
+\newcommand{\eclass}{\epsilon_{class}}
+\newcommand{\states}{\mathcal{S}}
+\newcommand{\lowprobstate}{\psi}
+\newcommand{\actions}{\mathcal{A}}
+\newcommand{\contexts}{\mathcal{X}}
+\newcommand{\edges}{\mathcal{E}}
+\newcommand{\variance}{\text{Var}}
+\newcommand{\params}{\vect{w}}
+\newcommand{\sign}{\text{sign}}
+
+\newcommand{\relu}[1]{\sigma\left(#1\right)}
+\newcommand{\reluder}[1]{\sigma'\left(#1\right)}
+\newcommand{\act}[1]{\sigma\left(#1\right)}
+\newcommand{\kijmin}{\lambda}
+\newcommand{\initvar}{\kappa}
+\newcommand{\uerror}{\mathcal{E}}
+\newcommand{\useq}{\xi}
+
+%zhiyuan's commands
+
+\usepackage{bm}
+\newcommand{\bone}[1]{\indict\left\{#1\right\}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\beps}{\mathbf{\varepsilon}}
+\newcommand{\balpha}{{\bm\alpha}}
+\newcommand{\nA}{\overline{A}}
+\newcommand{\reals}{\mathbb{R}}
+\newcommand{\rc}[1]{\overline{\mathcal{R}}_n\left(#1\right)}
+\newcommand{\gc}[1]{\overline{\mathcal{G}}_n\left(#1\right)}
+\newcommand{\ceil}[1]{\left\lceil#1\right\rceil}
+\newcommand{\inp}[2]{\left\langle #1,#2\right\rangle}
+
+\newcommand{\Erc}[1]{\E_{{\bm\eps} \sim \{\pm 1\}^n }\left[ #1 \right]}
+\newcommand{\Emrc}[1]{\E\limits_{\beps_i \in \{\pm 1\}^c,i\in [n] }\left[ #1 \right]}
+
+
+
+
+
+\newtheorem{thm}{Theorem}[section]
+
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{cor}[thm]{Corollary}
+
+%\newtheorem{lem}{Lemma}[section]
+%\newtheorem{cor}{Corollary}[section]
+\newtheorem{prop}{Proposition}[section]
+\newtheorem{asmp}{Assumption}[section]
+\newtheorem{defn}{Definition}[section]
+\newtheorem{fact}{Fact}[section]
+\newtheorem{conj}{Conjecture}[section]
+\newtheorem{rem}{Remark}[section]
+\newtheorem{example}{Example}[section]
+\newtheorem{condition}{Condition}[section]
+\newtheorem{obs}{Observation}
+\newtheorem{problem}{Problem}
+\newtheorem{question}{Question}
+
+\allowdisplaybreaks
+
+\newcommand{\simon}[1]{\textcolor{blue}{[Simon: #1]}}
+\newcommand{\wei}[1]{\textcolor{red}{[Wei: #1]}}
+
+\title{Fine-Grained Analysis of Optimization and Generalization for Overparameterized Two-Layer Neural Networks}
+
+\date{}
+
+\author{Sanjeev Arora\thanks{Princeton University and Institute for Advanced Study. Email: \texttt{arora@cs.princeton.edu}}
+	\and 
+	Simon S. Du\thanks{Carnegie Mellon University. Email: \texttt{ssdu@cs.cmu.edu}}
+	\and
+	Wei Hu\thanks{Princeton University. Email: \texttt{huwei@cs.princeton.edu}}
+	\and
+	Zhiyuan Li\thanks{Princeton University. Email: \texttt{zhiyuanli@cs.princeton.edu}}
+	\and
+	Ruosong Wang\thanks{Carnegie Mellon University. Email: \texttt{ruosongw@andrew.cmu.edu}}
+}
+
+% If accepted, instead use the following line for the camera-ready submission:
+%\usepackage[accepted]{icml2019}
+
+% The \icmltitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+%\icmltitlerunning{A Trajectory Based Analysis for Understanding Neural Networks}
+%\icmltitlerunning{Fine-Grained Analysis of Optimization and Generalization for Overparameterized Two-Layer Neural Networks}
+
+\begin{document}
+
+\maketitle
+%\twocolumn[
+%\icmltitle{Understanding Optimization and Generalization of Over-parameterized Neural Networks: A Trajectory Based Analysis}
+%\icmltitle{Fine-Grained Analysis of Optimization and Generalization for Overparameterized Two-Layer Neural Networks}
+
+% It is OKAY to include author information, even for blind
+% submissions: the style file will automatically remove it for you
+% unless you've provided the [accepted] option to the icml2019
+% package.
+
+% List of affiliations: The first argument should be a (short)
+% identifier you will use later to specify author affiliations
+% Academic affiliations should list Department, University, City, Region, Country
+% Industry affiliations should list Company, City, Region, Country
+
+% You can specify symbols, otherwise they are numbered in order.
+% Ideally, you should not use this facility. Affiliations will be numbered
+% in order of appearance and this is the preferred way.
+%\icmlsetsymbol{equal}{*}
+
+%\begin{icmlauthorlist}
+%\icmlauthor{blah}{blahh}
+
+
+
+%\end{icmlauthorlist}
+
+%\icmlaffiliation{blahh}{blahh}
+%\icmlcorrespondingauthor{blah}{blah}
+
+
+
+% You may provide any keywords that you
+% find helpful for describing your paper; these are used to populate
+% the "keywords" metadata in the PDF but will not be shown in the document
+%\icmlkeywords{generalization, optimization, neural networks}
+
+%\vskip 0.3in
+%]
+
+% this must go after the closing bracket ] following \twocolumn[ ...
+
+% This command actually creates the footnote in the first column
+% listing the affiliations and the copyright notice.
+% The command takes one argument, which is text to display at the start of the footnote.
+% The \icmlEqualContribution command is standard text for equal contribution.
+% Remove it (just {}) if you do not need this facility.
+
+%\printAffiliationsAndNotice{}  % leave blank if no need to mention equal contribution
+%\printAffiliationsAndNotice{\icmlEqualContribution} % otherwise use the standard text.
+
+
+
+\begin{abstract}
+	\input{abs.tex}
+\end{abstract}
+
+\section{Introduction}
+\label{sec:intro}
+\input{intro.tex}
+
+\section{Related Work}
+\label{sec:rel}
+\input{rel.tex}
+
+
+\section{Preliminaries and Overview of Results}
+\label{sec:pre}
+\input{pre.tex}
+
+
+%\section{The Trajectory in Optimization}
+%\label{sec:traj}
+%\input{trajectory.tex}
+
+\section{Analysis of Convergence Rate}
+\label{sec:rate}
+\input{rate.tex}
+
+\section{Analysis of Generalization}
+\label{sec:generalization}
+\input{generalization.tex}
+
+%\section{What Functions Can Overparameterized Two-Layer ReLU Neural Networks Learn?}
+\section{Provable Learning using Two-Layer ReLU Neural Networks}
+\label{sec:improper}
+\input{improper.tex}
+
+%\section{Proof Sketch}
+%\label{sec:proof_sketch}
+%\input{proof_sketch.tex}
+
+\section{Conclusion}
+\label{sec:con}
+\input{conclusion.tex}
+
+\section*{Acknowledgements}
+\input{ack.tex}
+
+
+\bibliography{simonduref}
+\bibliographystyle{icml2019}
+
+\onecolumn
+\newpage
+\appendix
+
+\section*{\Large Appendix}
+\input{exp}
+\section{Background on Generalization and Rademacher Complexity} \label{app:rademacher}
+\input{rademacher.tex}
+
+\section{Proofs for Section~\ref{sec:rate}}
+\label{app:proof_rate}
+\input{proof_rate.tex}
+
+\section{Proofs for Section~\ref{sec:generalization}}
+\label{app:proof_generalization}
+\input{proof_generalization.tex}
+
+\section{Proofs for Section~\ref{sec:improper}}
+\label{app:proof_improper}
+\input{proof_improper.tex}
+
+\end{document}
+
+
+% This document was modified from the file originally made available by
+% Pat Langley and Andrea Danyluk for ICML-2K. This version was created
+% by Iain Murray in 2018, and modified by Alexandre Bouchard in
+% 2019. Previous contributors include Dan Roy, Lise Getoor and Tobias
+% Scheffer, which was slightly modified from the 2010 version by
+% Thorsten Joachims & Johannes Fuernkranz, slightly modified from the
+% 2009 version by Kiri Wagstaff and Sam Roweis's 2008 version, which is
+% slightly modified from Prasad Tadepalli's 2007 version which is a
+% lightly changed version of the previous year's version by Andrew
+% Moore, which was in turn edited from those of Kristian Kersting and
+% Codrina Lauth. Alex Smola contributed to the algorithmic style files.

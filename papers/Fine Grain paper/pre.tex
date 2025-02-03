@@ -1,0 +1,203 @@
+%In this section we formally introduce our setting as well as necessary notation and definitions used in this paper.
+% introduce necessary notations and background knowledege that we will use in later sections.
+
+
+
+\paragraph{Notation.}
+We use bold-faced letters for vectors and matrices. For a matrix $\mat A$, let $\mat A_{ij}$ be its $(i, j)$-th entry.
+We use $\norm{\cdot}_2$ to denote the Euclidean norm of a vector or the spectral norm of a matrix, and use $\norm{\cdot}_F$ to denote the Frobenius norm of a matrix.
+Denote by $\lambda_{\min}(\mat A)$ the minimum eigenvalue of a symmetric matrix $\mat A$.
+Let $\vectorize{\mat A}$ be the vectorization of a matrix $\mat A$ in column-first order.
+Let $\mat I$ be the identity matrix and $[n]=\{1, 2, \ldots, n\}$.
+Denote by $\cN(\bm\mu, \mat\Sigma)$ the Gaussian distribution with mean $\bm\mu$ and covariance $\mat{\Sigma}$.
+Denote by $\relu{\cdot}$ the ReLU function $\relu{z} = \max\{z, 0\}$.
+Denote by $\indict\{E\}$ the indicator function for an event $E$.
+
+
+\subsection{Setting: Two-Layer Neural Network Trained by Randomly Initialized Gradient Descent} \label{sec:setup}
+
+We consider a two-layer ReLU activated neural network with $m$ neurons in the hidden layer:
+\begin{align*}
+f_{\mat{W},\vect{a}}(\vect{x}) = \frac{1}{\sqrt{m}}\sum_{r=1}^{m} a_r \relu{\vect{w}_r^\top \vect{x}},
+\end{align*}
+where $\vect{x}\in \mathbb{R}^d$ is the input, $\vect{w}_1, \ldots, \vect{w}_m \in \mathbb{R}^d$ are weight vectors in the first layer, $a_1, \ldots, a_m \in \mathbb{R}$ are weights in the second layer.
+For convenience we denote $\mat W = (\vect w_1, \ldots, \vect w_m) \in \R^{d\times m}$ and $\vect a = (a_1, \ldots, a_m)^\top \in \R^m$.
+
+%\paragraph{Data and training process.}
+We are given $n$ input-label samples $S = \{ (\vect x_i, y_i) \}_{i=1}^n$ drawn i.i.d. from an underlying data distribution $\calD$ over $\R^d\times \R$.
+We denote $\mat X = (\vect x_1, \ldots, \vect x_n) \in \R^{d\times n}$ and $\vect y = (y_1, \ldots, y_n)^\top \in \R^n$.
+For simplicity, we assume that for $(\vect x, y)$ sampled from $\calD$, we have $\norm{\vect x}_2=1$ and $|y|\le1$.
+
+We train the neural network by \emph{randomly initialized gradient descent (GD)} on the quadratic loss over data $S$.
+In particular, we first initialize the parameters randomly:
+\begin{equation} \label{eqn:random-init}
+\vect{w}_r(0) \sim \calN(\vect{0},\kappa^2\mat{I}), a_r \sim \unif\left(\left\{-1,1\right\}\right), \quad \forall r\in[m],
+\end{equation} %\label{eq:init}
+where $0<\kappa\le1$ controls the magnitude of initialization, and all randomnesses are independent.
+We then fix the second layer $\vect{a}$ and optimize the first layer $\mat{W}$ through GD on the following objective function:
+\begin{equation} \label{eqn:objective-function}
+\Phi(\mat{W}) = 
+%\sum_{i=1}^{n}L_i(\mat{W})\triangleq
+\frac{1}{2}\sum_{i=1}^{n}\left(y_i-f_{\mat W, \vect a}(\vect{x}_i)\right)^2.
+\end{equation}
+The GD update rule can be written as:\footnote{Since ReLU is not differentiable at $0$, we just define ``gradient'' using this formula, and this is indeed what is used in practice.}
+\begin{equation*} \label{eqn:w_r-gd}
+\begin{aligned}
+&\vw_r(k+1) - \vw_r(k)  =  -\eta \frac{\partial \Phi(\mat W(k))}{\partial \vect{w}_r} \\
+=\,& -\eta  \frac{a_r}{\sqrt m}  \sum_{i=1}^n (f_{\mat{W}(k),\vect{a}}(\vect{x}_i) - y_i) \indict \left\{ \vect{w}_r(k)^\top \vect x_i \ge 0 \right\}  \vect{x}_i,
+\end{aligned}
+\end{equation*}
+where $\eta>0$ is the learning rate.
+
+%Following \cite{du2018provably}, we initialize $\vect{w}_r(0) \sim N(\vect{0},\kappa^2\mat{I})$ and $a_r \sim \unif\left[\left\{-1,+1\right\}\right]$.
+%Here $\kappa$ controls the magnitude of the initialization.
+%In this work we fix the second layer $\vect{a}$ and only optimize the first layer through gradient descent where at each iteration we update $\mat{W}$ according to
+%\begin{align}
+%\mat{W}(k+1) = \mat{W}(k) - \eta \frac{\partial L_i(\mat{W}(k))}{\partial \mat{W}(k)}. \label{eqn:sgd}
+%\end{align}
+
+%\begin{align}
+%\mat{W}(k+1) = \mat{W}(k) - \eta \nabla L(\mat W(k)). \label{eqn:gd}
+%\end{align}
+
+
+
+	
+
+%\subsection{Linear Convergence of GD to Global Minimum}
+\subsection{The Gram Matrix from ReLU Kernel}\label{sec:relu_kernel}
+Given $\{\vx_i\}_{i=1}^n$, we define the following \emph{Gram matrix} $\mat H^\infty \in \R^{n\times n}$ as follows:
+\begin{equation}\label{eqn:H_infy_defn}
+\begin{aligned}
+\mat{H}_{ij}^\infty &= \expect_{\vect{w} \sim \calN(\vect{0},\mat{I})}\left[ \vect{x}_i^\top \vect{x}_j\indict\left\{\vect{w}^\top \vect{x}_i \ge 0, \vect{w}^\top \vect{x}_j \ge 0\right\}\right] \\
+&= \frac{\vect{x}_i^\top\vect{x}_j\left(\pi - \arccos(\vect{x}_i^\top\vect{x}_j)\right)}{2\pi}, \quad \forall i, j\in[n].
+\end{aligned}
+\end{equation}
+This matrix can be viewed as a Gram matrix from a kernel associated with the ReLU function, and has been studied in~\citep{xie2017diverse,tsuchida2017invariance,du2018provably}.
+
+In our setting of training a two-layer ReLU network, \citet{du2018provably} showed that if $\mat H^\infty$ is positive definite, GD converges to $0$ training loss if $m$ is sufficiently large:
+\begin{thm}[\citep{du2018provably}\footnote{\citet{du2018provably} only considered the case $\kappa=1$, but it is straightforward to generalize their result to general $\kappa$ at the price of an extra $1/\kappa^2$ factor in $m$.}]
+	\label{thm:ssdu-converge}
+	Assume $\lambda_0 = \lambda_{\min}(\mat H^\infty) >0$. For $\delta\in(0, 1)$, if $m = \Omega\left( \frac{n^6}{\lambda_0^4 \kappa^2 \delta^3 } \right)$ and $\eta = O\left( \frac{\lambda_0}{n^2} \right)$, then with probability at least $1-\delta$ over the random initialization~\eqref{eqn:random-init}, we have:
+	\begin{itemize}
+		\item $\Phi(\mat W(0)) = O(n/\delta)$;
+		\item $\Phi(\mat W(k+1)) \le \left( 1 - \frac{\eta \lambda_0}{2}\right)	\Phi(\mat W(k)),\  \forall k\ge0$.
+	\end{itemize}
+\end{thm}
+
+Our results on optimization and generalization also crucially depend on this matrix $\mat H^\infty$.
+
+\subsection{Overview of Our Results}
+
+Now we give an informal description of our main results.
+It assumes that the initialization magnitude $\kappa$ is sufficiently small and the network width $m$ is sufficiently large (to be quantified later).
+
+
+
+The following theorem gives a precise characterization of how the objective decreases to $0$.
+It says that this process is essentially determined by a power method for matrix $\mat I-\eta\mat H^\infty$ applied on the label vector $\vect y$.
+\begin{thm}[Informal version of Theorem~\ref{thm:convergence_rate}] \label{thm:rate-informal}
+	With high probability we have:
+	\[
+	\Phi(\mat W(k)) \approx \frac12 \norm{(\mat I - \eta \mat H^\infty)^k \vect y}_2^2, \quad \forall k\ge 0.
+	\]
+\end{thm}
+As a consequence, we are able to distinguish the convergence rates for different labels $\vect y$, which can be determined by the projections of $\vect y$ on the eigenvectors of $\mat H^\infty$.
+This allows us to obtain an answer to Question~\ref{ques:conv}. See Section~\ref{sec:rate} for details.
+
+
+Our main result for generalization is the following:
+\begin{thm}[Informal version of Theorem~\ref{thm:main_generalization}] \label{thm:generalization-informal}
+	For any $1$-Lipschitz loss function, the generalization error of the two-layer ReLU network found by GD is at most
+	\begin{equation} \label{eqn:gen_error}
+		\sqrt{\frac{2 \vect y^\top (\mat H^\infty)^{-1} \vect y}{n}}.
+	\end{equation}
+\end{thm}
+Notice that our generalization bound~\eqref{eqn:gen_error} can be computed from data $\{(\vect x_i, y_i)\}_{i=1}^n$, and is completely independent of the network width $m$.
+We observe that this bound can clearly distinguish true labels and random labels, thus providing an answer to Question~\ref{ques:gen}. See Section~\ref{sec:generalization} for details.
+
+
+Finally, using Theorem~\ref{thm:generalization-informal}, we prove that we can use our two-layer ReLU network trained by GD to learn a broad class of functions, including linear functions, two-layer neural networks with polynomial activation $\phi(z) = z^{2l}$ or cosine activation, etc.
+See Section~\ref{sec:improper} for details.
+
+
+\subsection{Additional Notation}
+We introduce some additional notation that will be used.
+
+Define $u_i = f_{\mat{W},\vect{a}}(\vect{x}_i)$, i.e., the network's prediction on the $i$-th input.
+We also use $\vect{u} = \left({u}_1,\ldots,{u}_n\right)^\top \in \R^n$ to denote all $n$ predictions.
+Then we have $\Phi(\mat W) = \frac12 \norm{\vect y - \vect u}_2^2$ and
+the gradient of $\Phi$ can be written as:
+\begin{equation} \label{eqn:gradient-w_r}
+\frac{\partial \Phi(\mat W)}{\partial \vect{w}_r} = \frac{1}{\sqrt m} a_r \sum_{i=1}^n (u_i - y_i) \indict_{r, i} \vect{x}_i, \quad \forall r\in[m],
+\end{equation}
+where $ \indict_{r, i} = \indict \left\{ \vect{w}_r^\top \vect x_i \ge 0 \right\} $.
+
+
+We define two matrices $\mat Z$ and $\mat H$ which will play a key role in our analysis of the GD trajectory:
+	\begin{align*}
+	\mat Z = \frac{1}{\sqrt m} \begin{pmatrix}
+	\indict_{1, 1} a_1 \vect{x}_1 & 
+%	\indict_{1, 2} a_1 \vect{x}_2 & 
+	\cdots & \indict_{1, n} a_1 \vect{x}_n \\
+%	\indict_{2, 1} a_2 \vect{x}_1 & \indict_{2, 2} a_2 \vect{x}_2 & \cdots & \indict_{2, n} a_2 \vect{x}_n \\
+	\vdots & 
+%	\vdots &
+	\ddots & \vdots \\
+	\indict_{m, 1} a_m \vect{x}_1 & 
+%	\indict_{m, 2} a_m \vect{x}_2 & 
+	\cdots & \indict_{m, n} a_m \vect{x}_n
+	\end{pmatrix}
+		\in \R^{md \times n},
+	\end{align*}
+	and
+	$
+		\mat{H} = \mat{Z}^\top \mat{Z}
+	$.
+	Note that $$\mat{H}_{ij} = \frac{\vect{x}_i^\top \vect{x}_j}{m} \sum_{r=1}^{m}\indict_{r,i}\indict_{r,j}, \quad \forall i,j\in[n].$$
+With this notation we have a more compact form of the gradient~\eqref{eqn:gradient-w_r}:
+\begin{equation*}
+\vectorize{\nabla \Phi(\mat W)} =  \mat Z (\vect u - \vect y).
+\end{equation*}
+Then the GD update rule is:
+\begin{equation} \label{eqn:gd}
+\vectorize{\mat W(k+1)} = \vectorize{\mat W(k)} - \eta \mat Z(k) (\vect u(k) - y),
+\end{equation}
+for  $k=0, 1, \ldots$.
+Throughout the paper, we use $k$ as the iteration number,
+% and the letter $t$ to denote the continuous time index which we will use in our proof.
+and also use $k$ to index all variables that depend on $\mat{W}(k)$.
+For example, we have $u_i(k) = f_{\mat{W}(k),\vect{a}}(\vect{x}_i)$, $\indict_{r, i}(k) = \indict\left\{ \vect{w}_r(k)^\top \vect x_i \ge 0 \right\}$, etc.
+
+
+
+
+
+
+
+%In particular, we characterize two trajectories, one on the parameter $\left\{\mat{W}(k)\right\}_{k=0}^\infty$ defined according to Equation~\eqref{eqn:gd} and one on the predictions $\left\{\vect{u}(k)\right\}_{k=0}^\infty$ defined as \begin{align}
+%\vect{u}(k) = \begin{pmatrix}
+%f(\mat{W}(k),\vect{a},\vect{x}_1) \\
+%\ldots \\
+%f(\mat{W}(k),\vect{a},\vect{x}_n)
+%\end{pmatrix}\in \mathbb{R}^n \label{eqn:u_defn}
+%\end{align} whose dynamics is induced by the dynamics of $\left\{\mat{W}(k)\right\}_{k=1}^{\infty}$.
+%Our analysis framework relies on quantitative characterizations of these two trajectories.
+%Using this framework, we obtain the following results.
+
+%\simon{we may move this paragraph to intro.}
+%Our analysis centers around two trajectories $\left\{\mat{W}(k)\right\}_{k=0}^\infty$, the parameter trajectory and  $\left\{\vect{u}(k)\right\}_{k=0}^\infty$, the prediction trajectory.
+%Both of them are induced by the gradient descent algorithm.
+%In our analysis, we will couple $\left\{\vect{u}(k)\right\}_{k=0}^\infty$  with another trajectory $\left\{\tilde{\vect{u}}(k)\right\}_{k=0}^\infty$ which is easier for analysis:
+%\begin{align}
+%\tilde{\vect{u}}(0) = &\vect{0}, \nonumber\\
+%\tilde{\vect{u}}(k+1) = &\tilde{\vect{u}}(k) - \eta \mat{H}^\infty\left(\tilde{\vect{u}}(k)-\vect{y}\right) \label{eqn:u_hat_dynamics}
+%\end{align}
+%where each entry of $\mat{H}^{\infty}$ is 
+%\begin{align}
+%\mat{H}_{ij}^\infty = &\expect_{\vect{w} \sim N(\vect{0},\mat{I})}\left[\indict\left\{\vect{w}^\top \vect{x}_i \ge 0, \vect{w}^\top \vect{x}_j \ge 0\right\}\right] \nonumber\\
+%= &\frac{\vect{x}_i^\top\vect{x}_j\left(\pi - \arccos(\vect{x}_i^\top\vect{x}_j)\right)}{2\pi}\label{eqn:H_infy_defn}
+%\end{align}
+%In \cite{du2018provably}, authors used $\mat{H}^\infty$ matrix to characterize the convergence rate of gradient descent.
+%$\{\tilde{\vect{u}}(k)\}_{k=0}^{\infty}$ uses $\vect{0}$ initialization and at each iteration, $\tilde{\vect{u}}(k)$ uses $\mat{H}^\infty$ to do the update and $\vect{u}(k)$ uses $\mat{H}(k)$ which varies at each iteration.
+%In \cite{du2018provably}, it was shown $\mat{H}(k)$ is close to $\mat{H}^\infty$ if $m$ is large.

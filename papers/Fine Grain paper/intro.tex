@@ -1,0 +1,113 @@
+
+%motivate the problem from existing empirical study
+
+The well-known work of \citet{zhang2016understanding} highlighted intriguing experimental phenomena about deep net training -- specifically, optimization and generalization -- and asked whether theory could explain them. They showed that sufficiently powerful nets (with vastly more parameters than number of training samples) can attain zero training error, regardless of whether the data is properly labeled or randomly labeled. Obviously, training with randomly labeled data cannot generalize, whereas training with properly labeled data generalizes. See Figure~\ref{fig:generalization} replicating some of these results. 
+
+Recent papers have begun to provide explanations, showing that gradient descent can allow an overparametrized multi-layer  net to attain arbitrarily low training error on fairly generic datasets~\citep{du2018global,du2018provably,li2018learning,allen2018convergence,zou2018stochastic}, provided the amount of overparametrization is a high polynomial of the relevant parameters (i.e. vastly more than the overparametrization in \cite{zhang2016understanding}). Under further assumptions it can also be shown that the trained net generalizes~\citep{allen2018learning}.  But some issues were not addressed in these papers, and the goal of the current paper is to address them. 
+
+%convergence rate is different
+First, the experiments in \cite{zhang2016understanding} show that though the nets attain zero training error on even random data, the convergence rate is much slower. See Figure~\ref{fig:rate_mnist}. % and~\ref{fig:rate_cifar}.
+%A natural question is how to explain this behavior.
+\begin{question}\label{ques:conv}
+	Why do true labels give faster convergence rate than random labels for gradient descent?
+%	Optimization is faster when using true labels than when using random labels. 
+\end{question}
+%Specifically, on CIFAR and ImageNet, if we replace some or all labels with random labels, the convergence to zero training error occurse slower. See Figure~\ref{fig:rate_mnist} and~\ref{fig:rate_cifar}. 
+The above papers do not answer this question, since their proof of convergence does not distinguish between good and random labels.
+
+
+%implict regularization
+The next issue is about generalization: clearly, some property of properly labeled data controls generalization, but what? 
+Classical measures used in generalization theory such as VC-dimension and Rademacher complexity are much too pessimistic.
+%as complexity measure, %which acts a surrogate of the generalization error.
+%but it cannot explain this phenomenon because these neural networks have more parameters than the number of data points.
+%Several attempts have been proposed to attack this problem.
+A line of research proposed norm-based (e.g. \cite{bartlett2017spectrally}) and compression-based bounds~\citep{arora2018stronger}.
+But the sample complexity upper bounds obtained are still far too weak. 
+Furthermore they rely on some property of the trained net that is \emph{revealed/computed} at the end of training. There is no property of data alone that determine upfront  whether the trained net will generalize.
+%Norm-based measures seem appealing, but since there is no explicit regularization, one cannot control the  of learned neural networks in a straightforward manner, making it difficult to analyze generalization.
+%Based on these empirical findings, \citet{zhang2016understanding} argued ``understanding deep learning requires rethinking generalization."
+%\begin{obs}\label{obs:gen}
+%Simple first-order optimization methods usually find generalizable solutions given true labels.
+%\end{obs}
+%A line of research proposed norm-based generalization bounds~\citep{bartlett2002rademacher,bartlett2017spectrally,neyshabur2015norm,neyshabur2017pac,neyshabur2018towards,konstantinos2017pac,golowich2017size,li2018tighter} and compression-based bounds~\citep{arora2018stronger}.
+%\citet{dziugaite2017computing,zhou2018nonvacuous} used the PAC-Bayes approach to compute non-vacuous generalization bounds for MNIST and ImageNet, respectively.
+A recent paper~\citep{allen2018learning} assumed that there exists an underlying (unknown) neural network that achieves low error on the data distribution,
+and the amount of data available is quite a bit more than the minimum number of samples needed to learn this underlying neural net. Under this condition, the overparametrized net (which has way more parameters) can learn in a way that generalizes. However, it is hard to verify from data whether this assumption is satisfied, even after the larger net has finished training.\footnote{In Section~\ref{sec:rel}, we discuss the related works in more details.} Thus the assumption is in some sense unverifiable. 
+ 
+\begin{question}\label{ques:gen}
+	Is there an easily verifiable complexity measure that can differentiate true labels and random labels?
+\end{question}
+
+%In fact, without explicit regularization, there is still one source left that can be the reason behind generalization: the training algorithms.
+%To understand this phenomenon, 
+Without explicit regularization, to attack this problem,
+one must resort to algorithm-dependent generalization analysis.
+One such line of work established that first-order methods can automatically find minimum-norm/maximum-margin solutions that fit the data in the settings of logistic regression, deep linear networks, and symmetric matrix factorization~\citep{soudry2018implicit,gunasekar2018characterizing,gunasekar2018implicit,ji2018gradient,li2018algorithmic}.
+However, how to extend these results to non-linear neural networks remains unclear~\citep{wei2018margin}.
+Another line of algorithm-dependent analysis of generalization \citep{hardt2015train,mou2017generalization,chen2018stability} used stability of specific optimization algorithms  that satisfy certain generic properties like convexity, smoothness, etc.
+However, as the number of epochs becomes large, these generalization bounds are vacuous. 
+%Therefore, to understand generalization in deep learning one needs to exploit specific properties of the neural network in question
+%instead of just relying on generic properties.
+
+
+%In this paper we give the first analysis on the implicit regularization imposed by the gradient descent algorithm on non-linear neural networks.
+
+
+\paragraph{Our results.}
+We give a new analysis that provides answers to Questions~\ref{ques:conv} and~\ref{ques:gen} for overparameterized two-layer neural networks with ReLU activation trained by gradient descent (GD), when the number of neurons in the hidden layer is sufficiently large.
+In this setting, \citet{du2018provably} have proved that GD with random initialization can achieve zero training error for any non-degenerate data.
+We give a more refined analysis of the trajectory of GD which enables us to provide answers to Questions~\ref{ques:conv} and~\ref{ques:gen}.
+In particular:
+\begin{itemize}
+\item In Section~\ref{sec:rate}, using the trajectory of the network predictions on the training data during optimization, we accurately estimate the magnitude of training loss in each iteration.
+%on predictions $\{\vect{u}(k)\}_{k=1}^\infty$, we are able to explain Observation~\ref{obs:conv}.
+Our key finding is that the number of iterations needed to achieve a target accuracy depends on the projections of data labels on the eigenvectors of a certain Gram matrix to be defined in Equation~\eqref{eqn:H_infy_defn}.
+On MNIST and CIFAR datasets, we find that such projections are significantly different for true labels and random labels, and as a result we are able to answer Question~\ref{ques:conv}.
+%See Section~\ref{sec:rate}.
+
+\item In Section~\ref{sec:generalization}, we give a generalization bound for the solution found by GD, based on accurate estimates of how much the network parameters can move during optimization (in suitable norms).
+Our generalization bound depends on a \emph{data-dependent complexity measure} (c.f. Equation~\eqref{eqn:complexity}), and notably, is completely independent of the number of hidden units in the network.
+Again, we test this complexity measure on MNIST and CIFAR, and find that the complexity measures for true and random labels are significantly different, which thus answers Question~\ref{ques:gen}.
+%To our knowledge, this is the first algorithm-based generalization theory for two-layer neural networks, thus answering an open question in \cite{wei2018margin}.
+
+Notice that because zero training error is achieved by the solution found by GD, a generalization bound is an upper bound on the error on the data distribution (test error).
+We also remark that our generalization bound is valid for \emph{any data labels} -- it does not require the existence of a small ground-truth network as in~\citep{allen2018learning}.
+Moreover, our bound can be efficiently computed for any data labels. 
+
+\item In Section~\ref{sec:improper}, we further study what kind of functions can be provably learned by two-layer ReLU networks trained by GD. 
+Combining the optimization and generalization results, we uncover a broad class of learnable functions, including linear functions, two-layer neural networks with polynomial activation $\phi(z) = z^{2l}$ or cosine activation, etc.
+Our requirement on the smoothness of learnable functions is weaker than that in~\citep{allen2018learning}.
+\end{itemize}
+
+
+Finally, we note that the intriguing generalization phenomena in deep learning were observed in kernel methods as well~\cite{belkin2018understand}.
+The analysis in the current paper is also related to a kernel from the ReLU activation (c.f.~Equation~\eqref{eqn:H_infy_defn}).
+
+
+%Success story of modern neural network is all overparameterized. While recent breakthroughs in optimization theory are able to explain why overparameterized neural networks trained by first order methods like SGD can achieve zero training error, why overparameterized neural network generalizes is still unknown. 
+%One key component that must be included in developing generalization theory for overparameterized models is that one needs to take account of the specific training algorithm, in contrast to classical statistics theory which directly analyzed the statistical property of the empirical risk minimizer (which is often unique).
+%
+%Generalization bound is based on certain complexity measures (check how off-convex-path describes it). Classical generalization theory based on VC theory cannot explain this phenomenon. Recent bounds based on the norms are mostly vacuous and are in a posterior manner compared to the VC-dimensional bound. In contrast, prior estimate bound is often more useful because it can help us determines a model’s generalization ability before training it 
+%\simon{check Weinan E's paper}
+%
+%A complexity measure that determines the generalization ability of overparameterized neural networks trained by a concrete optimization method. Concretely, this complexity measure should be small when the trained NN does generalize and should be big when the trained NN does not generalize. Mathematically, the generalization bound should relate to this complexity measure.
+
+%We make an important step towards this primary goal. We consider two-layer ReLU activated neural network. We propose a complexity measure that is specifically for this architecture trained by randomly initialized stochastic gradient descent. This complexity clearly distinguished the generalization ability of NN using the random labels and true labels. Furthermore, this complexity measure also explains why we have faster training for true labels than for random labels. As a corollary, using this complexity measure, we show this neural network can (improperly) learn a linear and odd order polynomial in an improper way with nearly optimal sample complexity. 
+
+
+
+%\paragraph{Paper organization.}
+%%\label{sec:org}
+%\simon{we can delete this if no space}
+%The rest of the paper is organized as follows.
+%In Section~\ref{sec:rel}, we survey related work and compare our results and proof techniques with previous ones.
+%In Section~\ref{sec:pre}, we introduce the problem setting and preliminaries.
+%In Section~\ref{sec:rate}, we %use our trajectory analysis on $\left\{\vect{u}(k)\right\}$ to 
+%give a fine-grained analysis of the convergence rate of gradient descent and demystify Observation~\ref{obs:conv}.
+%In Section~\ref{sec:generalization}, we %combine trajectory analysis on $\mat{W}(k)$ and a  Rademacher complexity bound to 
+%give our main generalization bound and thus explain Observation~\ref{obs:gen}.
+%In Section~\ref{sec:improper}, we study what functions can be learned by two-layer neural networks trained via GD.
+%%combine the optimization and generalization theories to show this two layer neural networks trained by gradient descent can learn function that can be decomposed into the sum of a smooth even function and a homogeneous linear function.
+%We conclude in Section~\ref{sec:con} and place most of our technical proofs in the appendix.
+

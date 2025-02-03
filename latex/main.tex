@@ -70,13 +70,14 @@
 	
 	\subsection{Hypothesis set}
 	
-	Define \(\mathcal{F} = \{f :\R^d \to \R^d\}\) as the set of all \textit{Non-Volume Preserving Coupling-Based Normalizing Flows}. And define the \textit{Realization Function} \(F:\R^P \to \mathcal{F}\). Now we have for an \(f_\theta := F(\theta)\) the following structure:
+	Define \(\mathcal{F} = \{f_L:\R^d \to \R^d \mid L \in \mathbb{N}, f = T^{L}\circ T^{L-1}\circ \cdots \circ T^{1}, T^{i} \in \mathcal{T}\}\) as the set of all \textit{Non-Volume Preserving Coupling-Based Normalizing Flows}, where \(\mathcal{T}=\{ T_{\theta_1, \theta_2}:\R^d \to \R^d \mid (\theta_1^\top,\theta_2^\top)^\top \in \R^P \}\) is the set of all affine coupling transforms defined as following:\\
+%	  Also define the \textit{Realization Function} \(F:\R^P \to \mathcal{T}\). Now we have for an \(f_\theta := F(\theta)\) the following structure:
 	
-	Denote the permutation by a matrix $Q \in \mathbb{R}^{d \times d}$ (an orthonormal permutation matrix), 
+	Denote a permutation by a matrix $Q \in \mathbb{R}^{d \times d}$ (an orthonormal permutation matrix), 
 	so that
 	\[
-	\tilde{x} = Q x.
-	\]
+	\tilde{x} = Q x
+	\].
 	We then split $\tilde{x}$ into two parts, 
 	\[
 	\tilde{x} 
@@ -99,7 +100,7 @@
 	\[
 	s_{\theta_1}: \mathbb{R}^{d'} \to \mathbb{R}^{d-d'}, 
 	\quad
-	t_{\theta_2}: \mathbb{R}^{d'} \to \mathbb{R}^{d-d'}.
+	t_{\theta_2}: \mathbb{R}^{d'} \to \mathbb{R}^{d-d'}
 %	\quad \theta = \begin{bmatrix}
 %		\theta_1 \\
 %		\theta_2
@@ -111,7 +112,7 @@
 %	y \;=\; Q^{-1}\,\tilde{y} 
 %	\quad \in \mathbb{R}^D.
 %	\]
-	Thus, the overall transformation is 
+	Thus, the overall transformation block is 
 	\[
 	T_{\theta_1,\theta_2}(x) \;=\;
 	\Bigl(
@@ -119,16 +120,15 @@
 	\tilde{x}_2 \odot \exp[s_{\theta_1}(\tilde{x}_1)] \;+\; t_{\theta_2}(\tilde{x}_1)
 	\Bigr)^\top
 	\quad\text{where}\quad 
-	\tilde{x} = Q x.
+	\tilde{x} = Q x
 	\].
 	
-	The Tangent Kernel of \(f_\theta\)
 	
 	A \textit{coupling based normalizing flow model} of depth \(L\) is therefore comprised by:
 	\[
-	f_\theta (x) = T^{(L)} \circ  T^{(L-1)} \circ \cdots \circ  T^{(1)} (x) 
+	f_{\Theta}(x) = T^{(L)} \circ  T^{(L-1)} \circ \cdots \circ  T^{(1)} (x) 
 	 \]
-	 , and we denote \(\theta = (\theta_1^s , \theta_1^t, \theta_2^s , \theta_2^t , \cdots ,\theta_L^s , \theta_L^t) \in \R^P \)
+	 , and we denote \(\Theta = ((\theta_1^1 , \theta_2^1), (\theta_1^2 , \theta_2^2) , \cdots ,(\theta_1^L , \theta_2^L)) \in \R^{P \times L} \)
 	
 	\paragraph{Jacobian Determinant.}
 	Because $Q$ is a permutation matrix with $\lvert \det Q \rvert = 1$, its contribution to the Jacobian determinant is 1.
@@ -142,25 +142,42 @@
 	\end{pmatrix},
 	\]
 	so the absolute Jacobian determinant is
-	\[
-	\bigl|\det \nabla_x f_\theta(x)\bigr|
-	\;=\;
-	\prod_{j=1}^{\,d-d'} \exp\bigl[s_{\theta,j}(\tilde{x}_1)\bigr]
-	\;=\;
-	\exp\!\Bigl(\sum_{j=1}^{\,d-d'} s_{\theta,j}(\tilde{x}_1)\Bigr).
-	\]
+	\begin{equation} \label{eq:jacobian-determinant}
+	\bigl|\det \nabla_x T_{\theta_1,\theta_2}\bigr|
+	=
+	\prod_{j=1}^{\,d-d'} \exp\bigl[(s_{\theta_1}(\tilde{x}_1))_j\bigr]
+	=
+	\exp \Bigl[\sum_{j=1}^{\,d-d'} (s_{\theta_1}(\tilde{x}_1))_j\Bigr].
+	\end{equation}
 	\subsection{Loss Criterion}
-	For a CPNF \(z = f_{\theta}(x)\),
+	For a CBNF \(z = f_{\theta}(x)\),
 	with the base density \( p_Z(z) \). By the change-of-variables formula, the model density is given by
 	\[
 	\hat{p}_X(\mathbf{x}) = p_Z\bigl(f_{\boldsymbol{\theta}}(\mathbf{x})\bigr) \, \Bigl|\det J(f_\theta,\mathbf{x}) \Bigr|.
 	\]
-	and minimizing the KL-divergence between \(\mu=p_X\)and \(\hat{p}_X\), will be equivalent to minimizing the expectation of the negative log-likelihood of \(\hat{p}_X\) with respect to \(p_X\) and is approximated by the empirical risk as below:
+	and minimizing the KL-divergence between \(\mu=p_X\) and \(\hat{p}_X\), will be equivalent to minimizing the expectation of the negative log-likelihood of \(\hat{p}_X\) with respect to \(p_X\) and is approximated by the empirical risk as the following:\\
+	Define the loss function on a sample and hypothesis:
 	\[
 	\mathcal{L}(\mathbf{x}; f) = -\log\hat{p}_X(\mathbf{x}) = -\log p_Z\bigl(f(\mathbf{x})\bigr) - \log \Bigl|\det J(f,\mathbf{x}) \Bigr|
 	\]
+	
+	
+%		To rewrite the KL-Div loss \( \mathcal{L} \) in a form that compares \( p_{\theta}(z) \) to the target latent distribution \( p(z) \):
+%	
+%	\begin{align*}\label{eq:kl_divergence_latent}
+%		\mathcal{L} &= D_{\text{KL}}(p_X(x) \| \hat{p}_X(x)) 
+%		\\
+%		&= \int p(x) \log \frac{p(x)}{p(z = f_{\theta}(x)) \left| \det \frac{\partial f_{\theta}(x)}{\partial x} \right|} \, dx
+%		\\
+%		&= \int p(z) \left| \det \frac{\partial f_{\theta}^{-1}(z)}{\partial z} \right| 
+%		\log \frac{p(f_{\theta}^{-1}(z)) \left| \det \frac{\partial f_{\theta}^{-1}(z)}{\partial z} \right|}{p(z)} \, dz  
+%		\\
+%		&= D_{\text{KL}}(p_{\theta}(z) \,\|\, p(z)). 
+%	\end{align*}\\
+%	
+	
 	\paragraph{Negative Log-Likelihood.}
-	We choose a standard normal base distribution $p_z(z) = \mathcal{N}(z \mid 0, I)$ on $\mathbb{R}^D$. 
+	We choose a standard normal base distribution $p_z(z) = \mathcal{N}(z \mid 0, I_d)$ on $\mathbb{R}^d$. 
 	Then for $y = f_\theta(x)$, 
 	the model's density is 
 	\[
@@ -181,14 +198,14 @@
 	\[
 	-\log p_z(y)
 	\;=\;
-	\frac12 \|y\|^2 \;+\; \frac{D}{2}\,\log (2\pi)
+	\frac12 \|y\|^2 \;+\; \frac{d}{2}\,\log (2\pi)
 	\quad (\text{ignoring constants in } \theta).
 	\]
-	Using the above determinant,
+	Using equation \ref{eq:jacobian-determinant} we get:,
 	\[
 	-\log \bigl|\det \nabla_x f_\theta(x)\bigr|
 	\;=\;
-	-\,\sum_{j=1}^{\,D-d} s_{\theta,j}\!\bigl(\tilde{x}_1\bigr).
+	-\,\sum_{j=1}^{\,d-d'} s_{\theta,j}\!\bigl(\tilde{x}_1\bigr).
 	\]
 	Thus the single-sample loss becomes
 	\[
@@ -198,7 +215,7 @@
 	\;=\;
 	\frac12 \|f_\theta(x)\|^2 
 	\;-\;
-	\sum_{j=1}^{\,D-d} s_{\theta,j}\!\bigl(\tilde{x}_1\bigr)
+	\sum_{j=1}^{\,d-d'} \bigl(s_{\theta_1}(\tilde{x}_1)\bigr)_j
 	\;+\;
 	\text{const.},
 	\]
@@ -228,7 +245,7 @@
 	\]
 	, and the \textit{empirical risk} is: 
 	\[
-	\hat{R}_S(f):=\frac{1}{|S|}\sum_{x\in S} \ell(\theta;x)
+	\hat{R}_S(f):=\frac{1}{|S|}\sum_{x\in S} \ell(\theta;x) = \mathcal{L}(\theta)
 	\]
 	
 %	Define the semi-norm and bi-linear form below:
@@ -262,6 +279,13 @@
 	 H: Maybe we should see the whole \(p_\theta\) as the network ?\\
 	 
 	 
+	 \subsection{NTK of a single block}
+	 
+	 Denoting \(z = T_{\theta_1,\theta_2}(x)\), we need to find \(\frac{d z(t)}{dt}\). First we need \(\frac{\partial \mathcal{L(\theta)}}{\partial \theta}\)
+	 
+	 
+	 
+	 We will denote a Tangent Kernel for the whole flow and one for each transform block.
 	 
 	
 	First we compute gradient of a transform \(T^{(i)}=T_{\theta_1,\theta_2}\) as:
@@ -282,16 +306,16 @@
 	\end{bmatrix} := \partial T
 	\]
 	
-	and so we have
-	\(
-	\nabla_\theta T_{\theta_1,\theta_2}(x) = (
-		0 ,
-		\cdots ,
-		\partial T ,
-		\cdots,
-		0
-) \in \R^{P \times d}
-	\).\\
+%	and so we have
+%	\(
+%	\nabla_\theta T_{\theta_1,\theta_2}(x) = (
+%		0 ,
+%		\cdots ,
+%		\partial T ,
+%		\cdots,
+%		0
+%) \in \R^{P \times d}
+%	\).\\
 	
 
 	

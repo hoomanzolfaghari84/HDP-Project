@@ -1,0 +1,159 @@
+
+
+
+
+
+Theorem~\ref{thm:main_generalization} determines that $\sqrt{\frac{2 \vect y^\top (\mat H^\infty)^{-1}\vect y }{n}}$ controls the generalization error.
+% of the two-layer neural networks trained by GD.
+In this section, we study what functions can be provably learned in this setting.
+We assume the data satisfy $y_i = g(\vect{x}_i)$ for some underlying function $g:\R^d\to\R$.
+A simple observation is that if we can prove $$\vect y^\top (\mat H^\infty)^{-1}\vect y \le M_g$$ for some quantity $M_g$ that is \emph{independent} of the number of samples $n$, then Theorem~\ref{thm:main_generalization} implies we can provably learn the function $g$ on the underlying data distribution using $ O\left( \frac{M_g+\log(1/\delta)}{\epsilon^2} \right) $ samples.
+The following theorem shows that this is indeed the case for a broad class of functions.
+
+\begin{thm}\label{thm:improper_learning_monomial}
+	Suppose we have
+	\begin{align*}
+	y_i = g(\vect{x}_i) = \alpha \left( \vbeta^\top \vx_i \right)^p, \quad \forall i\in[n],
+	\end{align*}
+	where $p=1$ or $p=2l$ $(l\in\mathbb N_+)$,	$\vbeta \in \R^d$ and $\alpha\in \R$.
+	Then we have
+\vspace{-0.3cm}
+	\begin{align*}
+	\sqrt{\vect y^\top (\mat H^\infty)^{-1}\vect y } \le  3 p \abs{\alpha} \cdot \norm{\vbeta}_2^{p}.
+	\end{align*}
+\vspace{-0.7cm}
+\end{thm}
+
+The proof of Theorem~\ref{thm:improper_learning_monomial} is given in Appendix~\ref{app:proof_improper}.
+
+
+Notice that for two label vectors $\vect y^{(1)}$ and $\vect y^{(2)}$, we have
+\begin{align*}
+&\sqrt{(\vy^{(1)}+\vy^{(2)})^\top (\vect{H}^{\infty})^{-1}  \left(\vy^{(1)}+\vy^{(2)}\right)} \\
+\le\,&
+\sqrt{(\vy^{(1)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(1)}} + \sqrt{(\vy^{(2)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(2)}}.
+\end{align*}
+This implies that \emph{the sum of learnable functions is also learnable}. Therefore, the following is a direct corollary of Theorem~\ref{thm:improper_learning_monomial}:
+\begin{cor}\label{cor:improper_learning_polynomial}
+	Suppose we have 
+	\begin{align}
+	y_i = g(\vect x_i) = \sum_{j} \alpha_j \left( \vbeta_j^\top \vx_i \right)^{p_j} , \quad \forall i\in[n],
+	\label{eqn:g_decomp}
+	\end{align}
+	where for each $j$, $p_j \in \{1, 2, 4, 6, 8, \ldots\}$, $\vbeta_j \in \R^d$ and $\alpha_j \in \R$.
+	Then we have
+	\begin{align} \label{eqn:g_complexity}
+	\sqrt{\vect y^\top (\mat H^\infty)^{-1}\vect y } \le 3 \sum_{j} p_j \abs{\alpha_j} \cdot \norm{\vbeta_j}_2^{p_j}.
+	\end{align}
+\end{cor}
+
+
+
+%\begin{thm}\label{thm:improper_learning}
+%Suppose we have $\lambda_{\min}(\mat H^\infty)>0$ and 
+%\begin{align}
+%\vect{\vbeta}_1^\top \vect{x}_i + \alpha_2\left(\vect{\vbeta}_2^\top \vect{x}_i\right)^2 + \alpha_4 \left(\vect{\vbeta}_4^\top \vect{x}_i\right)^4 + \cdots \label{eqn:g_decomp}
+%%g(\vect{x}) = \vect{\vbeta}_1^\top \vect{x} + \alpha_2\left(\vect{\vbeta}_2^\top \vect{x}\right)^2 + \alpha_4 \left(\vect{\vbeta}_4^\top \vect{x}\right)^4 + \cdots \label{eqn:g_decomp}
+%\end{align}
+%for all $i\in[n]$, where $\vbeta_1, \vbeta_2, \vbeta_4 \ldots \in \R^d$ and $\alpha_2, \alpha_4, \ldots \in \R$.
+%Then we have
+%\begin{align*}
+%\sqrt{\vect y^\top (\mat H^\infty)^{-1}\vect y } \le 2\norm{\vbeta_1}_2 + 2\sqrt{2\pi} \sum_{l=1}^\infty l \abs{\alpha_{2l}} \cdot \norm{\vbeta_{2l}}_2^{2l}.
+%\end{align*}
+%%
+%%
+%%
+%%satisfy
+%% \begin{align}
+%% \norm{\vbeta_1}_2+\sum_{j=1}^\infty j^4\alpha_{2j}\norm{\vect{\vbeta}_{2j}}_2 \le M \label{eqn:g_smoothness}
+%%\end{align} 
+%%for some $M > 0$ and $n \ge \Omega\left(\frac{M}{\rho\epsilon^2}\right)$.
+%%Further assume the conditions in Theorem~\ref{thm:main_generalization} hold and $k = \Omega\left(\frac{\log(n)}{\lambda_{\mu}(\delta_2)}\log(\frac{1}{\eps})\right)$.
+%%Then under the same assumptions in Theorem~\ref{thm:main_generalization} we have with failure probability $\delta+\delta_1+\delta_2$
+%% \begin{align*}
+%%	\expect_{\vect{x},y \sim \mu}\left[\ell(f\left(\mat{W}(k),\vect{a},\vect{x}\right),y)\right] \le \epsilon.
+%%\end{align*}
+%\end{thm}
+
+
+%Theorem~\ref{thm:improper_learning} uses the same set of assumptions  in Theorem~\ref{thm:main_generalization} and requires number of iterations $k =\Omega\left(\frac{\log(n)}{\lambda_{\mu}(\delta_2)}\log(\frac{1}{\eps})\right)$. The latter requirement makes the optimization error smaller than $\epsilon$.
+
+\vspace{-0.3cm}
+Corollary~\ref{cor:improper_learning_polynomial} shows that  overparameterized two-layer ReLU network can learn any function of the form~\eqref{eqn:g_decomp} for which \eqref{eqn:g_complexity} is bounded.
+One can view \eqref{eqn:g_decomp} as two-layer neural networks with polynomial activation $\phi(z)=z^p$, where $\{\vbeta_j\}$ are weights in the first layer and $\{\alpha_j\}$ are the second layer.
+%Equation~\eqref{eqn:g_complexity} quantifies the smoothness of the underlying function.
+%Intuitively, if the decomposition of $g$ has fast decaying Taylor expansion coefficients, then we can learn $g$ with few samples.
+Below we give some specific examples.
+
+\begin{example}[Linear functions] \label{example:linear}
+	For $g(\vx) = \vbeta^\top \vx$, we have $M_g = O(\norm{\vbeta}_2^2)$.
+\end{example}
+
+\begin{example}[Quadratic functions] \label{example:quadratic}
+	For $g(\vx) = \vx^\top \mat A \vx$ where $\mat A \in \R^{d\times d}$ is symmetric,
+	we can write down the eigen-decomposition $\mat A = \sum_{j=1}^d \alpha_j \vbeta_j \vbeta_j^\top$.
+	Then we have $g(\vx) = \sum_{j=1}^d \alpha_j (\vbeta_j^\top \vx)^2$, so $M_g = O\left( \sum_{i=1}^d \abs{\alpha_j} \right) = O(\norm{\mat{A}}_*)$.\footnote{$\norm{\mat{A}}_*$ is the trace-norm of $\mat A$.}
+	This is also the class of two-layer neural networks with quadratic activation.
+\end{example}
+
+%\begin{example}[Learning Polynomials]\label{example:poly}
+%Suppose the underlying function $g$ has the form $g(\vect{x}) = \vbeta_1^\top \vect{x} +\sum_{j=1}^{p} (\vbeta_{2j}^\top \vect{x})^{2j}$ for some small $p \in \mathbb{Z}^+$.
+%Theorem~\ref{thm:improper_learning} implies that we can learn this function with $O((\norm{\vbeta_1}+\sum_{j=1}^{p}\norm{\vbeta_{2j}})^2)$ number of samples.
+%Note for $p$ small, in the typical scaling $O((\norm{\vbeta_1}+\sum_{j=1}^{p}\norm{\vbeta_{2j}})^2) = O(d)$ because all $\vbeta_j$s are $d$-dimensional vectors.
+%Therefore we know we can learn low-degree polynomials with $O(d)$ number of samples, which is the optimal sample complexity.\simon{}
+%\end{example}
+
+\begin{example}[Cosine activation]\label{example:cos}
+Suppose $g(\vect{x}) = \cos(\vbeta^\top \vect{x})-1$ for some $\vbeta \in \mathbb{R}^d$.
+Using Taylor series we know $g(\vect{x}) = \sum_{j=1}^{\infty}\frac{(-1)^j(\vbeta^\top \vect{x})^{2j}}{(2j)!}$.
+Thus we have
+$M_g = O\left( \sum_{j=1}^\infty \frac{j}{(2j)!} \norm{\vbeta}_2^{2j} \right) = O\left( \norm{\vbeta}_2 \cdot \sinh(\norm{\vbeta}_2) \right) $.
+\end{example}
+
+
+Finally, we note that our ``smoothness'' requirement~\eqref{eqn:g_complexity} is weaker than that in \citep{allen2018learning}, as illustrated in the following example.
+\begin{example}[A not-so-smooth function]
+	Suppose $g(\vect{x}) = \phi(\vbeta^\top \vx)$, where $\phi(z) = z \cdot \arctan(\frac z2)$ and $\norm{\vbeta}_2 \le 1$.
+	We have $g(\vx) =   \sum_{j=1}^\infty \frac{(-1)^{j-1} 2^{1 - 2 j} }{2 j - 1} \left( \vbeta^\top \vx \right)^{2j}$ since $\abs{\vbeta^\top \vx} \le 1$.
+	Thus $M_g = O \left( \sum_{j=1}^\infty \frac{j \cdot 2^{1 - 2 j} }{2 j - 1}  \norm{\vbeta}_2^{2j} \right) \le O \left( \sum_{j=1}^\infty 2^{1 - 2 j}  \norm{\vbeta}^{2j} \right) = O\left( \norm{\vbeta}_2^2 \right)$, so our result implies that this function is learnable by $2$-layer ReLU nets.
+	
+	
+\end{example}
+However, \citet{allen2018learning}'s generalization theorem would require $\sum_{j=1}^\infty \frac{\left(  C\sqrt{\log(1/\epsilon)} \right)^{2j} 2^{1 - 2 j} }{2 j - 1}  $ to be bounded, where $C$ is a large constant and $\epsilon$ is the target generalization error. This is clearly not satisfied.
+
+%\simon{other example?}
+
+%\begin{example}[Learning ReLU Function]\label{example:relu}
+%Unfortunately, our theorem also demonstrate it is hard to learn a ReLU function of the form $g(\vect{x},\vbeta) = \relu{\vbeta^\top \vect{x}}$.
+%The main reason is that the coefficients of $\relu{\cdot}$ is large\simon{cite some paper analyzing the approximating ReLU using polynomials.}
+%\end{example}
+
+
+%We verify our theoretical findings empirically in Figure~\ref{fig:improper}.
+%\simon{@ruosong: two plots: Gaussian input: d=5 and 50. g=linear, quadratic, fourth-order poly, cosine, relu}
+%\wei{try cubic too, show it doesn't work?}
+
+%We want to emphasize that not able to learn ReLU function does not mean the over-parameterized two-layer neural network is a not a good model for learning as it already exhibits good performance on real world vision datasets.
+%Therefore, we expect that assuming the underlying model is ReLU activated neural network may not be appropriate to model real world vision problems.
+
+\begin{comment}
+\begin{figure}[t]
+	\label{fig:improper}
+	\subfigure[$d=10$]
+	{
+		\label{fig:improper_d_5}
+		\includegraphics[width=0.23\textwidth]{figs/mnist_spectrum.png}}   
+	\subfigure[$d=5$]
+	{
+		\label{fig:improper_d_50}
+		\includegraphics[width=0.23\textwidth]{figs/mnist_spectrum.png}}   
+	\caption{[Place holder] Learning specific functions by over-parameterized two-layer neural networks. }
+\end{figure}
+
+\end{comment}
+
+%\subsection{Proof Sketch of Theorem~\ref{thm:improper_learning}}
+%\label{sec:proof_sketch_improper}
+ 
+
+

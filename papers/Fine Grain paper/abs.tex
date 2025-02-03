@@ -1,0 +1,32 @@
+
+Recent works have cast some light on the mystery of why deep nets fit any data and generalize despite being very overparametrized. This paper analyzes training and generalization for a simple $2$-layer ReLU net with random initialization, and provides the following improvements over
+recent works:
+
+ \begin{enumerate}[(i)]
+ \item Using a tighter characterization of training speed than recent papers, an explanation for why training a neural net with random labels leads to slower training, as originally observed in  [Zhang et al. ICLR'17]. 
+ \item Generalization bound independent of network size, using a data-dependent complexity measure. 
+  Our measure distinguishes clearly between random labels and true labels on MNIST and CIFAR, as shown by experiments. 
+  Moreover, recent papers require sample complexity to increase (slowly) with the size, while our sample complexity is completely independent of the network size.
+
+ \item Learnability of a broad class of smooth functions %somewhat larger than in earlier works
+  by $2$-layer ReLU nets trained via gradient descent.
+ \end{enumerate}
+ 
+The key idea is to track dynamics of training and generalization via properties of a related kernel. 
+ 
+\iffalse 
+It was recently proved that over-parameterized neural networks with sufficiently large width trained with randomly initialized gradient descent (GD) can achieve zero training loss on any non-degenerate data.
+However, this result holds even for arbitrary labels (including random labels) and thus cannot explain the generalization behavior of solutions found by GD.
+In this work, we give a fine-grained analysis to characterize the optimization and generalization performance of two-layer over-parameterized ReLU activated neural networks trained with GD. This analysis  \begin{enumerate}[(i)]
+	\item explains why training a neural network with random labels is slower than with true labels, as observed in~\cite{zhang2016understanding}, 
+	\item yields a generalization bound for the solution found by GD, which is independent of the number of parameters in the network and only depends on a data-dependent complexity measure that can clearly distinguish random labels and true labels on MNIST and CIFAR datasets, and
+	\item implies that two-layer neural nets can provably learn a broad class of smooth functions via GD. %, including linear functions, even-degree polynomials and cosine function.
+\end{enumerate}
+\fi 
+%Our proof is through a fine-grained analysis of the trajectory of GD for optimizing over-parameterized two-layer neural networks, and we believe that this approach may be useful for analyzing the generalization behavior of deep neural networks.
+
+%\simon{notes:
+%	\begin{itemize}
+%		\item Fix reference typos.
+%	\end{itemize}
+%	}

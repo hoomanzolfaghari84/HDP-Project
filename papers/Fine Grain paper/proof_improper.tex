@@ -1,0 +1,106 @@
+
+We prove a lemma before proving Theorem~\ref{thm:improper_learning_monomial}.
+
+\begin{lem}\label{lem:inv_comparison}
+For any two symmetric matrices $\vect{A},\vect{B}\in \reals^{n\times n}$ such that $\vect{B}\succeq \vect{A}\succeq \mat0$, we have $\vect{A}^\dag\succeq \vect{P}_{\mat A} \vect{B}^\dag \vect{P}_{\mat A}$, where $\vect{P}_\vect{A} = \vect{A}^{1/2}\vect{A}^\dag \vect{A}^{1/2}$ is the projection matrix for the subspace spanned by $\vect{A}$.\footnote{$\vect{A}^\dag$ is the Moore-Penrose pseudo-inverse of $\vect{A}$.}
+
+Note that when $\vect{A}$ and $\vect{B}$ are both invertible,  this result reads $\vect{A}^{-1}\succeq \vect{B}^{-1}$.
+\end{lem}
+
+\begin{proof}
+W.L.O.G. we can assume $\vect{B}$ is invertible, which means $\vect{B}^{-1}=\vect{B}^{\dag}$. Additionally, we can assume $\vect{A}$ is diagonal and $\vect{A}= \begin{pmatrix}\mat \Lambda &\mat0 \\\mat0& \mat0\end{pmatrix} $. Thus $\vect{P}_
+\vect{A} =  \begin{pmatrix} \mat I & \mat 0 \\\mat0& \mat0\end{pmatrix}$. We define $\vect{P}_\vect{A}^\perp = \mat I-\vect{P}_\vect{A} =\begin{pmatrix} \mat0 & \mat0 \\ \mat0& \mat I\end{pmatrix}$. 
+
+Now we will show that all the solutions to the equation $\det(\vect{P}_\vect{A}\vect{B}^{-1}\vect{P}_\vect{A}-\lambda (\vect{A}^\dag + \vect{P}_\vect{A}^\perp))=0$ are between $0$ and $1$.
+If this is shown, we must have $\vect{P}_\vect{A}\vect{B}^{-1}\vect{P}_\vect{A} \preceq \vect{A}^\dag + \vect{P}_\vect{A}^\perp$, which would imply $\vect{P}_\vect{A}\vect{B}^{-1}\vect{P}_\vect{A} \preceq \vect{A}^\dag$. 
+
+We have
+\begin{equation}
+\begin{split}
+&\det(\vect{P}_\vect{A}\vect{B}^{-1}\vect{P}_\vect{A}-\lambda (\vect{A}^\dag + \vect{P}_\vect{A}^\perp)) \\
+=& \det(\vect{B}^{-1}\vect{P}_\vect{A}-\lambda (\vect{A}^\dag + \vect{P}_\vect{A}^\perp)) \\
+=& \det(\vect{B}^{-1})\det(\vect{P}_\vect{A}-\lambda \vect{B}(\vect{A}^\dag + \vect{P}_\vect{A}^\perp))\\
+= &\det(\vect{B}^{-1})\det((\vect{A}-\lambda \vect{B})(\vect{A}^\dag + \vect{P}_\vect{A}^\perp))\\ 
+= &\det(\vect{B}^{-1})\det(\vect{A}^\dag + \vect{P}_\vect{A}^\perp)\det(\vect{A}-\lambda \vect{B}).
+\end{split}
+\end{equation}
+Note $\det(\vect{B}^{-1})>0$ and $\det(\vect{A}^\dag + \vect{P}_\vect{A}^\perp)>0$.
+Thus all the solutions to  $\det(\vect{P}_\vect{A}\vect{B}^{-1}\vect{P}_\vect{A}-\lambda (\vect{A}^\dag + \vect{P}_\vect{A}^\perp))=0$ are exactly all the solutions to $\det(\vect{A}-\lambda \vect{B})=0$. Since $\vect{B}\succeq \vect{A}\succeq \mat0$ and $\mat B \succ \mat0$, we have $\det(\vect{A}-\lambda \vect{B})\neq 0$ when $\lambda<0$ or $\lambda >1$.
+\end{proof}
+
+
+\begin{proof}[Proof of Theorem~\ref{thm:improper_learning_monomial}]
+	
+	For vectors $\vect{a} = (a_1, \ldots, a_{n_1})^\top \in \reals^{n_1}, \vect{b} = (b_1, \ldots, b_{n_2}) \in\reals^{n_2}$, the \emph{tensor product} of $\vect{a}$ and $\vect{b}$ is defined as $\vect{a}\otimes\vect{b}\in\reals^{n_1 n_2}$, where 
+	$[\vect{a}\otimes\vect{b}]_{(i-1)n_2+j} = a_ib_j $.
+	For matrices $\vect{A} = (\vect a_1, \ldots, \vect a_{n_3}) \in\reals^{n_1\times n_3}, \vect{B} = (\vect b_1, \ldots, \vect b_{n_3}) \in\reals^{n_2\times n_3}$,  the \emph{Khatri-Rao product} of $\vect{A}$ and $\vect{B}$ is defined as  $\vect{A}\odot \vect{B}\in\reals^{n_1n_2\times n_3}$, where $\vect{A}\odot \vect{B} = [\vect{a}_1\otimes \vect{b}_1, \vect{a}_2\otimes \vect{b}_2, \ldots, \vect{a}_{n_3}\otimes \vect{b}_{n_3}]$. We use $\vect{A}\circ \vect{B}$ to denote the \emph{Hadamard product} (entry-wise product) of matrices $\vect{A}$ and $\vect{B}$ of the same size, i.e., $[\mat A \circ \mat B]_{ij} = \mat A_{ij} \mat B_{ij}$.
+	We also denote their corresponding powers by $\vect a^{\otimes l}$, $\mat A^{\odot l}$ and $\mat A^{\circ l}$.
+	
+	Recall $\mat X = (\vect x_1, \ldots, \vect x_n) \in \R^{d\times n}$.
+	Let  $\vect{K} = \vect{X}^\top \vect{X} \in \reals^{n \times n}$.
+	Then it is easy to see that $[\vect{K}^{\circ l}]_{ij} = \vect{K}^l_{ij} = \inp{\vx_i}{\vx_j}^l$ and $\vect{K}^{\circ l} = (\vX^{\odot l})^\top \vX^{\odot l}\succeq \bm{0}$ for all $l\in\mathbb N$.
+	Recall from~\eqref{eqn:H_infy_defn} that $\vect{H}^\infty_{ij} = \frac{\mat K_{ij}}{4}+ \frac{\vect{K}_{ij} \arcsin(\vect{K}_{ij})}{2\pi}$. 
+	Since  $\arcsin(x) = \sum_{l=0}^\infty \frac{(2l-1)!!}{(2l)!!}\cdot \frac{x^{2l+1}}{2l+1}\, (|x|\le1)$\footnote{$p!! = p(p-2)(p-4)\cdots$ and $0!!=(-1)!!=1$.},  we have 
+	\[ \vect{H}^\infty_{ij} = \frac{\vect{K}_{ij}}{4}+ \frac{1}{2\pi} \sum_{l=1}^\infty \frac{(2l-3)!!}{(2l-2)!!}\cdot \frac{\vect{K}_{ij}^{2l}}{2l-1},\]
+	which means
+	\[ \vect{H}^\infty = \frac{\vect{K}}{4}+ \frac{1}{2\pi} \sum_{l=1}^\infty \frac{(2l-3)!!}{(2l-2)!!}\cdot \frac{\vect{K}^{\circ 2l}}{2l-1}.\]
+	
+	Since $\vect{K}^{\circ l}\succeq \bm{0}$ ($\forall l\in \mathbb{N}$), we have 
+	$ \vect{H}^\infty \succeq \frac{\vect{K}}{4}$ and 
+	\[  \vect{H}^\infty \succeq \frac{1}{2\pi} \frac{(2l-3)!!}{(2l-2)!!}\cdot \frac{\vect{K}^{\circ 2l}}{2l-1} \succeq \frac{\vect{K}^{\circ 2l}}{2\pi(2l-1)^2}, \quad \forall l\in\mathbb N_+.\]
+	
+	
+	
+	Now we proceed to prove the theorem.
+	
+	%We decompose the label vector into $\vect y = \vect y^{(1)} + \sum_{l=1}^\infty \vect y^{(2l)}$, where $\left[ \vect y^{(p)} \right]_i = \alpha_p (\vbeta_p^\top \vect x_i)^p$ for $p\in\{1, 2, 4, 6, \ldots\}$ and $i\in[n]$.
+	
+	First we consider the case $p=1$. In this case we have $\vy =\alpha \vX^\top \vbeta_1$. Since $\mat H^\infty \succeq \frac{\mat K}{4}$,
+	 from Lemma~\ref{lem:inv_comparison} we have 
+	\[ \vect{P}_{\vect{K}} (\vect{H}^{\infty})^{-1} \vect{P}_{\vect{K}} \preceq 4\vect{K}^\dag,\]
+	where $\vect{P}_\vect{K} = \vect{K}^{1/2}\vect{K}^\dag \vect{K}^{1/2}$ is the projection matrix for the subspace spanned by $\vect{K}$. Since $\vect{K} = \vect{X}^\top \vect{X}$, we have $\vect{P}_{\vect{K}}\vX^\top = \vX^\top$. 
+	%$\vect{K}$ has the same column space as $\mat X$, which implies $\vect{P}_{\vect{K}}\vX^\top = \vX^\top$. 
+	Therefore, we have
+	\begin{align*}
+	&\vy^\top (\vect{H}^{\infty})^{-1}  \vy\\
+	 =\, &\alpha^2 \vbeta^\top \vX (\vect{H}^{\infty})^{-1}  \vX^\top \vbeta \\
+	=\,&\alpha^2  \vbeta^\top \vX \vect{P}_{\vect{K}}(\vect{H}^{\infty})^{-1} \vect{P}_\vect{K} \vX^\top \vbeta\\
+	 \le\, & 4\alpha^2 \vbeta^\top \vX \vect{K}^\dag \vX^\top \vbeta  \\
+	 =\, &4\alpha^2 \vbeta^\top \vect{P}_{\mat X \mat X^\top}\vbeta\\
+	 \le\,& 4\alpha^2 \norm{\vbeta}_2^2.
+	\end{align*}
+	This finishes the proof for $p=1$.
+	 
+	 
+	 Similarly, for $p=2l$ $(l\in\mathbb N_+)$, we have $\vy  = \alpha \left( \vX^{\odot 2l} \right)^\top \vbeta^{\otimes 2l}$. From
+	 $ \vect{H}^{\infty} \succeq \frac{\vect{K}^{\circ 2l}}{2\pi(2l-1)^2} = \frac{(\vX^{\odot 2l})^\top \vX^{\odot 2l}}{2\pi (2l-1)^2}$ and Lemma~\ref{lem:inv_comparison} we have
+	 \begin{align*}
+	&\vy^\top (\vect{H}^{\infty})^{-1}  \vy\\
+	 =\, & \alpha^2 (\vbeta^{\otimes 2l})^\top\vX^{\odot 2l} (\vect{H}^{\infty})^{-1}    (\vX^{\odot 2l})^\top \vbeta^{\otimes 2l}\\
+	 \le\, & 2\pi(2l-1)^2  \alpha^2  (\vbeta^{\otimes 2l})^\top\vX^{\odot 2l} (\vect{K}^{\circ 2l})^{\dag}    (\vX^{\odot 2l})^\top \vbeta^{\otimes 2l}\\
+	 =\, &2\pi(2l-1)^2 \alpha^2    (\vbeta^{\otimes 2l})^\top \vect{P}_{\vX^{\odot 2l} (\vX^{\odot 2l})^\top} \vbeta^{\otimes 2l}\\
+	 \le\, & 2\pi (2l-1)^2  \alpha^2   \norm{\vbeta^{\otimes 2l}}_2^2\\
+	 =\, &2\pi (2l-1)^2 \alpha^2  \norm{\vbeta}_2^{4l}\\
+	 \le\,& 2\pi p^2 \alpha^2  \norm{\vbeta}_2^{2p}.
+	 \end{align*}
+	 This finishes the proof for $p=2l$.
+%	
+%Therefore, we have
+%\begin{align*}
+%& \vy^\top (\mat H^\infty)^{-1} \vy\\
+%=\,&\left(\vy^{(1)} + \sum_{l=1}^\infty \vy^{(2l)} \right)^\top (\vect{H}^{\infty})^{-1} \left(\vy^{(1)} + \sum_{l=1}^\infty \vy^{(2l)} \right) \\
+%\le\,& \left(\sqrt{(\vy^{(1)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(1)}}+\sum_{l=1}^\infty \sqrt{(\vy^{(2l)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(2l)}}\right)^2\\
+%\le\, & \left( 2\norm{\vbeta_1} + \sqrt{2\pi} \sum_{l=1}^\infty ( 2l-1) \abs{\alpha_{2l}} \cdot \norm{\vbeta_{2l}}_2^{2l}  \right)^2. \qedhere
+%%\le \,& \left((\vy^{(1)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(1)} +  \sum_{l=1}^\infty l^2 (\vy^{(1)})^\top (\vect{H}^{\infty})^{-1}  \vy^{(1)} \right)\left(1+\sum_{l=1}^\infty  l^{-2}\right)\\
+%%\le \, & (1+\frac{\pi^2}{6})\left(\vy_1^\top(\vect{H}^{\infty})^{-1} \vy_1 +  \sum_{l=1}^L l^2 \vy_{2l}^\top(\vect{H}^{\infty})^{-1} \vy_{2l} \right)\\
+%\end{align*}
+%\begin{align*}
+% & \vy^\top (\mat H^\infty)^{-1} \vy\\
+% =\,&\left(\vy^{(1)} + \sum_{l=1}^L \vy^{(2l)} \right)^\top (\vect{H}^{\infty})^{-1} \left(\vy^{(1)} + \sum_{l=1}^L \vy^{(2l)} \right) \\
+% \le\,& \left(\sqrt{\vy_1^\top(\vect{H}^{\infty})^{-1} \vy_1}+\sum_{l=1}^L \sqrt{\vy_{2l}^\top(\vect{H}^{\infty})^{-1} \vy_{2l}}\right)^2\\
+% \le \,& \left(\vy_1^\top(\vect{H}^{\infty})^{-1} \vy_1 +  \sum_{l=1}^L l^2 \vy_{2l}^\top(\vect{H}^{\infty})^{-1} \vy_{2l} \right)\left(1+\sum_{l=1}^L l^{-2}\right)\\
+% \le \, & (1+\frac{\pi^2}{6})\left(\vy_1^\top(\vect{H}^{\infty})^{-1} \vy_1 +  \sum_{l=1}^L l^2 \vy_{2l}^\top(\vect{H}^{\infty})^{-1} \vy_{2l} \right)\\
+% \end{align*}
+%Take $L\to \infty$, we have 
+%\[ (\vy_1 + \sum_{l=1}^\infty \vy_{2l} )^\top (\vect{H}^{\infty})^{-1} (\vy_1 + \sum_{l=1}^\infty \vy_{2l} ) \le (1+\frac{\pi^2}{6}) \left( 4\norm{\vbeta_1}_2^2+ \sum_{l=1}^\infty 4\pi^2l^2(2l-1)^2 \alpha_{2l}^2\right)\] 
+\end{proof}

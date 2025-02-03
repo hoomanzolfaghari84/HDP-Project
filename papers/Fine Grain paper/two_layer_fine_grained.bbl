@@ -1,0 +1,431 @@
+\begin{thebibliography}{69}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Allen-Zhu et~al.(2018{\natexlab{a}})Allen-Zhu, Li, and
+  Liang]{allen2018learning}
+Allen-Zhu, Z., Li, Y., and Liang, Y.
+\newblock Learning and generalization in overparameterized neural networks,
+  going beyond two layers.
+\newblock \emph{arXiv preprint arXiv:1811.04918}, 2018{\natexlab{a}}.
+
+\bibitem[Allen-Zhu et~al.(2018{\natexlab{b}})Allen-Zhu, Li, and
+  Song]{allen2018convergence}
+Allen-Zhu, Z., Li, Y., and Song, Z.
+\newblock A convergence theory for deep learning via over-parameterization.
+\newblock \emph{arXiv preprint arXiv:1811.03962}, 2018{\natexlab{b}}.
+
+\bibitem[Arora et~al.(2018)Arora, Ge, Neyshabur, and Zhang]{arora2018stronger}
+Arora, S., Ge, R., Neyshabur, B., and Zhang, Y.
+\newblock Stronger generalization bounds for deep nets via a compression
+  approach.
+\newblock \emph{arXiv preprint arXiv:1802.05296}, 2018.
+
+\bibitem[Bartlett \& Mendelson(2002)Bartlett and
+  Mendelson]{bartlett2002rademacher}
+Bartlett, P.~L. and Mendelson, S.
+\newblock Rademacher and gaussian complexities: Risk bounds and structural
+  results.
+\newblock \emph{Journal of Machine Learning Research}, 3\penalty0
+  (Nov):\penalty0 463--482, 2002.
+
+\bibitem[Bartlett et~al.(2017{\natexlab{a}})Bartlett, Foster, and
+  Telgarsky]{bartlett2017spectrally}
+Bartlett, P.~L., Foster, D.~J., and Telgarsky, M.~J.
+\newblock Spectrally-normalized margin bounds for neural networks.
+\newblock In \emph{Advances in Neural Information Processing Systems}, pp.\
+  6241--6250, 2017{\natexlab{a}}.
+
+\bibitem[Bartlett et~al.(2017{\natexlab{b}})Bartlett, Harvey, Liaw, and
+  Mehrabian]{bartlett2017nearly}
+Bartlett, P.~L., Harvey, N., Liaw, C., and Mehrabian, A.
+\newblock Nearly-tight {VC}-dimension and pseudodimension bounds for piecewise
+  linear neural networks.
+\newblock \emph{arXiv preprint arXiv:1703.02930}, 2017{\natexlab{b}}.
+
+\bibitem[Belkin et~al.(2018)Belkin, Ma, and Mandal]{belkin2018understand}
+Belkin, M., Ma, S., and Mandal, S.
+\newblock To understand deep learning we need to understand kernel learning.
+\newblock \emph{arXiv preprint arXiv:1802.01396}, 2018.
+
+\bibitem[Brutzkus \& Globerson(2017)Brutzkus and
+  Globerson]{brutzkus2017globally}
+Brutzkus, A. and Globerson, A.
+\newblock Globally optimal gradient descent for a {C}onv{N}et with gaussian
+  inputs.
+\newblock \emph{arXiv preprint arXiv:1702.07966}, 2017.
+
+\bibitem[Chen et~al.(2018)Chen, Jin, and Yu]{chen2018stability}
+Chen, Y., Jin, C., and Yu, B.
+\newblock Stability and convergence trade-off of iterative optimization
+  algorithms.
+\newblock \emph{arXiv preprint arXiv:1804.01619}, 2018.
+
+\bibitem[Chizat \& Bach(2018{\natexlab{a}})Chizat and Bach]{chizat2018global}
+Chizat, L. and Bach, F.
+\newblock On the global convergence of gradient descent for over-parameterized
+  models using optimal transport.
+\newblock \emph{arXiv preprint arXiv:1805.09545}, 2018{\natexlab{a}}.
+
+\bibitem[Chizat \& Bach(2018{\natexlab{b}})Chizat and Bach]{chizat2018note}
+Chizat, L. and Bach, F.
+\newblock A note on lazy training in supervised differentiable programming.
+\newblock \emph{arXiv preprint arXiv:1812.07956}, 2018{\natexlab{b}}.
+
+\bibitem[Daniely(2017)]{daniely2017sgd}
+Daniely, A.
+\newblock {SGD} learns the conjugate kernel class of the network.
+\newblock \emph{arXiv preprint arXiv:1702.08503}, 2017.
+
+\bibitem[Daniely et~al.(2016)Daniely, Frostig, and Singer]{daniely2016toward}
+Daniely, A., Frostig, R., and Singer, Y.
+\newblock Toward deeper understanding of neural networks: The power of
+  initialization and a dual view on expressivity.
+\newblock In \emph{Advances In Neural Information Processing Systems}, pp.\
+  2253--2261, 2016.
+
+\bibitem[Du \& Lee(2018)Du and Lee]{du2018power}
+Du, S.~S. and Lee, J.~D.
+\newblock On the power of over-parametrization in neural networks with
+  quadratic activation.
+\newblock \emph{arXiv preprint arXiv:1803.01206}, 2018.
+
+\bibitem[Du et~al.(2017{\natexlab{a}})Du, Lee, and Tian]{du2017convolutional}
+Du, S.~S., Lee, J.~D., and Tian, Y.
+\newblock When is a convolutional filter easy to learn?
+\newblock \emph{arXiv preprint arXiv:1709.06129}, 2017{\natexlab{a}}.
+
+\bibitem[Du et~al.(2017{\natexlab{b}})Du, Lee, Tian, Poczos, and
+  Singh]{du2017spurious}
+Du, S.~S., Lee, J.~D., Tian, Y., Poczos, B., and Singh, A.
+\newblock Gradient descent learns one-hidden-layer {CNN}: Don't be afraid of
+  spurious local minima.
+\newblock \emph{arXiv preprint arXiv:1712.00779}, 2017{\natexlab{b}}.
+
+\bibitem[Du et~al.(2018{\natexlab{a}})Du, Lee, Li, Wang, and
+  Zhai]{du2018global}
+Du, S.~S., Lee, J.~D., Li, H., Wang, L., and Zhai, X.
+\newblock Gradient descent finds global minima of deep neural networks.
+\newblock \emph{arXiv preprint arXiv:1811.03804}, 2018{\natexlab{a}}.
+
+\bibitem[Du et~al.(2018{\natexlab{b}})Du, Wang, Zhai, Balakrishnan,
+  Salakhutdinov, and Singh]{du2018many}
+Du, S.~S., Wang, Y., Zhai, X., Balakrishnan, S., Salakhutdinov, R.~R., and
+  Singh, A.
+\newblock How many samples are needed to estimate a convolutional neural
+  network?
+\newblock In \emph{Advances in Neural Information Processing Systems}, pp.\
+  371--381, 2018{\natexlab{b}}.
+
+\bibitem[Du et~al.(2018{\natexlab{c}})Du, Zhai, Poczos, and
+  Singh]{du2018provably}
+Du, S.~S., Zhai, X., Poczos, B., and Singh, A.
+\newblock Gradient descent provably optimizes over-parameterized neural
+  networks.
+\newblock \emph{arXiv preprint arXiv:1810.02054}, 2018{\natexlab{c}}.
+
+\bibitem[Dziugaite \& Roy(2017)Dziugaite and Roy]{dziugaite2017computing}
+Dziugaite, G.~K. and Roy, D.~M.
+\newblock Computing nonvacuous generalization bounds for deep (stochastic)
+  neural networks with many more parameters than training data.
+\newblock \emph{arXiv preprint arXiv:1703.11008}, 2017.
+
+\bibitem[Freeman \& Bruna(2016)Freeman and Bruna]{freeman2016topology}
+Freeman, C.~D. and Bruna, J.
+\newblock Topology and geometry of half-rectified network optimization.
+\newblock \emph{arXiv preprint arXiv:1611.01540}, 2016.
+
+\bibitem[Ge et~al.(2015)Ge, Huang, Jin, and Yuan]{ge2015escaping}
+Ge, R., Huang, F., Jin, C., and Yuan, Y.
+\newblock Escaping from saddle points $-$ online stochastic gradient for tensor
+  decomposition.
+\newblock In \emph{Proceedings of The 28th Conference on Learning Theory}, pp.\
+   797--842, 2015.
+
+\bibitem[Golowich et~al.(2017)Golowich, Rakhlin, and Shamir]{golowich2017size}
+Golowich, N., Rakhlin, A., and Shamir, O.
+\newblock Size-independent sample complexity of neural networks.
+\newblock \emph{arXiv preprint arXiv:1712.06541}, 2017.
+
+\bibitem[Gunasekar et~al.(2018{\natexlab{a}})Gunasekar, Lee, Soudry, and
+  Srebro]{gunasekar2018characterizing}
+Gunasekar, S., Lee, J., Soudry, D., and Srebro, N.
+\newblock Characterizing implicit bias in terms of optimization geometry.
+\newblock \emph{arXiv preprint arXiv:1802.08246}, 2018{\natexlab{a}}.
+
+\bibitem[Gunasekar et~al.(2018{\natexlab{b}})Gunasekar, Lee, Soudry, and
+  Srebro]{gunasekar2018implicit}
+Gunasekar, S., Lee, J., Soudry, D., and Srebro, N.
+\newblock Implicit bias of gradient descent on linear convolutional networks.
+\newblock \emph{arXiv preprint arXiv:1806.00468}, 2018{\natexlab{b}}.
+
+\bibitem[Haeffele \& Vidal(2015)Haeffele and Vidal]{haeffele2015global}
+Haeffele, B.~D. and Vidal, R.
+\newblock Global optimality in tensor factorization, deep learning, and beyond.
+\newblock \emph{arXiv preprint arXiv:1506.07540}, 2015.
+
+\bibitem[Hardt \& Ma(2016)Hardt and Ma]{hardt2016identity}
+Hardt, M. and Ma, T.
+\newblock Identity matters in deep learning.
+\newblock \emph{arXiv preprint arXiv:1611.04231}, 2016.
+
+\bibitem[Hardt et~al.(2015)Hardt, Recht, and Singer]{hardt2015train}
+Hardt, M., Recht, B., and Singer, Y.
+\newblock Train faster, generalize better: Stability of stochastic gradient
+  descent.
+\newblock \emph{arXiv preprint arXiv:1509.01240}, 2015.
+
+\bibitem[Imaizumi \& Fukumizu(2018)Imaizumi and Fukumizu]{imaizumi2018deep}
+Imaizumi, M. and Fukumizu, K.
+\newblock Deep neural networks learn non-smooth functions effectively.
+\newblock \emph{arXiv preprint arXiv:1802.04474}, 2018.
+
+\bibitem[Jacot et~al.(2018)Jacot, Gabriel, and Hongler]{jacot2018neural}
+Jacot, A., Gabriel, F., and Hongler, C.
+\newblock Neural tangent kernel: Convergence and generalization in neural
+  networks.
+\newblock \emph{arXiv preprint arXiv:1806.07572}, 2018.
+
+\bibitem[Ji \& Telgarsky(2018)Ji and Telgarsky]{ji2018gradient}
+Ji, Z. and Telgarsky, M.
+\newblock Gradient descent aligns the layers of deep linear networks.
+\newblock \emph{arXiv preprint arXiv:1810.02032}, 2018.
+
+\bibitem[Jin et~al.(2017)Jin, Ge, Netrapalli, Kakade, and
+  Jordan]{jin2017escape}
+Jin, C., Ge, R., Netrapalli, P., Kakade, S.~M., and Jordan, M.~I.
+\newblock How to escape saddle points efficiently.
+\newblock In \emph{Proceedings of the 34th International Conference on Machine
+  Learning}, pp.\  1724--1732, 2017.
+
+\bibitem[Kawaguchi(2016)]{kawaguchi2016deep}
+Kawaguchi, K.
+\newblock Deep learning without poor local minima.
+\newblock In \emph{Advances In Neural Information Processing Systems}, pp.\
+  586--594, 2016.
+
+\bibitem[Konstantinos et~al.(2017)Konstantinos, Davies, and
+  Vandergheynst]{konstantinos2017pac}
+Konstantinos, P., Davies, M., and Vandergheynst, P.
+\newblock {PAC-Bayesian} margin bounds for convolutional neural
+  networks-technical report.
+\newblock \emph{arXiv preprint arXiv:1801.00171}, 2017.
+
+\bibitem[Krizhevsky \& Hinton(2009)Krizhevsky and
+  Hinton]{krizhevsky2009learning}
+Krizhevsky, A. and Hinton, G.
+\newblock Learning multiple layers of features from tiny images.
+\newblock Technical report, Citeseer, 2009.
+
+\bibitem[LeCun et~al.(1998)LeCun, Bottou, Bengio, and
+  Haffner]{lecun1998gradient}
+LeCun, Y., Bottou, L., Bengio, Y., and Haffner, P.
+\newblock Gradient-based learning applied to document recognition.
+\newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
+  2278--2324, 1998.
+
+\bibitem[Lee et~al.(2016)Lee, Simchowitz, Jordan, and Recht]{lee2016gradient}
+Lee, J.~D., Simchowitz, M., Jordan, M.~I., and Recht, B.
+\newblock Gradient descent only converges to minimizers.
+\newblock In \emph{Conference on Learning Theory}, pp.\  1246--1257, 2016.
+
+\bibitem[Li et~al.(2018{\natexlab{a}})Li, Lu, Wang, Haupt, and
+  Zhao]{li2018tighter}
+Li, X., Lu, J., Wang, Z., Haupt, J., and Zhao, T.
+\newblock On tighter generalization bound for deep neural networks: {CNNs},
+  {ResNets}, and beyond.
+\newblock \emph{arXiv preprint arXiv:1806.05159}, 2018{\natexlab{a}}.
+
+\bibitem[Li \& Liang(2018)Li and Liang]{li2018learning}
+Li, Y. and Liang, Y.
+\newblock Learning overparameterized neural networks via stochastic gradient
+  descent on structured data.
+\newblock \emph{arXiv preprint arXiv:1808.01204}, 2018.
+
+\bibitem[Li \& Yuan(2017)Li and Yuan]{li2017convergence}
+Li, Y. and Yuan, Y.
+\newblock Convergence analysis of two-layer neural networks with {ReLU}
+  activation.
+\newblock \emph{arXiv preprint arXiv:1705.09886}, 2017.
+
+\bibitem[Li et~al.(2018{\natexlab{b}})Li, Ma, and Zhang]{li2018algorithmic}
+Li, Y., Ma, T., and Zhang, H.
+\newblock Algorithmic regularization in over-parameterized matrix sensing and
+  neural networks with quadratic activations.
+\newblock In \emph{Conference On Learning Theory}, pp.\  2--47,
+  2018{\natexlab{b}}.
+
+\bibitem[Ma et~al.(2018)Ma, Wu, et~al.]{ma2018priori}
+Ma, C., Wu, L., et~al.
+\newblock A priori estimates of the generalization error for two-layer neural
+  networks.
+\newblock \emph{arXiv preprint arXiv:1810.06397}, 2018.
+
+\bibitem[Mei et~al.(2018)Mei, Montanari, and Nguyen]{mei2018mean}
+Mei, S., Montanari, A., and Nguyen, P.-M.
+\newblock A mean field view of the landscape of two-layers neural networks.
+\newblock \emph{arXiv preprint arXiv:1804.06561}, 2018.
+
+\bibitem[Mohri et~al.(2012)Mohri, Rostamizadeh, and
+  Talwalkar]{mohri2012foundations}
+Mohri, M., Rostamizadeh, A., and Talwalkar, A.
+\newblock Foundations of machine learning.
+\newblock \emph{MIT Press}, 2012.
+
+\bibitem[Mou et~al.(2017)Mou, Wang, Zhai, and Zheng]{mou2017generalization}
+Mou, W., Wang, L., Zhai, X., and Zheng, K.
+\newblock Generalization bounds of {SGLD} for non-convex learning: Two
+  theoretical viewpoints.
+\newblock \emph{arXiv preprint arXiv:1707.05947}, 2017.
+
+\bibitem[Neyshabur et~al.(2015)Neyshabur, Tomioka, and
+  Srebro]{neyshabur2015norm}
+Neyshabur, B., Tomioka, R., and Srebro, N.
+\newblock Norm-based capacity control in neural networks.
+\newblock In \emph{Conference on Learning Theory}, pp.\  1376--1401, 2015.
+
+\bibitem[Neyshabur et~al.(2017)Neyshabur, Bhojanapalli, McAllester, and
+  Srebro]{neyshabur2017pac}
+Neyshabur, B., Bhojanapalli, S., McAllester, D., and Srebro, N.
+\newblock A {PAC-Bayesian} approach to spectrally-normalized margin bounds for
+  neural networks.
+\newblock \emph{arXiv preprint arXiv:1707.09564}, 2017.
+
+\bibitem[Neyshabur et~al.(2019)Neyshabur, Li, Bhojanapalli, LeCun, and
+  Srebro]{neyshabur2018the}
+Neyshabur, B., Li, Z., Bhojanapalli, S., LeCun, Y., and Srebro, N.
+\newblock The role of over-parametrization in generalization of neural
+  networks.
+\newblock In \emph{International Conference on Learning Representations}, 2019.
+\newblock URL \url{https://openreview.net/forum?id=BygfghAcYX}.
+
+\bibitem[Nguyen \& Hein(2017)Nguyen and Hein]{nguyen2017loss}
+Nguyen, Q. and Hein, M.
+\newblock The loss surface of deep and wide neural networks.
+\newblock \emph{arXiv preprint arXiv:1704.08045}, 2017.
+
+\bibitem[Paszke et~al.(2017)Paszke, Gross, Chintala, Chanan, Yang, DeVito, Lin,
+  Desmaison, Antiga, and Lerer]{paszke2017automatic}
+Paszke, A., Gross, S., Chintala, S., Chanan, G., Yang, E., DeVito, Z., Lin, Z.,
+  Desmaison, A., Antiga, L., and Lerer, A.
+\newblock Automatic differentiation in pytorch.
+\newblock 2017.
+
+\bibitem[Rotskoff \& Vanden-Eijnden(2018)Rotskoff and
+  Vanden-Eijnden]{rotskoff2018neural}
+Rotskoff, G.~M. and Vanden-Eijnden, E.
+\newblock Neural networks as interacting particle systems: Asymptotic convexity
+  of the loss landscape and universal scaling of the approximation error.
+\newblock \emph{arXiv preprint arXiv:1805.00915}, 2018.
+
+\bibitem[Safran \& Shamir(2017)Safran and Shamir]{safran2017spurious}
+Safran, I. and Shamir, O.
+\newblock Spurious local minima are common in two-layer relu neural networks.
+\newblock \emph{arXiv preprint arXiv:1712.08968}, 2017.
+
+\bibitem[Sirignano \& Spiliopoulos(2018)Sirignano and
+  Spiliopoulos]{sirignano2018mean}
+Sirignano, J. and Spiliopoulos, K.
+\newblock Mean field analysis of neural networks.
+\newblock \emph{arXiv preprint arXiv:1805.01053}, 2018.
+
+\bibitem[Soltanolkotabi(2017)]{soltanolkotabi2017learning}
+Soltanolkotabi, M.
+\newblock Learning {ReLUs} via gradient descent.
+\newblock \emph{arXiv preprint arXiv:1705.04591}, 2017.
+
+\bibitem[Soltanolkotabi et~al.(2018)Soltanolkotabi, Javanmard, and
+  Lee]{soltanolkotabi2018theoretical}
+Soltanolkotabi, M., Javanmard, A., and Lee, J.~D.
+\newblock Theoretical insights into the optimization landscape of
+  over-parameterized shallow neural networks.
+\newblock \emph{IEEE Transactions on Information Theory}, 2018.
+
+\bibitem[Soudry \& Carmon(2016)Soudry and Carmon]{soudry2016no}
+Soudry, D. and Carmon, Y.
+\newblock No bad local minima: Data independent training error guarantees for
+  multilayer neural networks.
+\newblock \emph{arXiv preprint arXiv:1605.08361}, 2016.
+
+\bibitem[Soudry et~al.(2018)Soudry, Hoffer, Nacson, Gunasekar, and
+  Srebro]{soudry2018implicit}
+Soudry, D., Hoffer, E., Nacson, M.~S., Gunasekar, S., and Srebro, N.
+\newblock The implicit bias of gradient descent on separable data.
+\newblock \emph{Journal of Machine Learning Research}, 19\penalty0 (70), 2018.
+
+\bibitem[Tian(2017)]{tian2017analytical}
+Tian, Y.
+\newblock An analytical formula of population gradient for two-layered {ReLU}
+  network and its applications in convergence and critical point analysis.
+\newblock \emph{arXiv preprint arXiv:1703.00560}, 2017.
+
+\bibitem[Tsuchida et~al.(2017)Tsuchida, Roosta-Khorasani, and
+  Gallagher]{tsuchida2017invariance}
+Tsuchida, R., Roosta-Khorasani, F., and Gallagher, M.
+\newblock Invariance of weight distributions in rectified mlps.
+\newblock \emph{arXiv preprint arXiv:1711.09090}, 2017.
+
+\bibitem[Venturi et~al.(2018)Venturi, Bandeira, and Bruna]{venturi2018neural}
+Venturi, L., Bandeira, A., and Bruna, J.
+\newblock Neural networks with finite intrinsic dimension have no spurious
+  valleys.
+\newblock \emph{arXiv preprint arXiv:1802.06384}, 2018.
+
+\bibitem[Wei et~al.(2018)Wei, Lee, Liu, and Ma]{wei2018margin}
+Wei, C., Lee, J.~D., Liu, Q., and Ma, T.
+\newblock On the margin theory of feedforward neural networks.
+\newblock \emph{arXiv preprint arXiv:1810.05369}, 2018.
+
+\bibitem[Xie et~al.(2017)Xie, Liang, and Song]{xie2017diverse}
+Xie, B., Liang, Y., and Song, L.
+\newblock Diverse neural network learns true target functions.
+\newblock In \emph{Artificial Intelligence and Statistics}, pp.\  1216--1224,
+  2017.
+
+\bibitem[Yun et~al.(2018)Yun, Sra, and Jadbabaie]{yun2018critical}
+Yun, C., Sra, S., and Jadbabaie, A.
+\newblock A critical view of global optimality in deep learning.
+\newblock \emph{arXiv preprint arXiv:1802.03487}, 2018.
+
+\bibitem[Zhang et~al.(2017)Zhang, Bengio, Hardt, Recht, and
+  Vinyals]{zhang2016understanding}
+Zhang, C., Bengio, S., Hardt, M., Recht, B., and Vinyals, O.
+\newblock Understanding deep learning requires rethinking generalization.
+\newblock In \emph{Proceedings of the International Conference on Learning
+  Representations (ICLR), 2017}, 2017.
+
+\bibitem[Zhang et~al.(2018)Zhang, Yu, Wang, and Gu]{zhang2018learning}
+Zhang, X., Yu, Y., Wang, L., and Gu, Q.
+\newblock Learning one-hidden-layer relu networks via gradient descent.
+\newblock \emph{arXiv preprint arXiv:1806.07808}, 2018.
+
+\bibitem[Zhong et~al.(2017)Zhong, Song, Jain, Bartlett, and
+  Dhillon]{zhong2017recovery}
+Zhong, K., Song, Z., Jain, P., Bartlett, P.~L., and Dhillon, I.~S.
+\newblock Recovery guarantees for one-hidden-layer neural networks.
+\newblock \emph{arXiv preprint arXiv:1706.03175}, 2017.
+
+\bibitem[Zhou et~al.(2019)Zhou, Veitch, Austern, Adams, and
+  Orbanz]{zhou2018nonvacuous}
+Zhou, W., Veitch, V., Austern, M., Adams, R.~P., and Orbanz, P.
+\newblock Non-vacuous generalization bounds at the imagenet scale: a
+  {PAC}-bayesian compression approach.
+\newblock In \emph{International Conference on Learning Representations}, 2019.
+\newblock URL \url{https://openreview.net/forum?id=BJgqqsAct7}.
+
+\bibitem[Zhou \& Liang(2017)Zhou and Liang]{zhou2017critical}
+Zhou, Y. and Liang, Y.
+\newblock Critical points of neural networks: Analytical forms and landscape
+  properties.
+\newblock \emph{arXiv preprint arXiv:1710.11205}, 2017.
+
+\bibitem[Zou et~al.(2018)Zou, Cao, Zhou, and Gu]{zou2018stochastic}
+Zou, D., Cao, Y., Zhou, D., and Gu, Q.
+\newblock Stochastic gradient descent optimizes over-parameterized deep {ReLU}
+  networks.
+\newblock \emph{arXiv preprint arXiv:1811.08888}, 2018.
+
+\end{thebibliography}

@@ -1,0 +1,333 @@
+
+
+
+\subsection{Proof of Lemma~\ref{lem:distance_bounds}} \label{app:proof-lem:distance_bounds}
+
+\begin{proof}[Proof of Lemma~\ref{lem:distance_bounds}]
+	We assume that all the high-probability (``with probability $1-\delta$'') events happen. By a union bound at the end, the success probability is at least $1-\Omega(\delta)$, and then we can rescale $\delta$ by a constant such that the success probability is at least $1-\delta$.
+	
+	The first part of Lemma~\ref{lem:distance_bounds} is proved as Lemma~\ref{lem:weight-vector-movement} (note that $\norm{\vect y - \vect u(0)}_2 = O\left( \sqrt{n/\delta} \right)$). Now we prove the second part.
+	
+	Recall the update rule~\eqref{eqn:gd} for $\mat W$:
+	\begin{equation} \label{eqn:gd-repeated}
+	\vectorize{\mat W(k+1)} = \vectorize{\mat W(k)} - \eta \mat Z(k) (\vect u(k) - \vect y).
+	\end{equation}
+	According to the proof of Theorem~\ref{thm:convergence_rate} (\eqref{eqn:u-expression}, \eqref{eqn:u-expression-second-term} and \eqref{eqn:u-expression-third-term}) we can write
+	\begin{equation} \label{eqn:u-expression-2}
+	\vect u(k) - \vect y = -(\mat I - \eta \mat H^\infty)^k \vect y + \vect e(k),
+	\end{equation}
+	where
+	\begin{equation} \label{eqn:e(k)-bound}
+	\norm{\vect e(k)} = O\left(  (1-\eta \lambda_0)^k \cdot \frac{\sqrt n \kappa}{ \delta}  + k\left(1-\frac{\eta \lambda_0}{4}\right)^{k-1}\cdot \frac{\eta n^{7/2}}{\sqrt m \lambda_0 \kappa \delta^{2}}  \right).
+	\end{equation}
+	Plugging \eqref{eqn:u-expression-2} into \eqref{eqn:gd-repeated} and taking a sum over $k = 0, 1, \ldots, K-1$, we get:
+	\begin{equation} \label{eqn:W-movement}
+	\begin{aligned}
+	&\vectorize{\mat W(K)} - \vectorize{\mat W(0)} \\
+	=\,& \sum_{k=0}^{K-1} \left( \vectorize{\mat W(k+1)} - \vectorize{\mat W(k)}  \right) \\
+	=\,& - \sum_{k=0}^{K-1} \eta \mat Z(k) (\vect u(k) - \vect y) \\
+	=\,&  \sum_{k=0}^{K-1} \eta \mat Z(k) \left((\mat I - \eta \mat H^\infty)^k \vect y - \vect e(k)\right) \\
+	=\,&  \sum_{k=0}^{K-1} \eta \mat Z(k) (\mat I - \eta \mat H^\infty)^k \vect y  - \sum_{k=0}^{K-1} \eta \mat Z(k) \vect e(k) \\
+	=\,&  \sum_{k=0}^{K-1} \eta \mat Z(0) (\mat I - \eta \mat H^\infty)^k \vect y + \sum_{k=0}^{K-1} \eta (\mat Z(k) - \mat Z(0)) (\mat I - \eta \mat H^\infty)^k \vect y  - \sum_{k=0}^{K-1} \eta \mat Z(k)  \vect e(k).
+	\end{aligned}
+	\end{equation}
+	
+	The second and the third terms in~\eqref{eqn:W-movement} are considered perturbations, and we can upper bound their norms easily.
+	For the second term, using $\norm{\mat Z(k) - \mat Z(0)}_F = O\left( \frac{n}{\sqrt{m^{1/2} \lambda_0 \kappa \delta^{3/2}}} \right)$ (Lemma~\ref{lem:H-and-Z-perturbation}), we have:
+	\begin{equation} \label{eqn:W-movement-perturbation-1}
+	\begin{aligned}
+	& \norm{\sum_{k=0}^{K-1} \eta (\mat Z(k) - \mat Z(0)) (\mat I - \eta \mat H^\infty)^k \vect y}_2 \\
+	\le\,& \sum_{k=0}^{K-1} \eta \cdot O\left( \frac{n}{\sqrt{m^{1/2} \lambda_0 \kappa \delta^{3/2}}} \right) \norm{\mat I - \eta \mat H^\infty}_2^k \norm{\vect y}_2 \\
+	\le\,&  O\left( \frac{\eta n}{\sqrt{m^{1/2} \lambda_0 \kappa \delta^{3/2}}} \right)  \sum_{k=0}^{K-1} (1-\eta\lambda_0)^k \sqrt n \\
+	=\,& O\left( \frac{ n^{3/2}}{ \sqrt{m^{1/2} \lambda_0^3 \kappa \delta^{3/2}}} \right) . 
+	\end{aligned}
+	\end{equation}
+	
+	For the third term in \eqref{eqn:W-movement}, we use $\norm{\mat Z(k)}_F \le \sqrt n$ and \eqref{eqn:e(k)-bound} to get:
+	\begin{equation} \label{eqn:W-movement-perturbation-2}
+	\begin{aligned}
+	&\norm{\sum_{k=0}^{K-1} \eta \mat Z(k)  \vect e(k)}_2\\
+	\le\,& \sum_{k=0}^{K-1} \eta \sqrt n \cdot O\left(  (1-\eta \lambda_0)^k \cdot \frac{\sqrt n \kappa}{ \delta}  + k\left(1-\frac{\eta \lambda_0}{4}\right)^{k-1}\cdot \frac{\eta n^{7/2}}{\sqrt m \lambda_0 \kappa \delta^{2}}  \right) \\
+	=\,& O\left( \frac{\eta  n \kappa}{ \delta} \sum_{k=0}^{K-1}     (1-\eta \lambda_0)^k 
+		+ \frac{\eta^2  n^4}{\sqrt m \lambda_0 \kappa \delta^{2}} \sum_{k=0}^{K-1} k\left(1-\frac{\eta \lambda_0}{4}\right)^{k-1} \right) \\
+	=\,& O\left( \frac{  n \kappa}{\lambda_0 \delta} + \frac{  n^4}{\sqrt m \lambda_0^3 \kappa \delta^{2}}  \right).
+	\end{aligned}
+	\end{equation}
+	
+	Define $\mat T = \eta \sum_{k=0}^{K-1} (\mat I - \eta \mat H^\infty)^k$.
+	For the first term in \eqref{eqn:W-movement}, using $\norm{\mat H(0) - \mat H^\infty}_F = O\left( \frac{n\sqrt{\log \frac{n}{\delta}}}{\sqrt m} \right)$ (Lemma~\ref{lem:H(0)-H^inf}) we have
+	\begin{equation} \label{eqn:W-movement-main-term-bound-interim}
+	\begin{aligned}
+	&\norm{\sum_{k=0}^{K-1} \eta \mat Z(0) (\mat I - \eta \mat H^\infty)^k \vect y}_2^2 \\
+	=\,& \norm{ \mat Z(0) \mat T  \vect y}_2^2 \\
+	=\,&  \vect y^\top \mat T \mat Z(0)^\top \mat Z(0) \mat T \vect y \\
+	=\,&  \vect y^\top \mat T \mat H(0)  \mat T \vect y \\
+	\le\,&  \vect y^\top \mat T \mat H^\infty  \mat T \vect y  +    \norm{\mat H(0) - \mat H^\infty}_2  \norm{\mat T}_2^2 \norm{\vect y}_2^2 \\
+	\le \,&  \vect y^\top \mat T \mat H^\infty  \mat T \vect y  +    O\left( \frac{n\sqrt{\log \frac{n}{\delta}}}{\sqrt m} \right) \cdot  \left( \eta \sum_{k=0}^{K-1} (\mat I - \eta \lambda_0)^k\right)^2 n \\
+	= \,&  \vect y^\top \mat T \mat H^\infty  \mat T \vect y  +    O\left( \frac{n^2\sqrt{\log \frac{n}{\delta}}}{\sqrt m \lambda_0^2} \right) .
+	\end{aligned}
+	\end{equation}
+	Let the eigen-decomposition of $\mat H^\infty$ be $\mat H^\infty = \sum_{i=1}^n \lambda_i \vect v_i \vect v_i^\top$.
+	Since $\mat T$ is a polynomial of $\mat H^\infty$, it has the same set of eigenvectors as $\mat H^\infty$, and we have
+	\begin{align*}
+	\mat T  = \sum_{i=1}^n \eta \sum_{k=0}^{K-1} (1 - \eta \lambda_i)^k \vect v_i \vect v_i^\top
+	= \sum_{i=1}^n \frac{1 - (1 - \eta \lambda_i)^{K}}{\lambda_i} \vect v_i \vect v_i^\top.
+	\end{align*}
+	It follows that
+	\begin{align*}
+	\mat T \mat H^\infty  \mat T
+	= \sum_{i=1}^n \left( \frac{1 - (1 - \eta \lambda_i)^{K}}{\lambda_i} \right)^2 \lambda_i  \vect v_i \vect v_i^\top
+	\preceq \sum_{i=1}^n \frac{1}{\lambda_i}\vect v_i \vect v_i^\top
+	= \left( \mat H^\infty \right)^{-1}.
+	\end{align*}
+	Plugging this into \eqref{eqn:W-movement-main-term-bound-interim}, we get
+	\begin{equation} \label{eqn:W-movement-main-term-bound}
+	\norm{\sum_{k=0}^{K-1} \eta \mat Z(0) (\mat I - \eta \mat H^\infty)^k \vect y}_2
+	\le \sqrt{\vect y^\top (\mat H^\infty)^{-1} \vect y  +    O\left( \frac{n^2\sqrt{\log \frac{n}{\delta}}}{\sqrt m \lambda_0^2} \right) }
+	\le \sqrt{\vect y^\top (\mat H^\infty)^{-1} \vect y}  +    O\left( \sqrt{\frac{n^2\sqrt{\log \frac{n}{\delta}}}{\sqrt m \lambda_0^2} } \right) .
+	\end{equation}
+	
+	Finally, plugging the three bounds \eqref{eqn:W-movement-perturbation-1}, \eqref{eqn:W-movement-perturbation-2} and \eqref{eqn:W-movement-main-term-bound} into \eqref{eqn:W-movement}, we have
+	\begin{align*}
+	& \norm{\mat W(K) - \mat W(0)}_F \\
+	=\,& \norm{\vectorize{\mat W(K)} - \vectorize{\mat W(0)} }_2 \\
+	\le\,& \sqrt{\vect y^\top (\mat H^\infty)^{-1} \vect y}  +    O\left( \sqrt{\frac{n^2\sqrt{\log \frac{n}{\delta}}}{\sqrt m \lambda_0^2} } \right)
+		+ O\left( \frac{ n^{3/2}}{ \sqrt{m^{1/2} \lambda_0^3 \kappa \delta^{3/2}}} \right)
+		+ O\left( \frac{  n \kappa}{\lambda_0 \delta} + \frac{  n^4}{\sqrt m \lambda_0^3 \kappa \delta^{2}}  \right) \\
+	=\,& \sqrt{\vect y^\top (\mat H^\infty)^{-1} \vect y}  + O\left( \frac{  n \kappa}{\lambda_0 \delta} \right) + \frac{\poly\left(n, \frac{1}{\lambda_0}, \frac{1}{\delta} \right)}{m^{1/4} \kappa^{1/2}} .
+	\end{align*}
+	This finishes the proof of Lemma~\ref{lem:distance_bounds}.
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Proof of Lemma~\ref{lem:rad_dist_func_class}} \label{app:proof-lem:rad_dist_func_class}
+
+%
+%Define function class 
+%
+%\[\cF^{W(0),\va}_{R,B} = \{f:\reals^d \to \reals \mid f(\vx) = \sum_{r=1}^m\frac{ a_r}{\sqrt{m}} \relu{\vw_r^\top \vx}, \norm{\vw_r(0)-\vw}_{2}\le R,\norm{\vW(0)-\vW}_F\le B \}.\]
+%
+%
+%\begin{thm}
+%For any fixed $\{\vx_i\}_{i=1}^n$ s.t. $\norm{\vx_i}\le 1$,$\forall i\in [n]$, suppose $\{\vw_r(0)\}_{r=1}^m$,$\{a_r\}_{r=1}^m$ are independently sampled from $N(\bm{0}, I_d)$, $\textrm{Unif}[-1,1]$ respectively. Then w.h.p.  the empirical rademacher complexity has the following upper bound 
+% \[\rc{\cF^{\vW(0),\va}_{R,B}; \vX}\le  4nR^2\sqrt{m} +  B\norm{\vZ(0)}_F .\]
+%\end{thm}
+%
+%\begin{comment}
+%\begin{thm}
+%Suppose $\{\vx_i\}_{i=1}^n$ are sampled indepedently from distribution $\cD$, the support of  which is a subset of $\{\vx\in\reals^d \mid \norm{\vx}_2\le 1\}$, and that $\{\vw_r(0)\}_{r=1}^m$,$\{a_r\}_{r=1}^m$ are independently sampled from $N(\bm{0}, I_d)$, $\textrm{Unif}[-1,1]$ respectively. Then w.h.p. (over both of the randomness of $X$,$W(0)$,$\va$), the empirical rademacher complexity has the following upper bound 
+% \[\rc{\cF^{\vW(0),\va}_{R,B}; \vX}\le  4nR^2\sqrt{m} +  \norm{\vZ(0)}_F .\]
+%\end{thm}
+%\end{comment}
+
+\begin{proof}[Proof of Lemma~\ref{lem:rad_dist_func_class}]
+	We need to upper bound
+	\begin{align*}
+		\calR_S\left(\cF^{\mat{W}(0),\va}_{R,B} \right) 
+		&= \frac{1}{n} \Erc{\sup_{f \in \cF^{\mat{W}(0),\va}_{R,B}}\sum_{i=1}^{n} \eps_i f(\vect{x}_i)} \\
+		&= \frac{1}{n} \Erc{ \sup_{\mat W: \norm{\mat W - \mat W(0)}_{2, \infty} \le R \atop \norm{\mat W - \mat W(0)}_F \le B }\sum_{i=1}^{n} \eps_i f_{\mat W, \vect a}(\vect{x}_i)} \\
+		&= \frac{1}{n} \Erc{ \sup_{\mat W: \norm{\mat W - \mat W(0)}_{2, \infty} \le R \atop \norm{\mat W - \mat W(0)}_F \le B }\sum_{i=1}^{n} \eps_i \sum_{r=1}^m \frac{1}{\sqrt m} a_r \sigma(\vect w^\top \vect x_i)} ,
+	\end{align*}
+where $\norm{\mat W - \mat W(0)}_{2, \infty} = \max\limits_{r\in[m]} \norm{\vw_r-\vw_r(0)}_2$.
+	
+
+Similar to the proof of Lemma~\ref{lem:H-and-Z-perturbation}, we define events:
+\[A_{r, i} = \left\{ \abs{\vw_{r}(0)^\top \vx_i} \le R \right\}, \quad i\in[n], r\in[m].\]
+Since we only look at $\mat W$ such that $\norm{\vw_r-\vw_r(0)}_2\le R$ for all $ r\in[m]$,
+if $\indict\{A_{r, i}\}=0$ we must have $\indict\{ \vw^\top \vx_i \} = \indict\{\vw_r(0)^\top \vx_i\ge  0\} = \indict_{r, i}(0)$. Thus we have
+\[ \bone{\neg A_{r, i}} \relu{\vw_r^\top \vx_i} %=  \bone{\neg A_{r, i}} \vw_r^\top \vx_i \bone{\vw_r(0)^\top \vx_i\ge  0}  
+=  \bone{\neg A_{r, i}} \indict_{r, i}(0)\vw_r^\top \vx_i. \]
+Then we have
+\begin{align*}
+%\begin{aligned}
+&\sum_{i=1}^n \eps_i \sum_{r=1}^m a_r \relu{\vw_r^\top \vx_i} -\sum_{i=1}^n \eps_i \sum_{r=1}^m a_r \indict_{r,i}(0) \vw_r^\top \vx_i   \\
+=\,& \sum_{r=1}^m \sum_{i=1}^n \left( \bone{A_{r, i}} + \bone{\neg A_{r, i}}\right) \eps_i a_r \left( \relu{\vw_r^\top \vx_i} - \indict_{r,i}(0) \vw_r^\top \vx_i   \right)\\
+=\,& \sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \eps_i a_r \left( \relu{\vw_r^\top \vx_i} - \indict_{r,i}(0) \vw_r^\top \vx_i   \right)\\
+=\,& \sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \eps_i a_r \left( \relu{\vw_r^\top \vx_i} - \indict_{r,i}(0) \vw_r(0)^\top \vx_i    - \indict_{r,i}(0) (\vw_r-\vw_r(0))^\top \vx_i  \right)\\
+=\,& \sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \eps_i a_r \left( \relu{\vw_r^\top \vx_i} - \relu{\vw_r(0)^\top \vx_i}   - \indict_{r,i}(0) (\vw_r-\vw_r(0))^\top \vx_i   \right)\\
+\le\, & \sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}} \cdot 2R  .
+%\end{aligned}
+\end{align*}
+
+Thus we can bound the Rademacher complexity as:
+\begin{align*}
+%\begin{split}
+\calR_S\left( \cF^{\vW(0),\va}_{R,B} \right)
+=\,& \frac1n \Erc{ \sup_{\tiny \substack{\mat W: \norm{\vW-\vW(0)}_{2,\infty}\le R \\ \norm{\vW-\vW(0)}_F\le B }}  \sum_{i=1}^n\eps_i \sum_{r=1}^m\frac{ a_r}{\sqrt{m}} \relu{\vw_r^\top \vx} }\\
+\le\, & \frac1n  \Erc{ \sup_{\tiny \substack{\mat W: \norm{\vW-\vW(0)}_{2,\infty}\le R \\ \norm{\vW-\vW(0)}_F\le B }}  \sum_{i=1}^n\eps_i  \sum_{r=1}^m\frac{ a_r}{\sqrt{m}} \indict_{r,i}(0) \vw_r^\top \vx_i   } + \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+\le\, & \frac1n  \Erc{ \sup_{\mat W: \norm{\vW-\vW(0)}_F\le B}  \sum_{i=1}^n\eps_i   \sum_{r=1}^m\frac{ a_r}{\sqrt{m}} \indict_{r,i}(0) \vw_r^\top \vx_i  } + \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+=\, & \frac1n  \Erc{ \sup_{\mat W: \norm{\vW-\vW(0)}_F\le B}  \vectorize{\mat W}^\top \mat Z(0) {\bm{\eps}} }+ \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+=\, & \frac1n  \Erc{ \sup_{\mat W: \norm{\vW-\vW(0)}_F\le B}  \vectorize{\mat W - \mat W(0)}^\top \mat Z(0) {\bm{\eps}} } + \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+\le\,& \frac1n \Erc{B\cdot \norm{\mat Z(0) \bm{\eps}}_2} + \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+\le\,& \frac Bn \sqrt{\Erc{ \norm{\mat Z(0) \bm{\eps}}_2^2}} + \frac{2R}{n\sqrt{m}}\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}  \\
+=\, & \frac Bn \norm{\vZ(0)}_F + \frac{2R}{n\sqrt{m}} \sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}} .
+%\end{split}
+\end{align*}
+
+Next we bound $\norm{\mat Z(0)}_F$ and $\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}$.
+
+For $\norm{\mat Z(0)}_F$, notice that
+\begin{align*}
+\norm{\mat Z(0)}_F^2 = \frac1m \sum_{r=1}^m \left( \sum_{i=1}^n \indict_{r,i}(0) \right).
+\end{align*}
+Since all $m$ neurons are independent at initialization and $\E\left[ \sum_{i=1}^n \indict_{r,i}(0) \right] = n/2$, by Hoeffding's inequality, with probability at least $1-\delta/2$ we have
+ \begin{align*}
+ \norm{\mat Z(0)}_F^2 \le n\left( \frac 12 + \sqrt{\frac{\log \frac2\delta}{2m}} \right).
+ \end{align*}
+
+Similarly, for $\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}}$, from \eqref{eqn:A_{ri}-bound} we know $\E\left[ \sum_{i=1}^n  \bone{A_{r, i}} \right] \le \frac{\sqrt 2 n R}{\sqrt\pi \kappa}$. Then by Hoeffding's inequality, with probability at least $1-\delta/2$ we have
+\begin{align*}
+\sum_{r=1}^m \sum_{i=1}^n  \bone{A_{r, i}} \le mn \left( \frac{\sqrt 2  R}{\sqrt\pi \kappa} + \sqrt{\frac{\log \frac2\delta}{2m}} \right).
+\end{align*}
+
+Therefore, with probability at least $1-\delta$, the Rademacher complexity is bounded as:
+\begin{align*}
+\calR_S\left( \cF^{\vW(0),\va}_{R,B} \right)
+&\le \frac Bn \left( \sqrt{\frac n2} + \sqrt{n\sqrt{\frac{\log \frac2\delta}{2m}}} \right) + \frac{2R}{n\sqrt{m}} mn \left( \frac{\sqrt 2  R}{\sqrt\pi \kappa} + \sqrt{\frac{\log \frac2\delta}{2m}} \right) \\
+&= \frac{B}{\sqrt{2n}} \left(1+\left( \frac{2\log \frac2\delta}{m} \right)^{1/4} \right)  + \frac{2\sqrt 2 R^2 \sqrt m}{\sqrt\pi \kappa} + R \sqrt{2\log \frac2\delta},
+\end{align*}
+completing the proof of Lemma~\ref{lem:rad_dist_func_class}.
+(Note that the high probability events used in the proof do not depend on the value of $B$, so the above bound holds simultaneously for every $B$.)
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Proof of Theorem~\ref{thm:main_generalization}} \label{app:proof-thm:main_generalization}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main_generalization}]
+	First of all, since the distribution $\cD$ is $(\lambda_0, \delta/3, n)$-non-degenerate, with probability at least $1-\delta/3$ we have $\lambda_{\min}(\mat H^\infty) \ge \lambda_0$. The rest of the proof is conditioned on this happening.
+	
+	 Next, from Theorem~\ref{thm:ssdu-converge}, Lemma~\ref{lem:distance_bounds} and Lemma~\ref{lem:rad_dist_func_class}, we know that for any sample $S$, with probability at least $1-\delta/3$ over the random initialization, the followings hold simultaneously:
+	 \begin{enumerate}[(i)]
+	 	\item Optimization succeeds (Theorem~\ref{thm:ssdu-converge}):
+	 	\begin{equation*} 
+	 	\Phi(\mat W(k)) \le \left( 1-\frac{\eta\lambda_0}{2} \right)^k \cdot O\left( \frac{n}{\delta} \right) \le \frac12. %\frac{n\epsilon^2}{8}.
+	 	\end{equation*}
+	 	This implies an upper bound on the training error $L_S(f_{\mat W(k), \vect a}) = \frac1n \sum_{i=1}^n \ell(f_{\mat W(k), \vect a}(\vect x_i), y_i) = \frac1n \sum_{i=1}^n \ell(u_i(k), y_i)$:
+	 	\begin{align*}
+	 	L_S(f_{\mat W(k), \vect a}) &= \frac1n \sum_{i=1}^n \left[ \ell(u_i(k), y_i) - \ell(y_i, y_i)\right] \\
+	 	&\le \frac1n \sum_{i=1}^n \abs{u_i(k) - y_i} \\
+	 	&\le \frac{1}{\sqrt n} \norm{\vect u(k) - \vect y}_2 \\
+	 	&= \sqrt{\frac{2\Phi(\mat W(k))}{n}} \\
+	 	&\le \frac{1}{\sqrt n}. %\frac{\epsilon}{2}.
+	 	\end{align*}
+	 	
+	 	\item $\norm{\vect w_r(k) - \vect w_r(0)}_2 \le R$ $(\forall r\in[m])$ and
+	 	%$\norm{\mat{W}(k) - \mat{W}(0)}_{2,\infty} \le \frac{\poly(n,1/\lambda_0)}{\sqrt{m}}$,
+	 	 $\norm{\mat{W}(k)-\mat{W}(0)}_{F} \le B $,
+	 	%The learned function $f_{\mat W(k), \vect a}$ belongs to the function class $\cF_{R, B}^{\mat W(0), \vect a}$, 
+	 	where $R = O\left( \frac{ n }{\sqrt m \lambda_0\sqrt{\delta}} \right)$   and $B = \sqrt{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}} + O\left( \frac{  n \kappa}{\lambda_0 \delta} \right) + \frac{\poly\left(n, \lambda_0^{-1}, \delta^{-1} \right)}{m^{1/4} \kappa^{1/2}}$.
+	 	Note that $B\le O\left( \sqrt{\frac{n}{\lambda_0}} \right)$.
+	 	
+	 	\item 
+	 	Let $B_i =  i$ ($i=1, 2, \ldots$).
+	 	Simultaneously for all $i$, the function class $\cF_{R, B_i}^{\mat W(0), \vect a}$ has Rademacher complexity bounded as
+	 	\begin{align*}
+	 	\calR_S\left( \cF^{\mat W(0),\va}_{R,B_i} \right)
+	 	\le 	\frac{B_i}{\sqrt{2n}} \left(1+\left( \frac{2\log \frac{10}{\delta}}{m} \right)^{1/4} \right) + \frac{2 R^2 \sqrt m}{ \kappa} + R \sqrt{2\log \frac{10}{\delta}} .
+	 	\end{align*}
+	 \end{enumerate}
+ 
+ 
+ 
+ Let $i^*$ be the smallest integer such that $B\le B_{i^*}$. Then we have $i^* \le O\left( \sqrt{\frac{n}{\lambda_0}} \right)$ and $B_{i^*} \le B + 1$.
+ From above we know $f_{\mat W(k), \vect a}\in \cF_{R, B_{i^*}}^{\mat W(0), \vect a}$, and
+ \begin{align*}
+ %\begin{aligned}
+ &\calR_S\left( \cF^{\mat W(0),\va}_{R,B_{i^*}} \right) \\
+ \le \,&	\frac{B+1}{\sqrt{2n}} \left(1+\left( \frac{2\log \frac{10}{\delta}}{m} \right)^{1/4} \right) + \frac{2 R^2 \sqrt m}{ \kappa} + R \sqrt{2\log \frac{10}{\delta}} \\
+ = \,& \frac{\sqrt{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}} }{\sqrt{2n}} \left(1+\left( \frac{2\log \frac{10}{\delta}}{m} \right)^{1/4} \right) + \frac{1}{\sqrt{n}} + O\left( \frac{ \sqrt n \kappa}{\lambda_0 \delta} \right) + \frac{\poly\left(n, \lambda_0^{-1}, \delta^{-1} \right)}{m^{1/4} \kappa^{1/2}} + \frac{2 R^2 \sqrt m}{ \kappa} + R \sqrt{2\log \frac{10}{\delta}} \\
+ \le \,& \sqrt{\frac{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{2n}}  +  \sqrt{\frac{\sqrt n \lambda_0^{-1}\sqrt n}{2n}} \left( \frac{2\log \frac{10}{\delta}}{m} \right)^{1/4} + \frac{1}{\sqrt{n}}  + O\left( \frac{ \sqrt n \kappa}{\lambda_0 \delta} \right) + \frac{\poly\left(n, \lambda_0^{-1}, \delta^{-1} \right)}{m^{1/4} \kappa^{1/2}} \\
+ = \,& \sqrt{\frac{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{2n}}  + \frac{1}{\sqrt{n}}  + O\left( \frac{ \sqrt n \kappa}{\lambda_0 \delta} \right) + \frac{\poly\left(n, \lambda_0^{-1}, \delta^{-1} \right)}{m^{1/4} \kappa^{1/2}} \\
+ \le \,& \sqrt{\frac{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{2n}}   + \frac{2}{\sqrt{n}} .
+ %\end{aligned}
+ \end{align*}
+ 
+ 
+ 
+ 
+ Next, from the theory of Rademacher complexity (Theorem~\ref{thm:rad_generalization}) and a union bound over a finite set of different $i$'s, for any random initialization $\left(\mat W(0), \mat a \right)$, with probability at least $1-\delta/3$ over the sample $S$, we have
+ \begin{equation*}
+ \sup_{f \in \cF_{R, B_i}^{\mat W(0), \vect a}} \left\{ L_{\calD}(f)-L_{S}(f) \right\} \le 2 \calR_S\left(\cF_{R, B_i}^{\mat W(0), \vect a}\right) + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right) , \qquad \forall i\in \left\{1, 2, \ldots, O\left( \sqrt{\frac{n}{\lambda_0}} \right) \right\}.
+ \end{equation*}
+ 
+ Finally, taking a union bound, we know that with probability at least $1-\frac23\delta$ over the sample $S$ and the random initialization $(\mat W(0), \vect a)$, the followings are all satisfied (for some $i^*$):
+ \begin{equation*}
+ \begin{aligned}
+ L_S(f_{\mat W(k), \vect a}) &\le \frac{1}{\sqrt n},\\
+ f_{\mat W(k), \vect a} &\in \cF_{R, B_{i^*}}^{\mat W(0), \vect a} ,\\
+ \calR_S\left( \cF^{\mat W(0),\va}_{R,B_{i^*}} \right) &\le \sqrt{\frac{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{2n}}  + \frac{2}{\sqrt{n}}  , \\
+  \sup_{f \in \cF_{R, B_{i^*}}^{\mat W(0), \vect a}} \left\{ L_{\calD}(f)-L_{S}(f) \right\} &\le 2 \calR_S\left(\cF_{R, B_{i^*}}^{\mat W(0), \vect a}\right) + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right)  .
+ \end{aligned}
+ \end{equation*}
+ These together can imply:
+ \begin{align*}
+ L_\cD(f_{\mat W(k), \vect a}) &\le \frac{1}{\sqrt n} + 2 \calR_S\left(\cF_{R, B_{i^*}}^{\mat W(0), \vect a}\right) + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right) \\
+ &\le \frac{1}{\sqrt n} + 2 \left(\sqrt{\frac{\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{2n}}  + \frac{2}{\sqrt{n}}    \right) + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right)  \\
+  &= \sqrt{\frac{2\vect{y}^\top \left(\mat{H}^{\infty}\right)^{-1}\vect{y}}{n}}  + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right) .
+ \end{align*}
+ This completes the proof.
+\end{proof}
+
+
+
+
+
+
+
+\subsection{Proof of Corollary~\ref{cor:binary-classification-generalization}} \label{app:proof-cor:binary-classification-generalization}
+
+\begin{proof}[Proof of Corollary~\ref{cor:binary-classification-generalization}]
+	We apply Theorem~\ref{thm:main_generalization} to the ramp loss
+	\begin{align*}
+		 \ell^{\mathrm{ramp}}(u, y) =
+		 \begin{cases}
+		 1, & uy\le0,\\
+		 1-uy, & 0<uy<1,\\
+		 0, & uy\ge1.
+		 \end{cases} \qquad (u\in\R, y\in\{\pm1\})
+	\end{align*}
+	Note that it is $1$-Lipschitz in $u$ for $y\in\{\pm1\}$ and satisfies $\ell^{\mathrm{ramp}}(y, y) = 0$ for $y\in\{\pm1\}$. It is also an upper bound on the 0-1 loss:
+	\[
+	\ell^{\mathrm{ramp}}(u, y) \ge \ell^{01}(u, y) = \indict\left\{ uy\le0 \right\}.
+	\]
+	
+	Therefore we have with probability at least $1-\delta$:
+	\begin{align*}
+	L_\calD^{01}(f_{\mat W(k), \vect a}) 
+	&= \E_{(\vect x, y)\sim \cD} \left[ \ell^{01}(f_{\mat W(k), \vect a}(\vect x), y)  \right] \\
+	&\le \E_{(\vect x, y)\sim \cD} \left[ \ell^{\mathrm{ramp}}(f_{\mat W(k), \vect a}(\vect x), y)  \right] \\
+	&\le \sqrt{\frac{2 \vect y^\top (\mat H^\infty)^{-1}\vect y }{n}} + O\left( \sqrt{\frac{\log\frac{n}{\lambda_0\delta}}{n}} \right)  .
+	\qedhere
+	\end{align*}
+\end{proof}

@@ -1,0 +1,19 @@
+\section{Experiment Setup}\label{sec:expdetails}
+The architecture of our neural networks is as described in Section \ref{sec:setup}.
+During the training process,  we fix the second layer and only optimize the first layer, following the setting in Section \ref{sec:setup}.
+We fix the number of neurons to be $m = 10,000$ in all experiments. 
+We train the neural network using (full-batch) gradient descent (GD), with a fixed learning rate $\eta = 10^{-3}$.
+Our theory requires a small scaling factor $\kappa$ during the initialization (cf.~\eqref{eqn:random-init}).
+We fix $\kappa = 10^{-2}$ in all experiments. 
+We train the neural networks until the training $\ell_2$ loss converges. 
+
+
+We use two image datasets, the CIFAR dataset \cite{krizhevsky2009learning} and the MNIST dataset \cite{lecun1998gradient}, in our experiments. 
+We only use the first two classes of images in the the CIFAR dataset and the MNIST dataset,
+with $10,000$ training images and $2,000$ validation images in total for each dataset.
+In both datasets, for each image $\vect x_i$, we set the corresponding label $y_i$ to be $+1$ if the image belongs to the first class, and $-1$ otherwise.
+For each image $\vect x_i$ in the dataset, we normalize the image so that $\|\vect x_i\|_2 = 1$, following the setup in Section \ref{sec:setup}.
+
+In the experiments reported in Figure~\ref{fig:generalization}, we choose a specific portion of (both training and test) data uniformly at random, and change their labels $y_i$ to $\unif\left(\left\{-1,1\right\}\right)$.
+
+Our neural networks are trained using the PyTorch package \cite{paszke2017automatic}, using (possibly multiple) NVIDIA Tesla V100 GPUs.

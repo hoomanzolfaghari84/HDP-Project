@@ -1,0 +1,41 @@
+
+%generalization
+%\subsection{Generalization via Rademacher Complexity}
+
+Consider a loss function $\ell: \R \times \R \to \R$. For a function $f: \R^d \to \R$, the \emph{population loss} over data distribution $\calD$ as well as the \emph{empirical loss} over $n$ samples $S = \{(\vect{x}_i, y_i)\}_{i=1}^n$ from $\calD$ are defined as:
+\begin{equation*}
+\begin{aligned}
+L_\calD(f) &= \E_{(\vect x, y)\sim\calD}\left[ \ell(f(\vect x), y) \right],\\
+L_S(f) &= \frac{1}{n}\sum_{i=1}^{n}\ell(f(\vect{x}_i),y_i).
+\end{aligned}
+\end{equation*}
+Generalization error refers to the gap $L_\calD(f) - L_S(f)$ for the learned function $f$ given sample $S$.
+
+Recall the standard definition of Rademacher complexity:
+\begin{defn}\label{defn:rademacher}
+%Given a sample $S = \left(\vect{x}_1,\ldots,\vect{x}_n\right)$, 
+Given $n$ samples $S$, the empirical Rademacher complexity of a function class $\cF$ (mapping from $\R^d$ to $\R$) is defined as:
+\[
+\calR_S(\cF) = \frac{1}{n} \expect_{\bm \eps}\left[\sup_{f \in \cF}\sum_{i=1}^{n} \eps_i f(\vect{x}_i)\right],
+\]
+where $\bm\eps = \left(\eps_1,\ldots,\eps_n\right)^\top $ contains i.i.d. random variables drawn from the Rademacher distribution $\unif(\{1, -1\})$.
+%, i.e., $\prob(\epsilon_i=1) = \prob(\eps_i=-1)=1/2$ for $i=1,\ldots,n$.
+\end{defn}
+
+Rademacher complexity directly gives an upper bound on generalization error (see e.g.~\citep{mohri2012foundations}):%\citep{koltchinskii2002empirical}.
+%\simon{@zhiyuan, is this correct?}
+\begin{thm}\label{thm:rad_generalization}
+%Assume each data point is sampled i.i.d. from some distribution $\mu$, i.e.,
+%\[
+%(\vect{x}_i, y_i) \sim \mu \text{ for } i=1,\ldots,n.
+%\]
+%We denote $S = \left\{\vect{x}_i,y_i\right\}_{i=1}^n$.
+%Given a function class $\cF$, for $f \in \cF$, we let $L_{tr}(f) = \frac{1}{n}\sum_{i=1}^{n}\ell(f(\vect{x}_i),y_i)$ and $L_{te}(f) = \expect_{(\vect{x},y) \sim \mu }\left[\ell(f(\vect{x}),y)\right]$. 
+Suppose the loss function $\ell(\cdot,\cdot)$ is bounded in $[0, c]$ and is $\rho$-Lipschitz in the first argument. Then with probability at least $1-\delta$ over sample $S$ of size $n$:
+\[
+\sup_{f \in \cF} \left\{ L_{\calD}(f)-L_{S}(f) \right\} \le 2\rho \calR_S(\cF) + 3c \sqrt{\frac{\log(2/\delta)}{2n}}.
+\]
+%where $C>0$ is an absolute constant and $\widehat{R}_S(\cF)$ is the empirical Rademacher complexity of $\cF$.
+\end{thm}
+Therefore, as long as we can bound the Rademacher complexity of a certain function class that contains our learned predictor, we can obtain a generalization bound.
+%In Section~\ref{sec:generalization} we use this strategy to derive a generalization bound for two-layer over-parameterized neural networks. 

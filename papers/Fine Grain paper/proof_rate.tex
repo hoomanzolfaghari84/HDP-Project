@@ -1,0 +1,303 @@
+
+In this section we prove Theorem~\ref{thm:convergence_rate}.
+
+
+We first show some technical lemmas. Most of them are already proved in~\citep{du2018provably} and we give proofs for them for completeness.
+
+
+First, we have the following lemma which gives an upper bound on how much each weight vector can move during optimization.
+
+\begin{lem} \label{lem:weight-vector-movement}
+	Under the same setting as Theorem~\ref{thm:ssdu-converge}, i.e., $\lambda_0 = \lambda_{\min}(\mat H^\infty) >0$, $m = \Omega\left( \frac{n^6}{\lambda_0^4 \kappa^2 \delta^3 } \right)$ and $\eta = O\left( \frac{\lambda_0}{n^2} \right)$,
+	with probability at least $1-\delta$ over the random initialization we have
+	\begin{equation*}
+	\norm{\vect w_r(k) - \vect w_r(0)}_2 \le \frac{4\sqrt n \norm{\vect y- \vect u(0)}_2}{\sqrt m \lambda_0}, \quad \forall r\in[m], \forall k \ge 0.
+	\end{equation*}
+\end{lem}
+\begin{proof}
+	From Theorem~\ref{thm:ssdu-converge} we know $ \norm{\vect y- \vect u(k+1)}_2 \le \sqrt{1 - \frac{\eta\lambda_0}{2}} \norm{\vect y- \vect u(k)}_2 \le \left( 1 - \frac{\eta\lambda_0}{4} \right) \norm{\vect y- \vect u(k)}_2$ for all $k\ge0$, which implies
+	\begin{equation} \label{eqn:y-u(k)_bound}
+	\norm{\vect y- \vect u(k)}_2 \le \left( 1 - \frac{\eta\lambda_0}{4} \right)^k \norm{\vect y- \vect u(0)}_2, \quad \forall k\ge 0.
+	\end{equation}
+	Recall the GD update rule:
+	\begin{equation*}
+	\vect w_r(k+1) - \vect w_r(k) = - \eta \frac{\partial \Phi(\mat W)}{\partial \vect{w}_r} \bigg|_{\mat W = \mat W(k)} = -\frac{\eta}{\sqrt m} a_r \sum_{i=1}^n (u_i(k) - y_i) \indict_{r, i}(k) \vect{x}_i,
+	\end{equation*}
+	which implies
+	\begin{equation*}
+	\norm{\vect w_r(k+1) - \vect w_r(k)}_2 \le \frac{\eta}{\sqrt m} \sum_{i=1}^n |u_i(k) - y_i| \le \frac{\eta \sqrt n}{\sqrt m} \norm{\vect y - \vect u(k)}_2.
+	\end{equation*}
+	Therefore, we have
+	\begin{align*}
+	\norm{ \vect w_r(k) - \vect w_r(0) }_2
+	& \le \sum_{t=0}^{k-1} \norm{\vect w_r(t+1) - \vect w_r(t)}_2 \\
+	& \le \sum_{t=0}^{k-1} \frac{\eta \sqrt n}{\sqrt m} \norm{\vect y - \vect u(k)}_2 \\
+	& \le \frac{\eta \sqrt n}{\sqrt m}  \sum_{t=0}^{\infty} \left( 1 - \frac{\eta\lambda_0}{4} \right)^k \norm{\vect y- \vect u(0)}_2 \\
+	&= \frac{4\sqrt n \norm{\vect y- \vect u(0)}_2}{\sqrt m \lambda_0},
+	\end{align*}
+	completing the proof.
+\end{proof}
+
+As a consequence of Lemma~\ref{lem:weight-vector-movement}, we can upper bound the norms of $\mat H(k) - \mat H(0)$ and $\mat Z(k) - \mat Z(0)$ for all $k$.
+These bounds show that the matrices $\mat H$ and $\mat Z$ do not change much during optimization if $m$ is sufficiently large.
+
+\begin{lem} \label{lem:H-and-Z-perturbation}
+	Under the same setting as Theorem~\ref{thm:ssdu-converge}, with probability at least $1-4\delta$ over the random initialization, for all $k\ge 0$ we have:
+	\begin{equation*}
+	\begin{aligned}
+	\norm{\mat H(k) - \mat H(0)}_F = O\left( \frac{n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right), \\
+	%= O\left( \frac{n^{5/2} \norm{\vect y- \vect u(0)}_2}{\sqrt m \lambda_0 \kappa \delta} \right), \\
+	 \norm{\mat Z(k) - \mat Z(0)}_F = O\left( \frac{n}{\sqrt{m^{1/2} \lambda_0 \kappa \delta^{3/2}}} \right).
+	 %= O\left( \sqrt{\frac{n^{3/2}  \norm{\vect y- \vect u(0)}_2}{\sqrt m \lambda_0 \kappa \delta}} \right).
+	\end{aligned}
+	\end{equation*}
+\end{lem}
+\begin{proof}
+	Let $R = \frac{C n }{\sqrt m \lambda_0 \sqrt{\delta}}$ for some universal constant $C>0$.
+	From Lemma~\ref{lem:weight-vector-movement} we know that with probability at least $1-\delta$ we have $\norm{\vect w_r(k) - \vect w_r(0)} \le R$ for all $r\in[m]$ and all $k \ge 0$.
+	% Now we condition on this indeed happening.
+	
+	We define events
+	\begin{equation} \label{eqn:A_{ri}-defn}
+	A_{r, i} = \left\{ \left| \vect w_r(0)^\top \vect x_i \right| \le R \right\}, \quad i\in[n], r\in [m].
+	\end{equation}
+	%If $\indict\{A_{r, i}\} = 1$, then it is possible that $\vect w_r^\top \vect x_i$ changes sign during optimization. On the other hand, if $\indict\{A_{r, i}\} = 0$, $\vect w_r^\top \vect x_i$ will not change sign during optimization.
+	Then it is easy to see that
+	\begin{equation*}
+	\indict\left\{ \indict_{r, i}(k) \not= \indict_{r, i}(0) \right\} \le  \indict\{A_{r, i}\} + \indict\{ \norm{\vect w_r(k) - \vect w_r(0)} > R \}  , \quad \forall i\in[n], \forall r\in[m], \forall k\ge0.
+	\end{equation*}
+	
+	Then for any $i, j\in[n]$ we have
+	\begin{equation} \label{eqn:H-pertubation-proof}
+	\begin{aligned}
+	\left| \mat H_{ij}(k) - \mat H_{ij}(0) \right|
+	&= \left| \frac{\vect{x}_i^\top \vect{x}_j}{m} \sum_{r=1}^{m} \left( \indict_{r,i}(k) \indict_{r,j}(k) - \indict_{r,i}(0) \indict_{r,j}(0) \right) \right| \\
+	&\le \frac1m \sum_{r=1}^{m} \left( \indict\left\{ \indict_{r, i}(k) \not= \indict_{r, i}(0) \right\} + \indict\left\{ \indict_{r, j}(k) \not= \indict_{r, j}(0)  \right\} \right) \\
+	&\le \frac1m \sum_{r=1}^{m} \left( \indict\{A_{r, i}\}+\indict\{A_{r, j}\} + 2 \indict\{ \norm{\vect w_r(k) - \vect w_r(0)} > R \} \right).
+	\end{aligned}
+	\end{equation}
+	Next, notice that $\vect w_r(0)^\top \vect x_i$ has the same distribution as $\calN(0, \kappa^2)$. So we have
+	\begin{equation} \label{eqn:A_{ri}-bound}
+	\E[\indict\{A_{r, i}\}] = \Pr_{z\sim \calN(0, \kappa^2)} \left[ |z| \le R \right]
+	= \int_{-R}^{R} \frac{1}{\sqrt{2\pi}\kappa} e^{-x^2/2\kappa^2} dx
+	\le \frac{2R}{\sqrt{2\pi}\kappa}.
+	\end{equation}
+	Now taking the expectation of~\eqref{eqn:H-pertubation-proof}, we have
+	\begin{align*}
+	\E\left[ \left| \mat H_{ij}(k) - \mat H_{ij}(0) \right| \right]
+	&\le \frac1m \sum_{r=1}^{m} \left( \E[\indict\{A_{r, i}\}] + \E[\indict\{A_{r, j}\}] + 2 \indict\{ \norm{\vect w_r(k) - \vect w_r(0)} > R \} \right)\\
+	&\le \frac{4R}{\sqrt{2\pi}\kappa} + \frac2m \sum_{r=1}^{m}  \E\left[ \indict\{ \norm{\vect w_r(k) - \vect w_r(0)} > R \} \right]\\
+	&\le  \frac{4R}{\sqrt{2\pi}\kappa} + \frac2m \delta, \qquad \forall i, j \in[n],
+	\end{align*}
+	which implies
+	\begin{equation*}
+	\E \left[ \norm{\mat H(k) - \mat H(0)}_F \right]
+	\le \E\left[ \sum_{i, j=1}^n \left| \mat H_{ij}(k) - \mat H_{ij}(0) \right| \right]
+	\le \frac{4n^2R}{\sqrt{2\pi}\kappa} + \frac{2n^2\delta}{m}.
+	\end{equation*}
+	Then from Markov's inequality we know that with probability at least $1-\delta$ we have $\norm{\mat H(k) - \mat H(0)}_F \le \frac{4n^2R}{\sqrt{2\pi}\kappa\delta} + \frac{2n^2}{m} = O\left( \frac{n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) $. % Then the first part of the lemma follows from $\norm{\vect y - \vect u(0)}_2 = O(\sqrt{n/\delta})$ (Theorem~\ref{thm:ssdu-converge}).
+	 %which proves the first part of the lemma.
+	
+	To bound $\norm{\mat Z(k) - \mat Z(0)}_F$, we have
+	\begin{align*}
+	\E\left[ \norm{\mat Z(k) - \mat Z(0)}_F^2 \right]
+	&=  \E\left[ \frac1m \sum_{i=1}^n \sum_{r=1}^m \left( \indict_{r, i}(k) - \indict_{r, i}(0) \right)^2  \right]\\
+	&= \frac1m  \sum_{i=1}^n \sum_{r=1}^m \E\left[  \indict\{ \indict_{r, i}(k) \not= \indict_{r, i}(0) \}  \right]\\
+	&\le \frac1m  \sum_{i=1}^n \sum_{r=1}^m \E\left[  \indict\{ A_{r, i} \} + \indict\{ \norm{\vect w_r(k) - \vect w_r(0)} > R \}  \right]\\
+	&\le \frac1m \cdot mn \cdot \frac{2R}{\sqrt{2\pi}\kappa} + \frac nm \delta\\
+	&= \frac{2nR}{\sqrt{2\pi}\kappa} + \frac{n\delta}{m}.
+	\end{align*}
+	Using Markov's inequality, with probability at least $1-\delta$ we have $\norm{\mat Z(k) - \mat Z(0)}_F^2 \le \frac{2nR}{\sqrt{2\pi}\kappa\delta} + \frac nm = O\left( \frac{n^{2}  }{\sqrt m \lambda_0\kappa\delta^{3/2}} \right)$,
+	proving the second part of the lemma.
+\end{proof}
+
+
+The next lemma shows that $\mat H(0)$ is close to $\mat H^\infty$.
+
+\begin{lem} \label{lem:H(0)-H^inf}
+	With probability at least $1-\delta$, we have $\norm{\mat H(0) - \mat H^\infty}_F = O\left( \frac{n\sqrt{\log \frac{n}{\delta}}}{\sqrt m} \right)$.
+\end{lem}
+\begin{proof}
+	For all $i, j \in[n]$, $\mat{H}_{ij}(0) = \frac{\vect{x}_i^\top \vect{x}_j}{m} \sum_{r=1}^{m}\indict_{r,i}(0)\indict_{r,j}(0)$ is the average of $m$ i.i.d. random variables bounded in $[0, 1]$ with expectation $\mat H^\infty_{ij}$.
+	Thus by Hoeffding's inequality, with probability at least $1-\delta'$ we have
+	$$\left| \mat{H}_{ij}(0) - \mat H^\infty_{ij} \right| \le \sqrt{\frac{\log ({2}/{\delta'})}{2m}}.$$
+	Letting $\delta' = \delta/n^2$ and applying a union bound over all $i, j \in [n]$, we know that with probability at least $1-\delta$:
+	\begin{align*}
+	\norm{\mat H(0) - \mat H^\infty}_F^2 \le n^2 \cdot \frac{\log (2n^2/\delta)}{2m}.
+	\end{align*}
+	This completes the proof.
+\end{proof}
+
+
+
+Now we are ready to prove Theorem~\ref{thm:convergence_rate}.
+
+\begin{proof}[Proof of Theorem~\ref{thm:convergence_rate}]
+	We assume that all the high-probability (``with probability $1-\delta$'') events happen. By a union bound at the end, the success probability is at least $1-\Omega(\delta)$, and then we can rescale $\delta$ by a constant such that the success probability is at least $1-\delta$.
+	
+	The main idea is to show that the dynamics of $\left\{\vect u(k) \right\}_{k=0}^\infty$ is close to that of $\left\{\tilde{\vect u}(k) \right\}_{k=0}^\infty$.
+	We have
+	\begin{equation} \label{eqn:u-dynamics-1}
+	u_i(k+1) - u_i(k) = \frac{1}{\sqrt m} \sum_{r=1}^m a_r \left[ \sigma\left( \vect w_r(k+1)^\top \vect x_i \right)  -  \sigma\left( \vect w_r(k)^\top \vect x_i \right) \right].
+	\end{equation}
+	For each $i\in[n]$, we partition all $m$ neurons into two parts:
+	\[
+	S_i = \left\{ r\in[m] : \indict\{A_{r, i}\} = 0  \right\}
+	\]
+	and
+	\[
+	\bar{S_i} = \left\{ r\in[m] : \indict\{A_{r, i}\} = 1 \right\},
+	\]
+	where $A_{r, i}$ is defined in~\eqref{eqn:A_{ri}-defn}.
+	We know from the proof of Lemma~\ref{lem:H-and-Z-perturbation} that all neurons in $S_i$ will not change activation pattern on data-point $\vect x_i$ during optimization, i.e.,
+	\[
+	r\in S_i \Longrightarrow \indict_{r, i}(k) = \indict_{r, i}(0), \forall k\ge0.
+	\]
+	
+	From~\eqref{eqn:A_{ri}-bound} we know
+	\begin{align*}
+	\E\left[ |\bar{S_i}| \right] = \E\left[ \sum_{r=1}^m \indict\{A_{r, i}\} \right]
+	\le  \frac{8\sqrt{mn} \norm{\vect y- \vect u(0)}_2}{\sqrt{2\pi}\kappa \lambda_0}
+	= O\left( \frac{\sqrt{m} n }{\kappa \lambda_0 \sqrt\delta} \right),
+	\end{align*}
+	where we have used $\norm{\vect y - \vect u(0)}_2 = O(\sqrt{n/\delta})$ (Theorem~\ref{thm:ssdu-converge}).
+	Then we know $\E\left[ \sum_{i=1}^n |\bar{S_i}| \right]  = O\left( \frac{\sqrt{m} n^2 }{\kappa \lambda_0 \sqrt\delta} \right)$. Therefore with probability at least $1-\delta$ we have
+	\begin{equation} \label{eqn:S_i_bar-bound}
+	\sum_{i=1}^n |\bar{S_i}| = O\left( \frac{\sqrt{m} n^2 }{\kappa \lambda_0 \delta^{3/2}} \right).
+	\end{equation}
+	
+	We write~\eqref{eqn:u-dynamics-1} as
+	\begin{equation} \label{eqn:u-dynamics-2}
+	\begin{aligned}
+	&u_i(k+1) - u_i(k) \\
+	=\ & \frac{1}{\sqrt m} \sum_{r\in S_i} a_r \left[ \sigma\left( \vect w_r(k+1)^\top \vect x_i \right)  -  \sigma\left( \vect w_r(k)^\top \vect x_i \right) \right]
+	+ \frac{1}{\sqrt m} \sum_{r\in \bar{S_i}} a_r \left[ \sigma\left( \vect w_r(k+1)^\top \vect x_i \right)  -  \sigma\left( \vect w_r(k)^\top \vect x_i \right) \right].
+	\end{aligned}
+	\end{equation}
+	We consider the two terms in~\eqref{eqn:u-dynamics-2} separately.
+	We denote the second term as $\epsilon_i(k)$ and treat it as a perturbation term, which we bound as
+	\begin{equation} \label{eqn:u-dynamics-second-term}
+	\begin{aligned}
+	\abs{\epsilon_i(k)} = \, &\left| \frac{1}{\sqrt m} \sum_{r\in \bar{S_i}} a_r \left[ \sigma\left( \vect w_r(k+1)^\top \vect x_i \right)  -  \sigma\left( \vect w_r(k)^\top \vect x_i \right) \right] \right| \\
+	\le\,& \frac{1}{\sqrt m} \sum_{r\in \bar{S_i}} \left| \vect w_r(k+1)^\top \vect x_i  - \vect w_r(k)^\top \vect x_i  \right| \\
+	\le\,& \frac{1}{\sqrt m} \sum_{r\in \bar{S_i}} \norm{\vect w_r(k+1) - \vect w_r(k) }_2  \\
+	=\,& \frac{1}{\sqrt m} \sum_{r\in \bar{S_i}} \norm{\frac{\eta}{\sqrt m} a_r \sum_{j=1}^n (u_j(k) - y_j) \indict_{r, j}(k) \vect{x}_j }_2  \\
+	\le\,& \frac{\eta}{m} \sum_{r\in \bar{S_i}} \sum_{j=1}^n |u_j(k) - y_j|   \\
+	\le\,& \frac{\eta \sqrt n |\bar{S_i}|}{m} \norm{\vect u(k) - \vect y}_2.
+	\end{aligned}
+	\end{equation}
+	For the first term in~\eqref{eqn:u-dynamics-2}, we have
+	\begin{equation} \label{eqn:u-dynamics-first-term}
+	\begin{aligned}
+	&\frac{1}{\sqrt m} \sum_{r\in S_i} a_r \left[ \sigma\left( \vect w_r(k+1)^\top \vect x_i \right)  -  \sigma\left( \vect w_r(k)^\top \vect x_i \right) \right] \\
+	=\,& \frac{1}{\sqrt m} \sum_{r\in S_i} a_r \indict_{r, i}(k) \left(  \vect w_r(k+1)  -  \vect w_r(k)\right)^\top \vect x_i   \\
+	=\,& \frac{1}{\sqrt m} \sum_{r\in S_i} a_r \indict_{r, i}(k) \left( - \frac{\eta}{\sqrt m} a_r \sum_{j=1}^n (u_j(k) - y_j) \indict_{r, j}(k) \vect{x}_j  \right)^\top \vect x_i   \\
+	=\,& -\frac{\eta}{m} \sum_{j=1}^n (u_j(k) - y_j) \vect{x}_j^\top\vect x_i \sum_{r\in S_i}  \indict_{r, i}(k) \indict_{r, j}(k) \\
+	=\,& -\eta  \sum_{j=1}^n (u_j(k) - y_j) \mat H_{ij}(k) + \epsilon_i'(k),
+	\end{aligned}
+	\end{equation}
+	where $\epsilon_i'(k) = \frac{\eta}{m} \sum_{j=1}^n (u_j(k) - y_j) \vect{x}_j^\top\vect x_i \sum_{r\in \bar{S_i}}  \indict_{r, i}(k) \indict_{r, j}(k)$ is regarded as perturbation:
+	\begin{equation}  \label{eqn:u-dynamics-perturbation-1}
+	\begin{aligned}
+	\abs{\epsilon_i'(k)} \le \frac{\eta}{m} \abs{\bar{S_i}} \sum_{j=1}^n \abs{u_j(k) - y_j} 
+	\le \frac{\eta \sqrt n \abs{\bar{S_i}} }{m} \norm{\vect u(k) - \vect y}_2  .
+	\end{aligned}
+	\end{equation}
+	Combining \eqref{eqn:u-dynamics-2}, \eqref{eqn:u-dynamics-second-term}, \eqref{eqn:u-dynamics-first-term}, \eqref{eqn:u-dynamics-perturbation-1}, we have
+	\begin{equation*}
+	\begin{aligned}
+	u_i(k+1) - u_i(k) =  -\eta  \sum_{j=1}^n (u_j(k) - y_j) \mat H_{ij}(k) + \epsilon_i'(k) + \epsilon_i(k),
+	\end{aligned}
+	\end{equation*}	
+	which gives
+	\begin{equation} \label{eqn:u-dynamics-3}
+	\vect u(k+1) - \vect u(k) = - \eta \vect H(k) (\vect u(k) - \vect y) + \bm{\epsilon}(k),
+	\end{equation}
+	where $\bm{\epsilon}(k) \in \R^n$ can be bounded as
+	\begin{equation*}
+	\begin{aligned}
+	\norm{\bm{\epsilon}(k)}_2 
+	&\le \norm{\bm{\epsilon}(k)}_1 = \sum_{i=1}^n \abs{ \epsilon_i(k) + \epsilon_i'(k) }
+	\le \sum_{i=1}^n \frac{2 \eta \sqrt n |\bar{S_i}|}{m} \norm{\vect u(k) - \vect y}_2
+	= O\left( \frac{\sqrt{m} n^2 }{\kappa \lambda_0 \delta^{3/2}} \right)   \frac{2 \eta \sqrt n }{m} \norm{\vect u(k) - \vect y}_2 \\
+	&= O\left( \frac{\eta  n^{5/2} }{\sqrt m \kappa \lambda_0 \delta^{3/2}} \right)  \norm{\vect u(k) - \vect y}_2.
+	\end{aligned}
+	\end{equation*}
+	Here we have used~\eqref{eqn:S_i_bar-bound}.
+	
+	Next, since $\mat H(k)$ is close to $\mat H^\infty$ according to Lemmas~\ref{lem:H-and-Z-perturbation} and~\ref{lem:H(0)-H^inf}, we rewrite~\eqref{eqn:u-dynamics-3} as
+	\begin{equation} \label{eqn:u-dynamics-4}
+	\begin{aligned}
+	\vect u(k+1) - \vect u(k) = - \eta \mat H^\infty (\vect u(k) - \vect y) + \bm{\zeta}(k),
+	\end{aligned}
+	\end{equation}
+	where $\bm{\zeta}(k) = \eta (\mat H^\infty - \mat H(k)) (\vect u(k) - \vect y) + \bm{\epsilon}(k)$.
+	From Lemmas~\ref{lem:H-and-Z-perturbation} and~\ref{lem:H(0)-H^inf} we have
+	\begin{equation*}
+	\begin{aligned}
+	\norm{\mat H^\infty - \mat H(k)}_2
+	&\le \norm{\mat H^\infty - \mat H(k)}_F
+	 \le \norm{\mat H(0) - \mat H(k)}_F + \norm{\mat H(0) - \mat H^\infty}_2  \\
+	 &= O\left( \frac{n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) + O\left( \frac{n\sqrt{\log \frac{n}{\delta}}}{\sqrt m} \right)
+	 = O\left( \frac{n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right).
+	 \end{aligned}
+	\end{equation*}
+	Therefore we can bound $\bm{\zeta}(k)$ as
+	\begin{equation} \label{eqn:u-dynamics-perturbation-2}
+	\begin{aligned}
+	\norm{\bm{\zeta}(k)}_2
+	&\le \eta \norm{\mat H^\infty - \mat H(k)}_2 \norm{\vect u(k) - \vect y}_2 + \norm{\bm{\epsilon}(k)}_2 \\
+	&= O\left(  \frac{\eta n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) \norm{\vect u(k) - \vect y}_2  + O\left( \frac{\eta  n^{5/2} }{\sqrt m \kappa \lambda_0 \delta^{3/2}} \right)  \norm{\vect u(k) - \vect y}_2 \\
+	&= O\left(  \frac{\eta n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) \norm{\vect u(k) - \vect y}_2  .
+	\end{aligned}
+	\end{equation}
+	
+	Finally, applying~\eqref{eqn:u-dynamics-4} recursively, we get
+	\begin{equation} \label{eqn:u-expression}
+	\begin{aligned}
+	\vect u(k) - \vect y &= (\mat I - \eta \mat H^\infty)^k (\vect u(0) - \vect{y}) + \sum_{t=0}^{k-1} (\mat I - \eta \mat H^\infty)^t \bm{\zeta}(k-1-t) \\
+	&= -(\mat I - \eta \mat H^\infty)^k \vect{y} + (\mat I - \eta \mat H^\infty)^k \vect u(0)  + \sum_{t=0}^{k-1} (\mat I - \eta \mat H^\infty)^t \bm{\zeta}(k-1-t).
+	\end{aligned}
+	\end{equation}
+	Note that $\mat I - \eta \mat H^\infty$ is positive semidefinite, because we have $\norm{\mat H^\infty}_2 \le \tr\left[\mat H^\infty\right] = \frac n2$ and $\eta = O\left( \frac{\lambda_0}{n^2} \right) = O\left( \frac{\lambda_{\min}(\mat H^\infty)}{\norm{\mat H^\infty}_2^2} \right) \le \frac{1}{\norm{\mat H^\infty}_2}$.
+	This implies $\norm{\mat I - \eta \mat H^\infty}_2 \le 1 - \eta \lambda_0$.
+		
+	Now we study the three terms in~\eqref{eqn:u-expression} separately.
+	The first term is exactly $\tilde{\vect u}(k) - \vect y$ (see Section~\ref{sec:proof_sketch_rate}), and in Section~\ref{sec:proof_sketch_rate} we have shown that
+	\begin{equation} \label{eqn:u-expression-first-term}
+	\norm{-(\mat I - \eta \mat H^\infty)^k \vect{y}}_2 = \sqrt{\sum_{i=1}^n (1-\eta\lambda_i)^{2k} (\vect v_i^\top \vect y)^2}.
+	\end{equation}
+	
+	The second term in~\eqref{eqn:u-expression} is small as long as $\vect u(0)$ is small, which is the case when the magnitude of initialization $\kappa$ is set to be small.
+	Formally, each $u_i(0)$ has zero mean and variance $O(\kappa^2)$, which means $\E\left[(u_i(0))^2\right] = O(\kappa^2)$. This implies $\E\left[\norm{\vect u(0)}^2\right] = O(n\kappa^2)$, and by Markov's inequality we have $\norm{\vect u(0)}^2 \le \frac{n\kappa^2}{\delta}$ with probability at least $1-\delta$.
+	Therefore we have
+	\begin{equation} \label{eqn:u-expression-second-term}
+	\norm{(\mat I - \eta \mat H^\infty)^k \vect u(0) }_2
+	\le \norm{(\mat I - \eta \mat H^\infty)^k }_2 \norm{\vect u(0)}_2
+	\le (1-\eta \lambda_0)^k O\left( \sqrt n \kappa / \delta \right).
+	\end{equation} 
+	
+	The third term in~\eqref{eqn:u-expression} can be bounded using~\eqref{eqn:u-dynamics-perturbation-2}.
+	Also note that we have $\norm{\vect u(k) - \vect y}_2 \le \left( 1 - \frac{\eta\lambda_0}{4} \right)^k \norm{\vect u(0) - \vect y}_2 = \left( 1 - \frac{\eta\lambda_0}{4} \right)^k O(\sqrt{n/\delta})$ (Theorem~\ref{thm:ssdu-converge}).
+	Therefore we have
+	\begin{equation} \label{eqn:u-expression-third-term}
+	\begin{aligned}
+	\norm{\sum_{t=0}^{k-1} (\mat I - \eta \mat H^\infty)^t \bm{\zeta}(k-1-t)}_2
+	&\le \sum_{t=0}^{k-1} \norm{ \mat I - \eta \mat H^\infty}_2^t \norm{\bm{\zeta}(k-1-t)}_2 \\
+	&\le \sum_{t=0}^{k-1} (1-\eta \lambda_0)^t O\left(  \frac{\eta n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) \norm{\vect u(k-1-t) - \vect y}_2  \\
+	&\le \sum_{t=0}^{k-1} (1-\eta \lambda_0)^t O\left(  \frac{\eta n^3}{\sqrt m \lambda_0 \kappa \delta^{3/2}} \right) \left( 1 - \frac{\eta\lambda_0}{4} \right)^{k-1-t} O(\sqrt{n/\delta})  \\
+	&\le k \left( 1 - \frac{\eta\lambda_0}{4} \right)^{k-1}   O\left(  \frac{\eta n^{7/2}}{\sqrt m \lambda_0 \kappa \delta^{2}} \right) .
+	\end{aligned}
+	\end{equation}
+	
+	Combining \eqref{eqn:u-expression}, \eqref{eqn:u-expression-first-term}, \eqref{eqn:u-expression-second-term} and \eqref{eqn:u-expression-third-term}, we obtain
+	\begin{align*}
+	\norm{\vect u(k) - \vect y}_2
+	&= \sqrt{\sum_{i=1}^n (1-\eta\lambda_i)^{2k} (\vect v_i^\top \vect y)^2} \pm O\left( (1-\eta \lambda_0)^k \frac{ \sqrt n \kappa }{ \delta}  + k \left( 1 - \frac{\eta\lambda_0}{4} \right)^{k-1}    \frac{\eta n^{7/2}}{\sqrt m \lambda_0 \kappa \delta^{2}}\right) \\
+	&= \sqrt{\sum_{i=1}^n (1-\eta\lambda_i)^{2k} (\vect v_i^\top \vect y)^2} \pm O\left(  \frac{ \sqrt n \kappa }{ \delta} + \frac{1}{\eta\lambda_0} \cdot   \frac{\eta n^{7/2}}{\sqrt m \lambda_0 \kappa \delta^{2}}\right)\\
+		&= \sqrt{\sum_{i=1}^n (1-\eta\lambda_i)^{2k} (\vect v_i^\top \vect y)^2} \pm O\left(  \frac{ \sqrt n \kappa }{ \delta} +  \frac{ n^{7/2}}{\sqrt m \lambda_0^2 \kappa \delta^{2}}\right),
+	\end{align*}
+	where we have used $\max\limits_{k\ge 0} \left\{ k (1-\eta\lambda_0/4)^{k-1} \right\} = O(1/(\eta\lambda_0))$.
+	From our choices of $\kappa$ and $m$, the above error term is at most $\epsilon$.
+	 This completes the proof of Theorem~\ref{thm:convergence_rate}.
+\end{proof}
