@@ -15,6 +15,9 @@
 \pgfplotsset{compat=1.16}
 
 % \usetikzlibrary{positioning}
+\usepackage{FiraSans}
+
+
 
 
 %\newtheorem{theorem}{Theorem}
@@ -314,7 +317,7 @@ subsubsectionstyle=show/shaded/hide]
 		\label{thm:smallest-eig-NTK}
 		Let $\{x_i\}_{i=1}^N$ be a set of i.i.d.\ data points from $P_X$, where $P_X$ has 
 		zero mean and satisfies Assumptions~2.1 and~2.2. Let $K^{(L)}$ be the limiting 
-		NTK recursively defined in (9). Then, for any even integer constant $r \ge 2$, 
+		NTK recursively defined in. Then, for any even integer constant $r \ge 2$, 
 		we have with probability at least 
 		\[
 		1 - N\,e^{-\Omega(d)} \;-\; N^2\,e^{-\Omega\bigl(d\,N^{-2/(\,r - 0.5\,)}\bigr)}
@@ -331,6 +334,92 @@ subsubsectionstyle=show/shaded/hide]
 		given by (8).
 	\end{theorem}
 \end{frame}
+
+
+
+
+
+\begin{frame}
+\frametitle{Estimates from Data and Theorem Application}
+
+\textbf{Content Overview:}
+\begin{itemize}
+	\item \textbf{Useful Estimates:}
+	The data estimations are derived from the assumptions that we have \( \| x_i \|^2_2 = \Theta(d) \) for all \( i \in [N] \) with probability \( 1 \geq N e^{-\Omega(d)} \).
+	\item \textbf{Key Assumptions:}
+	\begin{itemize}
+		\item \textbf{Assumption 2.1 \& 2.2:} \( \| x_i - x_j \|^2 \) is Lipschitz continuous.
+		\item \textbf{Lipschitz Continuity:} \( \| x_i - x_j \|^2 \leq t = dN^{-1/(r-0.5)} \), where \( t \) is the bound for \( |x_i - x_j| \).
+	\end{itemize}
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Key Result:}
+\begin{itemize}
+	\item \textbf{Theorem 3.1 Outcome:}  
+	\[
+	\| x_i - x_j \|^2_2 = \Theta(d) \quad \forall i \in [N], \quad |x_i - x_j|^{r} \leq dN^{-1/(r-0.5)} \quad \forall i \neq j.
+	\]
+	The equation holds with the same probability as stated in the theorem.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Matrix Analysis}
+
+\textbf{Lemma 3.1 Application:}
+\[
+K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
+\]
+
+\textbf{Observation:} The matrices \( G(l), \hat{G}(l), G(l) \) are positive semidefinite.
+
+\vspace{0.5cm}
+
+\textbf{Eigenvalue Bound:}
+\[
+\lambda_{\min}( K(L) ) \geq \sum_{l=1}^{L} \lambda_{\min}( G(l) ) \min_{i \in [N]} \left( \prod_{p=l+1}^L (G(p))_{ii} \right)
+\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Matrix Eigenvalue Estimates}
+
+\textbf{Final Eigenvalue Bound:}
+\[
+\lambda_{\min}( G(2) ) = \lambda_{\min}( D \left[ \sigma(X^T w) \circ ( X^T w )^T D \right] )
+\]
+\[
+\lambda_{\min}( G(2) ) = \lambda_{\min}( D \left[ \mu(\sigma) 21N^T + \sum_{s=1}^{\infty} \mu_s(\sigma) (X^T X^*) \right] )
+\]
+
+\textbf{Assumptions:}
+\begin{itemize}
+	\item \( \mu(\sigma) \geq \mu_{\text{min}} \).
+\end{itemize}
+
+\vspace{0.5cm}
+
+\textbf{Conclusion:}
+\[
+\lambda_{\min}( G(2) ) \geq \mu(\sigma) \lambda_{\min}( D(X^*)^T (X^*)^T D )
+\]
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Equation (37)}
+
+\[
+\lambda_{\min} \left( G(2) \right) \geq \lambda_{\min} \left( \sum_{i \in [N]} \| x_i \|^2_2 (X^* X^T) \right)
+\]
+
+\end{frame}
+
+
 
 
 \section{Our Results and Observations}
@@ -416,7 +505,8 @@ subsubsectionstyle=show/shaded/hide]
 		\begin{align*}
 			\mathbb{E}[H] = (\frac{1}{2} -s_d) \mathbf{1} + s_d J
 		\end{align*}
-		and hence \( \lambda_{\min}(\mathbb{E}[H]) = \frac{1}{2} - s_d \).
+		where \( s_d = \frac{1}{2 \pi (d - 1)} \frac{\Gamma \left( \frac{d}{2} \right)^2}{\Gamma \left( \frac{d - 1}{2} \right) \Gamma \left( \frac{d + 1}{2} \right)} \). 
+		\item Hence \( \lambda_{\min}(\mathbb{E}[H]) = \frac{1}{2} - s_d \).
 		\item Now we can take adventage of Weyl's inequality to bound the smallest eigenvalue of \(H^\infty\) via:
 			\begin{align*}
 				\lambda_{\min}(H^\infty) \geq \lambda_{\min}(A) + \lambda_{\min}(\mathbb{E}[H]) = \lambda_{\min}(A) + \frac{1}{2} - s_d
@@ -430,6 +520,7 @@ subsubsectionstyle=show/shaded/hide]
 		\begin{align*}
 			\lambda_{\min}(H^\infty) \geq -t + \frac{1}{2} - s_d
 		\end{align*}
+
 		or equivalently:
 		\begin{align*}
 			\lambda_{\min}(H^\infty) \geq max \left\{ -t + \frac{1}{2} - s_d, 0 \right\}
