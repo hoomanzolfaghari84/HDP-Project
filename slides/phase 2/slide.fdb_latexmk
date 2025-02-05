@@ -1,11 +1,11 @@
 # Fdb version 4
-["xdvipdfmx"] 0 "slide.xdv" "slide.pdf" "slide" 0 -1
-  "slide.xdv" 1734681325 897616 c55dbaf1ca28e08ae32879e4c73f988a "xelatex"
+["xdvipdfmx"] 1738731480 "slide.xdv" "slide.pdf" "slide" 1738731480 0
+  "slide.xdv" 1738731479 674716 d4670c67ad8ab956507050b5f23a7f92 "xelatex"
   (generated)
   "slide.pdf"
   (rewritten before read)
-["xelatex"] 1734681321 "e:/Course 031/HDP/HDP P/HDP-Project/slides/slide.tex" "slide.xdv" "slide" 1734681326 2
-  "SUTstyle.sty" 1734680580 3734 e7a1d20beec3cb85932d5102b204589b ""
+["xelatex"] 1738731476 "e:/Course 031/HDP/Project/HDP-Project/HDP-Project/slides/phase 2/slide.tex" "slide.xdv" "slide" 1738731480 0
+  "SUTstyle.sty" 1738729799 3734 e7a1d20beec3cb85932d5102b204589b ""
   "c:/texlive/2023/texmf-dist/fonts/map/fontname/texfonts.map" 1697120780 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/adobe/zapfding/pzdr.tfm" 1697122535 1528 7e12f4c0fcf5a072cebdcfbfc610f54c ""
   "c:/texlive/2023/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm" 1697120362 916 f87d7c45f9c908e672703b83b72241a3 ""
@@ -281,16 +281,20 @@
   "c:/texlive/2023/texmf-dist/web2c/texmf.cnf" 1697120325 40745 87bb86a62d462f93a1efc6b0c65c872e ""
   "c:/texlive/2023/texmf-var/web2c/xetex/xelatex.fmt" 1697122726 10502501 a25c41307f5468294c46db2c48342dda ""
   "c:/texlive/2023/texmf.cnf" 1697122552 713 e69b156964470283e0530f5060668171 ""
-  "e:/Course 031/HDP/HDP P/HDP-Project/slides/slide.tex" 1734681321 19038 d7ab0345e3566b24e5bcde0abce61f01 ""
-  "pic/NTK_paper_exp.png" 1734680580 164175 1dc5feb7fad601033fc3ea997bc18d71 ""
-  "pic/sharif-main-logo.png" 1734680580 29027 c10c7fef9faa805f962d1ccab2602c62 ""
-  "slide.aux" 1734681325 5550 d0a9ff76f57fed353b7075fb27580c70 "xelatex"
-  "slide.nav" 1734681037 3869 ebfda2bfc426e36745ec39e5b63a4cc6 ""
-  "slide.tex" 1734681321 19038 d7ab0345e3566b24e5bcde0abce61f01 ""
-  "slide.toc" 0 -1 0 ""
+  "e:/Course 031/HDP/Project/HDP-Project/HDP-Project/slides/phase 2/slide.tex" 1738731473 15869 613ed17922a6f6d13bc8c93da411c47b ""
+  "pic/gresh.jpg" 1738730471 57227 702ddadcc9d51b4eaf351c70cbeb91b6 ""
+  "pic/sharif-main-logo.png" 1738729799 29027 c10c7fef9faa805f962d1ccab2602c62 ""
+  "slide.aux" 1738731479 6807 41d7b21407617e2997086ba3ad67a934 "xelatex"
+  "slide.nav" 1738731479 3404 43609038251e59e6af880bbd1fbe0193 "xelatex"
+  "slide.out" 1738731479 1020 30201bd0f23040d438cc5ea55ae5ad13 "xelatex"
+  "slide.tex" 1738731473 15869 613ed17922a6f6d13bc8c93da411c47b ""
+  "slide.toc" 1738731479 365 3239a62a93377193c26aa612a9b233a9 "xelatex"
   (generated)
   "slide.aux"
   "slide.log"
+  "slide.nav"
   "slide.out"
+  "slide.snm"
+  "slide.toc"
   "slide.xdv"
   (rewritten before read)
