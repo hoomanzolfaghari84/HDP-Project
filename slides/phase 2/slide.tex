@@ -79,18 +79,18 @@ subsubsectionstyle=show/shaded/hide]
 %-------------------------------------------------
 \begin{frame}{Emergence}
 	\begin{itemize}
-		\item \textbf{Dynamics} of training infinitely wide NNs \(\approx\) \textbf{convex optimization} in RKHS
 		
-		\vspace{0.5em}
 		\item For \(f_\theta: \mathbb{R}^d \to \mathbb{R}\) (NN), GD training induces:
 		\[
 		\underbrace{\Theta(\theta)}_{\text{NTK}} \in \mathbb{R}^{n\times n}, \quad \Theta(\theta)_{i,j}:= \nabla_\theta f_\theta(x_i)^\top \nabla_\theta f_\theta(x_j) 
 		\]
 		
+		\item \textbf{Dynamics} of training infinitely wide NNs \(\approx\) \textbf{convex optimization} in RKHS
+		
+		
 		\item \textbf{Asymptotic Property}: \(\Theta(\theta^{(0)}) \to \Theta^{\infty}\) as width \(\to \infty\)
 		
 	\end{itemize}
-	
 	
 \end{frame}
 
@@ -104,44 +104,28 @@ subsubsectionstyle=show/shaded/hide]
 	\]
 	
 	\begin{itemize}
+		\item Global convergence
+		\item Linear rate for \(\lambda_{\min}(\Theta^\infty) > 0\)
 		\item \textbf{Feature Learning Gap}: NTK regime \(\neq\) real NNs (finite-width trains via \(\nabla\Theta \neq 0\))
-		\item \textbf{Deep vs Shallow}: Depth induces \textbf{spectral bias} (eigenvalue decay of \(\Theta^\infty\))
 	\end{itemize}
-	
-	\vspace{1em}
-	\begin{columns}
-		\begin{column}{0.5\textwidth}
-			\textbf{Good News}:
-			\begin{itemize}
-				\item Global convergence
-				\item Linear rate for \(\lambda_{\min}(\Theta^\infty) > 0\)
-			\end{itemize}
-		\end{column}
-		\begin{column}{0.5\textwidth}
-			\textbf{Bad News}:
-			\begin{itemize}
-				\item No feature learning
-				\item Fails for transformers/attention
-			\end{itemize}
-		\end{column}
-	\end{columns}
 \end{frame}
 
 \section{Analysis of Convergence and Generalization}
 
-\begin{frame}
+\begin{frame}{Focus Hypothesis set}
 	\begin{itemize}
-		\item Research focused on more practical assumptions.
+		\item Research focused on more practical assumptions and particular settings
 		\item Two-layer ReLU network \(f_{\mathbf{W},\mathbf{a}}(\mathbf{x}) = \frac{1}{\sqrt{m}}\sum_{r=1}^{m} a_r \relu(\mathbf{w}_r^\top \mathbf{x})
 		\)
-		\item Least Squares Regression \(C(W):=\frac{1}{2}\sum_{i=1}^{n}(y_i - f_{\mathbf{W},\mathbf{a}}(\mathbf{x}_i))\)
+		\item Least Squares Regression \(C(W):=\frac{1}{2}\sum_{i=1}^{n}(y_i - f_{\mathbf{W},\mathbf{a}}(\mathbf{x}_i))^2\)
 		\item Resulting NTK gram matrix:
-		\begin{align}
+		\begin{align*}
 			\mathbf{H}_{ij}^\infty &= \E{\mathbf{w} \sim \mathcal{N}(0,\mathbf{I})}\left[ \mathbf{x}_i^\top \mathbf{x}_j\mathbb{I}\left\{\mathbf{w}^\top \mathbf{x}_i \ge 0, \mathbf{w}^\top \mathbf{x}_j \ge 0\right\}\right] \\
 			&= \frac{\mathbf{x}_i^\top\mathbf{x}_j\left(\pi - \arccos(\mathbf{x}_i^\top\mathbf{x}_j)\right)}{2\pi}, \quad \forall i, j\in[n].
-		\end{align}
-		\item  If \(H^\infty\) is positive
-		definite \(\lambda_0 := \lambda_{\min}(H^{\infty})>0\) , GD converges to \(0\) training loss if \(m\) is sufficiently large \(\Omega(\frac{n^6}{\lambda_0^4})\).
+		\end{align*}
+		\item \textbf{Theorem}. If \(H^\infty\) is positive
+		definite \(\lambda_0 := \lambda_{\min}(H^{\infty})>0\) , 
+		GD converges to \(0\) training loss w.h.p. if \(m\) is sufficiently large \(\Omega(\frac{n^6}{\lambda_0^4})\).
 	\end{itemize}
 \end{frame}
 
@@ -150,10 +134,10 @@ subsubsectionstyle=show/shaded/hide]
 %----------------------------------------------------
 %  Eigen-decomposition setup
 
-\begin{frame}
+\begin{frame}{Convergence}
 	\begin{itemize}
 		
-		\item Eigen-decomposition $H^\infty\;=\; \sum_{i=1}^n \lambda_i\,v_i\,v_i^\top,$.
+		\item Eigen-decomposition $H^\infty\;=\; \sum_{i=1}^n \lambda_i\,v_i\,v_i^\top$.
 		
 		%----------------------------------------------------
 		%  Theorem 4.1
@@ -166,28 +150,19 @@ subsubsectionstyle=show/shaded/hide]
 		\quad
 		\eta \;=\; O\!\Bigl(\frac{\lambda_0}{n^2}\Bigr).
 		\)
-		Then with probability at least $1 - \delta$ over the random initialization, 
+		\item \textbf{Theorem.} Then w.p. at least $1 - \delta$ over the \textit{random initialization}, 
 		for all $k = 0,1,2,\dots$ we have
 		\[
 		\|y \;-\; u(k)\|_2 
 		\;=\;
 		\sqrt{\;\sum_{i=1}^n \Bigl(1 \;-\; \eta\,\lambda_i\Bigr)^{2k}\,\bigl(v_i^\top y\bigr)^2}
-		\;\;\pm\;\;\varepsilon.
-		\tag{8}
+		\;\;\pm\;\;\varepsilon
 		\]
 		
 		
 		%----------------------------------------------------
 		%  Definition 5.1
 		
-		\item 
-		A distribution $D$ over $\mathbb{R}^d \times \mathbb{R}$ is called 
-		$(\lambda_0,\delta,n)$\emph{-non-degenerate} 
-		if for $n$ i.i.d.\ samples $\{(x_i,y_i)\}_{i=1}^n$ from $D$, 
-		with probability at least $1 - \delta$ we have
-		\[
-		\lambda_{\min}\bigl(H^\infty\bigr) \;\;\ge\;\; \lambda_0 \;>\; 0.
-		\]
 		
 	\end{itemize}
 	
@@ -207,74 +182,102 @@ subsubsectionstyle=show/shaded/hide]
 %----------------------------------------------------
 %  Theorem 5.1
 
-\begin{frame}
-	
-	\label{thm:5.1}
-	Fix a failure probability $\delta \in (0,1)$. 
-	Suppose our data $S = \{(x_i,y_i)\}_{i=1}^n$ are i.i.d.\ samples 
-	from a $(\lambda_0,\delta/3,n)$-non-degenerate distribution $D$, 
-	and let 
-	\[
-	\kappa \;=\; O\!\Bigl(\tfrac{\lambda_0\,\delta}{n}\Bigr),
-	\quad
-	m \;\ge\; \kappa^{-2}\,\mathrm{poly}\bigl(n,\,\lambda_0^{-1},\,\delta^{-1}\bigr).
-	\]
-	Consider any loss function 
-	$\ell:\mathbb{R}\times\mathbb{R}\to[0,1]$ 
-	that is 1-Lipschitz in its first argument and satisfies $\ell(y,y)=0$. 
-	Then with probability at least $1 - \delta$ 
-	(over the random initialization \emph{and} the training samples), 
-	the two-layer neural network $f_{\mathbf{W}(k),a}$ 
-	trained by gradient descent for 
-	\[
-	k \;\ge\; \Omega\!\Bigl(\tfrac{1}{\eta\,\lambda_0}\,\log\tfrac{n}{\delta}\Bigr)
-	\quad\text{iterations}
-	\]
-	has population loss
+\begin{frame}{Generalization Assumptions}
+	\begin{itemize}
+		
+		\item \textbf{Definition.}
+		A distribution $D$ over $\mathbb{R}^d \times \mathbb{R}$ is called 
+		"$(\lambda_0,\delta,n)${-non-degenerate}"
+		if for $n$ i.i.d.\ samples $\{(x_i,y_i)\}_{i=1}^n$ from $D$, 
+		with probability at least $1 - \delta$ we have
+		\[
+		\lambda_{\min}\bigl(H^\infty\bigr) \;\;\ge\;\; \lambda_0 \;>\; 0.
+		\]
+		
+		
+		\item Fix a failure probability $\delta \in (0,1)$. 
+		Suppose our data $S = \{(x_i,y_i)\}_{i=1}^n$ are i.i.d.\ samples 
+		from a $(\lambda_0,\delta/3,n)$-non-degenerate distribution $D$, 
+		and let \(
+		\kappa \;=\; O\!\Bigl(\tfrac{\lambda_0\,\delta}{n}\Bigr),
+		\quad
+		m \;\ge\; \kappa^{-2}\,\mathrm{poly}\bigl(n,\,\lambda_0^{-1},\,\delta^{-1}\bigr).
+		\)
+		\item Loss function 
+		$\ell:\mathbb{R}\times\mathbb{R}\to[0,1]$ 
+		that is 1-Lipschitz in its first argument and satisfies $\ell(y,y)=0$. 
+		
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Generalization Theorem}
+	\begin{itemize}
+		\item \textbf{Theorem} Then w.p. at least $1 - \delta$ 
+		over the random initialization \emph{and} the training samples,
+		the network $f_{\mathbf{W}(k),a}$ 
+		trained by GD for 
+		\(
+		k \;\ge\; \Omega\!\Bigl(\tfrac{1}{\eta\,\lambda_0}\,\log\tfrac{n}{\delta}\Bigr)
+		\) iterations
+		has population loss:
+		\[
+		L_D\bigl(f_{\mathbf{W}(k),a}\bigr)
+		\;=\;
+		\mathbb{E}_{(x,y)\sim D}\bigl[\ell\bigl(f_{\mathbf{W}(k),a}(x),\,y\bigr)\bigr]
+		\;\le\;
+		\sqrt{\frac{2\,y^\top \bigl(H^\infty\bigr)^{-1}\,y}{n}}
+		\;+\;
+		O\Bigl(\sqrt{\tfrac{\log\!\bigl(\tfrac{n}{\lambda_0\,\delta}\bigr)}{n}}\Bigr)
+		\]
+	\end{itemize}
+\end{frame}
+
+
+\section{Closer Look \& Motivation}
+\begin{frame}{Closer Look}
 	\[
 	L_D\bigl(f_{\mathbf{W}(k),a}\bigr)
-	\;=\;
-	\mathbb{E}_{(x,y)\sim D}\bigl[\ell\bigl(f_{\mathbf{W}(k),a}(x),\,y\bigr)\bigr]
 	\;\le\;
 	\sqrt{\frac{2\,y^\top \bigl(H^\infty\bigr)^{-1}\,y}{n}}
 	\;+\;
-	O\!\Bigl(\sqrt{\tfrac{\log\!\bigl(\tfrac{n}{\lambda_0\,\delta}\bigr)}{n}}\Bigr).
-	\tag{9}
+	O\Bigl(\sqrt{\tfrac{\log\!\bigl(\tfrac{n}{\lambda_0\,\delta}\bigr)}{n}}\Bigr)
 	\]
-	
-\end{frame}
-
-\section{Closer Look \& Motivation}
-
-\begin{frame}
 	\begin{itemize}
-		\item We can see that the bound depends on:
-		\begin{itemize}
-			
-			\item Distribution \((x,y) \sim \mathcal{D}\) such that,
-			\item \(\mathbf{y}^\top H^\infty \mathbf{y} \leq \|(H^\infty)^{-1}\| \|\mathbf{y}\|_2 = \lambda_{\min}(H^{\infty}) \|\mathbf{y}\|_2 \)
-		\end{itemize}  
+		
+		\item We can see that the bound depends on the Distribution \((x,y) \sim \mathcal{D}\) such that,
+		
+		\item \(\mathbf{y}^\top( H^\infty)^{-1} \mathbf{y} \leq \|(H^\infty)^{-1}\| \|\mathbf{y}\|_2 = \frac{1}{\lambda_{\min}(H^{\infty})} \|\mathbf{y}\|_2 \)
 		
 		
-		\item To be able to \text{provably} learn (e.g. PAC-Learning), the bound must converge to \(0\) as \(n \to \infty\).
-		
-		\item The paper mentions the case of \(y=g(x)\) for some function \(g\).
-		
-		\item We focus on bounding \(\lambda_{\min}(H^{\infty}) \text{ and } \|\mathbf{y}\|_2\)
 		
 	\end{itemize}
 	
 \end{frame}
 
+\begin{frame}{Motivation}
+	\begin{itemize}
+		
+		\item What class of functions \(y=g(x)\) or distributions \((x,y) \sim \mathcal{D}\) are provably learnable ?
+		\item This depends on definition of Learnable (PAC, Agnostic-PAC etc.)
+		\item We chose: The bound must converge to \(0\) as \(n \to \infty\).
+		
+		\item The paper mentions the case of \(y=g(x)\) for some function \(g\) and gives a simple statement.
+		
+		\item We focus on bounding \(\lambda_{\min}(H^{\infty})\).
+		
+		\item Then we propose a (relatively small) family of \(\mathcal{D}\) that is learnable. We are yet to prove the most general class.
+		
+	\end{itemize}
+\end{frame}
 
 
+\section{Similar works}
 
-\section{Bounds on Minimum Eigenvalue}
 
-
-\begin{frame}
-\begin{itemize}
-	\item Data scaling assumption.
+\begin{frame}{Similar works}
+	\begin{itemize}
+		\item Data scaling assumption.
 		The data distribution $P_X$ satisfies the following properties:
 		\begin{enumerate}
 			\item $\displaystyle \int \|x\|_{2}\, dP_X(x) \;=\; \Theta(\sqrt{d}).$
@@ -286,14 +289,14 @@ subsubsectionstyle=show/shaded/hide]
 		counterpart $x - \mathbb{E}x$. We remark that the data can have any scaling, 
 		but in this paper we fix it to be of order $d$ for convenience. We further 
 		assume the following condition on the data distribution.
-	
-
-\end{itemize}
+		
+		
+	\end{itemize}
 \end{frame}
 
 \begin{frame}
 	\begin{itemize}
-			\item Lipschitz concentration assumption.
+		\item Lipschitz concentration assumption.
 		The data distribution $P_X$ satisfies the Lipschitz concentration property. 
 		Namely, for every Lipschitz continuous function 
 		$f : \mathbb{R}^d \to \mathbb{R}$, there exists an absolute constant $c > 0$ 
@@ -335,6 +338,7 @@ subsubsectionstyle=show/shaded/hide]
 
 \section{Our Results and Observations}
 
+
 \begin{frame}{Gershgorin Circle Theorem}
 	\textbf{Statement:} Let \( A = [a_{ij}] \) be an \( n \times n \) matrix. The eigenvalues of \( A \) lie within the union of disks \( D_i \) in the complex plane, centered at \( a_{ii} \) with radius \( \sum_{j \neq i} |a_{ij}| \):
 	\[
@@ -348,52 +352,77 @@ subsubsectionstyle=show/shaded/hide]
 		\caption{Gershgorin Circle Theorem}
 	\end{figure}
 \end{frame}
-\begin{frame}
-\begin{itemize}
-	  \item Most papers and our main reference assume \(\|x\|=1\) and \(|y|\leq 1\), for simplicity.
-	
-	\item Therefore, the diagonal \(H^\infty_{ii} = \frac{1}{2}\).
-	\item Now denote \(\rho = \max_{i,j\neq i} |x_i^\top x_j| \). since \(f(x)=\frac{x(\pi-\arccos(x))}{2\pi}\), is as below, we get:
-	\[
-	H^\infty_{i,j\neq i} \leq \frac{\rho(\pi-\arccos(\rho))}{2\pi} \leq \frac{1}{2}
-	\]
-	\item We can use the \textbf{Gershgorin circle} theorem and get
-	\[
-	| \lambda_{\min}(H^\infty) - \frac{1}{2} | \leq (n-1)\frac{\rho(\pi-\arccos(\rho))}{2\pi}
-	\]
-	\item Thus, the bound depends on the maximum "correlation" between two distinct i.i.d \(x_i\) in a sample of size \(n\). This will depend on the distribution of \(x\) on \(S^{d-1}\).
-\end{itemize}
-\end{frame}
 
 
 \begin{frame}
 	\begin{itemize}
-
-	\item So the bound is good when \(x_i\) are almost orthogonal with high probability. We can show the following examples:
-	
-	\item \(x_i \sim \text{Unif}(S^{d-1})\):
-	\[
-	\max_{1 \le i < j \le n}
-	\Bigl|\langle X_i,\;X_j\rangle\Bigr|
-	\;\;\le\;
-	C\,
-	\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
-	\,.
-	\]
-	
-	\item \(x_i\) are isotropic, mean-zero, sub-Gaussian vectors:
-	\[
-	\max_{1 \le i < j \le n}
-	\bigl|\langle X_i,\;X_j\rangle\bigr|
-	\;\;\le\;
-	C\,
-	\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
-	\;\;\max_{1\le i\le n}\|X_i\|\ .
-	\]
+		\item Most papers and our main reference assume \(\|x_i\|=1\) and \(|y_i|\leq 1\), for simplicity.
+		\item The diagonal \(H^\infty_{ii} = \frac{1}{2}\).
+		\item Denote \(\rho = \max_{i,j\neq i} |x_i^\top x_j| \). Considering \(ft(t)=\frac{t(\pi-\arccos(t))}{2\pi}\), we get:
+		\[
+		H^\infty_{i,j\neq i} \leq \frac{\rho(\pi-\arccos(\rho))}{2\pi} \leq \frac{1}{2}
+		\]
+		\item We find the \textbf{Gershgorin circle} theorem and get
+		\[
+		 \lambda_{\min}(H^\infty) \geq  \frac{1}{2} - (n-1)\frac{\rho(\pi-\arccos(\rho))}{2\pi}
+		\]
 	\end{itemize}
-	
+	\begin{figure}
+		\includegraphics[width=0.7\textwidth]{pic/Arc-Cos-Func.jpg}
+	\end{figure}
 \end{frame}
 
+
+
+\begin{frame}{Examples}
+	\begin{itemize}
+		
+		\item Thus, the bound depends on the maximum "correlation" between two distinct i.i.d \(x_i\) in a sample of size \(n\). This will depend on the distribution of \(x\) on \(S^{d-1}\).
+		\item The problem is now bounding \(\rho\) such that:
+		
+		\item \(x_i \sim \text{Unif}(S^{d-1})\):
+		\[
+		\max_{1 \le i < j \le n}
+		\Bigl|\langle X_i,\;X_j\rangle\Bigr|
+		\;\;\le\;
+		C\,
+		\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
+		\,
+		\]
+		
+		\item \(x_i\) are isotropic, mean-zero, sub-Gaussian vectors:
+		\[
+		\max_{1 \le i < j \le n}
+		\bigl|\langle X_i,\;X_j\rangle\bigr|
+		\;\;\le\;
+		C\,
+		\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
+		\;\;\max_{1\le i\le n}\|X_i\|\ .
+		\]
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Learnable Distributions}
+	\begin{itemize}
+		\item \(\mathbf{y}\) has sub-Gaussian Coordinates and \(\E[y_i^2] = 2C^2\)
+		\item So w.h.p. \(\|y\|_2 \leq C\sqrt{n}\)
+		\item we need \(\lambda_0 \|y\|_2 \leq Cn\), so we want:
+		\[
+		\lambda_0 \leq C\sqrt{n} \implies  \frac{1}{2} - (n-1)\frac{\rho(\pi-\arccos(\rho))}{2\pi} \geq \frac{1}{C\sqrt{n}}
+		\]
+		\item For \(0 \leq \rho \leq 1\) gives a computable bound. approximately \(O(\frac{1}{n})\).
+		\item So we need distributions on \(x_i\) such that \(\sup_{i,j}|\langle x_i, x_j \rangle| = O(\frac{1}{n})\) for \(n\) i.i.d samples w.h.p.
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Intuition}
+	\begin{itemize}
+\item We saw that the bound is suitable  when \(x_i\) are almost orthogonal with high probability.
+
+\item Intuitively, we need \(x_i\) to lie on a manifold in \(\mathbb{R}^n\) such that they are distributed on it with low correlation. The data are sufficiently “spread out” in that manifold.
+	\end{itemize}
+\end{frame}
 
 \begin{frame}{Weyl's Inequality}
     \textbf{Weyl's Inequality} provides bounds on the eigenvalues of the sum of two Hermitian matrices.
@@ -442,6 +471,10 @@ subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
 
+
+\begin{frame}{Future Directions \& Other Ideas}
+	
+\end{frame}
 
 %%-------------------------------------------------
 %\begin{frame}{Advanced Implications}
