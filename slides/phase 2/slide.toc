@@ -1,6 +1,0 @@
-\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
-\beamer@sectionintoc {2}{Analysis of Convergence and Generalization}{6}{0}{2}
-\beamer@sectionintoc {3}{Closer Look \& Motivation}{11}{0}{3}
-\beamer@sectionintoc {4}{Similar works}{14}{0}{4}
-\beamer@sectionintoc {5}{Our Results and Observations}{18}{0}{5}
-\beamer@sectionintoc {6}{References}{28}{0}{6}
