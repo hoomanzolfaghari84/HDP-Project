@@ -13,14 +13,10 @@
 \usepackage{amsmath}   % For equations
 \usepackage{array}     % For tables
 \pgfplotsset{compat=1.16}
-
-% \usetikzlibrary{positioning}
 \usepackage{FiraSans}
 
+% \usetikzlibrary{positioning}
 
-
-
-%\newtheorem{theorem}{Theorem}
 %\newtheorem{definition}{Definition}
 %\newtheorem{remark}{Remark}
 
@@ -258,6 +254,8 @@ subsubsectionstyle=show/shaded/hide]
 	
 \end{frame}
 
+
+
 \begin{frame}{Motivation}
 	\begin{itemize}
 		
@@ -275,7 +273,120 @@ subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
 
+\section{Bounds on Minimum Eigenvalue}
+
+\begin{frame}
+	\begin{itemize}
+		\item \textbf{Data Scaling Assumption}:
+		\begin{enumerate}
+			\item \( \int \|x\|_2 \, dP_X(x) = \Theta(\sqrt{d}) \)
+			\item \( \int \|x\|_2^2 \, dP_X(x) = \Theta(d) \)
+			\item \( \int \|x - \mathbb{E}[x]\|_2^2 \, dP_X(x) = \Omega(d) \)
+		\end{enumerate}
+		These are scaling conditions on the data vector \( x \) or its centered counterpart \( x - \mathbb{E}[x] \).
+		
+		\item \textbf{Lipschitz Concentration Assumption}:
+		The data distribution \( P_X \) satisfies the Lipschitz concentration property. For any Lipschitz continuous function \( f : \mathbb{R}^d \to \mathbb{R} \), there exists a constant \( c > 0 \) such that:
+		\[
+		\mathbb{P}\left( \left| f(x) - \int f(x')\, dP_X(x') \right| > t \right) \leq 2 e^{-c t^2 / \|f\|_{\mathrm{Lip}}^2}
+		\]
+		
+		\item \textbf{General Assumption}: This assumption includes distributions satisfying the log-Sobolev inequality or log-concave densities.
+	\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}{Main Theorem}
+	\begin{theorem}[Smallest eigenvalue of limiting NTK]
+		\label{thm:smallest-eig-NTK}
+		Let $\{x_i\}_{i=1}^N$ be a set of i.i.d.\ data points from $P_X$, where $P_X$ has 
+		zero mean and satisfies above assumptions. Let $K^{(L)}$ be the limiting 
+		NTK recursively defined. Then, for any even integer constant $r \ge 2$, 
+		we have with probability at least 
+		\[
+		1 - N\,e^{-\Omega(d)} \;-\; N^2\,e^{-\Omega\bigl(d\,N^{-2/(\,r - 0.5\,)}\bigr)}
+		\]
+		that
+		\[
+		\mathrm{LO}(d) 
+		\;\;\ge\;\;
+		\lambda_{\min}\bigl(K^{(L)}\bigr) 
+		\;\;\ge\;\;
+		\mu_{r}(\sigma)^{2}\;\Omega(d),
+		\]
+		where $\mu_{r}(\sigma)$ is the $r$-th Hermite coefficient of the ReLU function.
+	\end{theorem}
+	
+\end{frame}
+
+
+\begin{frame}{Estimates from Data and Theorem Application}
+	
+	\textbf{Content Overview:}
+	\begin{itemize}
+		\item \textbf{Useful Estimates:}
+		The data estimations are derived from the assumptions that we have \( \| x_i \|^2_2 = \Theta(d) \) for all \( i \in [N] \) with probability \( 1 \geq N e^{-\Omega(d)} \).
+		\item \textbf{Key Assumptions:}
+		\begin{itemize}
+			\item \textbf{Assumption 2.1 \& 2.2:} \( \| x_i - x_j \|^2 \) is Lipschitz continuous.
+			\item \textbf{Lipschitz Continuity:} \( \| x_i - x_j \|^2 \leq t = dN^{-1/(r-0.5)} \), where \( t \) is the bound for \( |x_i - x_j| \).
+		\end{itemize}
+	\end{itemize}
+	
+	\vspace{0.5cm}
+	
+	\textbf{Key Result:}
+	\begin{itemize}
+		\item \textbf{Theorem 3.1 Outcome:}  
+		\[
+		\| x_i - x_j \|^2_2 = \Theta(d) \quad \forall i \in [N], \quad |x_i - x_j|^{r} \leq dN^{-1/(r-0.5)} \quad \forall i \neq j.
+		\]
+		The equation holds with the same probability as stated in the theorem.
+	\end{itemize}
+	
+\end{frame}
+
+\begin{frame}
+	\frametitle{Matrix Analysis}
+	
+	\textbf{Lemma 3.1 Application:}
+	
+	Define Gram matrix kernel as:
+	\[
+	H \triangleq K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L)
+	\]
+	
+	\vspace{0.5cm}
+	
+	\textbf{Eigenvalue Bound:}
+	\[
+	\lambda_{\min}( K(L) ) \geq \sum_{l=1}^{L} \lambda_{\min} \left( G(l) \right)
+	\]
+	
+\end{frame}
+
+\begin{frame}{Matrix Eigenvalue Estimates}
+	
+	\textbf{Final Eigenvalue Bound:}
+	\[
+	\lambda_{\min}( G(2) ) = \lambda_{\min}( D \; \mathbb{E}\left[ \sigma(X^T w) \sigma( X^T w )^T \right] D )
+	\]
+	where \( D = \text{diag}(\| x_i \|^2_2) \).
+	\[
+	\lambda_{\min}( G(2) ) \geq \mu(\sigma) \lambda_{\min}( D(X^*)^T (X^*)^T D )
+	\]
+	\[
+	\lambda_{\min} \left( G(2) \right) \geq \lambda_{\min} \left( \sum_{i \in [N]} \| x_i \|^2_2 (X^* X^T) \right)
+	\]
+	At last, by Gershgorin circle theorem we have:
+	\[
+	\lambda_{\min} \left( (X^*r) (X^r)^T \right) \geq \min_{i \in [N]} \| x_i \|_2^{2r} - (N - 1) \max_{i \neq j} \left| \langle x_i, x_j \rangle \right|^r \geq \Omega(d)
+	\]
+\end{frame}
+
 \section{Similar works}
+
 
 
 \begin{frame}{Similar works}
@@ -320,7 +431,7 @@ subsubsectionstyle=show/shaded/hide]
 		\label{thm:smallest-eig-NTK}
 		Let $\{x_i\}_{i=1}^N$ be a set of i.i.d.\ data points from $P_X$, where $P_X$ has 
 		zero mean and satisfies Assumptions~2.1 and~2.2. Let $K^{(L)}$ be the limiting 
-		NTK recursively defined in. Then, for any even integer constant $r \ge 2$, 
+		NTK recursively defined in (9). Then, for any even integer constant $r \ge 2$, 
 		we have with probability at least 
 		\[
 		1 - N\,e^{-\Omega(d)} \;-\; N^2\,e^{-\Omega\bigl(d\,N^{-2/(\,r - 0.5\,)}\bigr)}
@@ -337,92 +448,6 @@ subsubsectionstyle=show/shaded/hide]
 		given by (8).
 	\end{theorem}
 \end{frame}
-
-
-
-
-
-\begin{frame}
-\frametitle{Estimates from Data and Theorem Application}
-
-\textbf{Content Overview:}
-\begin{itemize}
-	\item \textbf{Useful Estimates:}
-	The data estimations are derived from the assumptions that we have \( \| x_i \|^2_2 = \Theta(d) \) for all \( i \in [N] \) with probability \( 1 \geq N e^{-\Omega(d)} \).
-	\item \textbf{Key Assumptions:}
-	\begin{itemize}
-		\item \textbf{Assumption 2.1 \& 2.2:} \( \| x_i - x_j \|^2 \) is Lipschitz continuous.
-		\item \textbf{Lipschitz Continuity:} \( \| x_i - x_j \|^2 \leq t = dN^{-1/(r-0.5)} \), where \( t \) is the bound for \( |x_i - x_j| \).
-	\end{itemize}
-\end{itemize}
-
-\vspace{0.5cm}
-
-\textbf{Key Result:}
-\begin{itemize}
-	\item \textbf{Theorem 3.1 Outcome:}  
-	\[
-	\| x_i - x_j \|^2_2 = \Theta(d) \quad \forall i \in [N], \quad |x_i - x_j|^{r} \leq dN^{-1/(r-0.5)} \quad \forall i \neq j.
-	\]
-	The equation holds with the same probability as stated in the theorem.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Matrix Analysis}
-
-\textbf{Lemma 3.1 Application:}
-\[
-K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
-\]
-
-\textbf{Observation:} The matrices \( G(l), \hat{G}(l), G(l) \) are positive semidefinite.
-
-\vspace{0.5cm}
-
-\textbf{Eigenvalue Bound:}
-\[
-\lambda_{\min}( K(L) ) \geq \sum_{l=1}^{L} \lambda_{\min}( G(l) ) \min_{i \in [N]} \left( \prod_{p=l+1}^L (G(p))_{ii} \right)
-\]
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Matrix Eigenvalue Estimates}
-
-\textbf{Final Eigenvalue Bound:}
-\[
-\lambda_{\min}( G(2) ) = \lambda_{\min}( D \left[ \sigma(X^T w) \circ ( X^T w )^T D \right] )
-\]
-\[
-\lambda_{\min}( G(2) ) = \lambda_{\min}( D \left[ \mu(\sigma) 21N^T + \sum_{s=1}^{\infty} \mu_s(\sigma) (X^T X^*) \right] )
-\]
-
-\textbf{Assumptions:}
-\begin{itemize}
-	\item \( \mu(\sigma) \geq \mu_{\text{min}} \).
-\end{itemize}
-
-\vspace{0.5cm}
-
-\textbf{Conclusion:}
-\[
-\lambda_{\min}( G(2) ) \geq \mu(\sigma) \lambda_{\min}( D(X^*)^T (X^*)^T D )
-\]
-
-\end{frame}
-
-\begin{frame}
-\frametitle{Equation (37)}
-
-\[
-\lambda_{\min} \left( G(2) \right) \geq \lambda_{\min} \left( \sum_{i \in [N]} \| x_i \|^2_2 (X^* X^T) \right)
-\]
-
-\end{frame}
-
-
 
 
 \section{Our Results and Observations}
@@ -495,7 +520,7 @@ K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
 	\begin{itemize}
 		\item \(\mathbf{y}\) has sub-Gaussian Coordinates and \(\E[y_i^2] = 2C^2\)
 		\item So w.h.p. \(\|y\|_2 \leq C\sqrt{n}\)
-		\item we need \(\lambda_0 \|y\|_2 \leq Cn\), so we want:
+		\item We need \(\lambda_0 \|y\|_2 \leq Cn\), so we want:
 		\[
 		\lambda_0 \leq C\sqrt{n} \implies  \frac{1}{2} - (n-1)\frac{\rho(\pi-\arccos(\rho))}{2\pi} \geq \frac{1}{C\sqrt{n}}
 		\]
@@ -505,13 +530,31 @@ K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
 \end{frame}
 
 
-\begin{frame}{Intuition}
-	\begin{itemize}
-\item We saw that the bound is suitable  when \(x_i\) are almost orthogonal with high probability.
-
-\item Intuitively, we need \(x_i\) to lie on a manifold in \(\mathbb{R}^n\) such that they are distributed on it with low correlation. The data are sufficiently “spread out” in that manifold.
-	\end{itemize}
-\end{frame}
+%\begin{frame}
+%
+%stimates from Data and Theorem Application}
+%extbf{Useful Estimates:}
+% from the assumptions that we have \( \| x_i \|^2_2 = \Theta(d) \) for all \( i \in [N] \) with probability \( 1 \geq N e^{-\Omega(d)} \).
+%tinuity:} \( \| x_i - x_j \|^2 \leq t = dN^{-1/(r-0.5)} \), where \( t \) is the bound for \( |x_i - x_j| \).
+% x_i - x_j \|^2_2 = \Theta(d) \quad \forall i \in [N], \quad |x_i - x_j|^{r} \leq dN^{-1/(r-0.5)} \quad \forall i \neq j.
+%
+%\frametitle{Matrix Analysis}
+%ion:}
+%\circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
+%sitive semidefinite.
+%^{L} \lambda_{\min}( G(l) ) \min_{i \in [N]} \left( \prod_{p=l+1}^L (G(p))_{ii} \right)
+%_{\min}( G(2) ) = \lambda_{\min}( D \left[ \sigma(X^T w) \circ ( X^T w )^T D \right] )
+%fty} \mu_s(\sigma) (X^T X^*) \right] )
+%cm}
+%lusion:}
+%G(2) ) \geq \mu(\sigma) \lambda_{\min}( D(X^*)^T (X^*)^T D )
+%a_{\min} \left( G(2) \right) \geq \lambda_{\min} \left( \sum_{i \in [N]} \| x_i \|^2_2 (X^* X^T) \right)
+%\(x_i\) are almost orthogonal with high probability.
+%
+%\item Intuitively, we need \(x_i\) to lie on a manifold in \(\mathbb{R}^n\) such that they are distributed on it with low correlation. The data are sufficiently “spread out” in that manifold.
+%	\end{itemize}
+%\end{frame}
+%
 
 \begin{frame}{Weyl's Inequality}
     \textbf{Weyl's Inequality} provides bounds on the eigenvalues of the sum of two Hermitian matrices.
@@ -534,8 +577,7 @@ K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
 		\begin{align*}
 			\mathbb{E}[H] = (\frac{1}{2} -s_d) \mathbf{1} + s_d J
 		\end{align*}
-		where \( s_d = \frac{1}{2 \pi (d - 1)} \frac{\Gamma \left( \frac{d}{2} \right)^2}{\Gamma \left( \frac{d - 1}{2} \right) \Gamma \left( \frac{d + 1}{2} \right)} \). 
-		\item Hence \( \lambda_{\min}(\mathbb{E}[H]) = \frac{1}{2} - s_d \).
+		and hence \( \lambda_{\min}(\mathbb{E}[H]) = \frac{1}{2} - s_d \).
 		\item Now we can take adventage of Weyl's inequality to bound the smallest eigenvalue of \(H^\infty\) via:
 			\begin{align*}
 				\lambda_{\min}(H^\infty) \geq \lambda_{\min}(A) + \lambda_{\min}(\mathbb{E}[H]) = \lambda_{\min}(A) + \frac{1}{2} - s_d
@@ -545,11 +587,11 @@ K(L) = \sum_{l=1}^{L} G(l) \circ G(l+1) \circ G(l+2) \circ \dots \circ G(L).
 
 \begin{frame}{Main Observations}
 	\begin{itemize}
+
 		\item 	Let \( \mathbb{P} \left[ \lvert H - \mathbb{E}[H] \rvert_{op} \geq t \right] \leq \delta_t \). Then, with probability at least \( 1 - \delta_t \), we have:
 		\begin{align*}
 			\lambda_{\min}(H^\infty) \geq -t + \frac{1}{2} - s_d
 		\end{align*}
-
 		or equivalently:
 		\begin{align*}
 			\lambda_{\min}(H^\infty) \geq max \left\{ -t + \frac{1}{2} - s_d, 0 \right\}
