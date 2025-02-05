@@ -77,18 +77,17 @@ subsubsectionstyle=show/shaded/hide]
 \section{Introduction}
 
 %-------------------------------------------------
-\begin{frame}{Key Idea}
+\begin{frame}{Emergence}
 	\begin{itemize}
-		\item \textbf{Dynamics} of training infinitely wide NNs \(\approx\)
-		\item \textbf{convex optimization} in RKHS
+		\item \textbf{Dynamics} of training infinitely wide NNs \(\approx\) \textbf{convex optimization} in RKHS
 		
 		\vspace{0.5em}
 		\item For \(f_\theta: \mathbb{R}^d \to \mathbb{R}\) (NN), GD training induces:
 		\[
-		\underbrace{\Theta(\theta)_{i,j}}_{\text{NTK}} := \nabla_\theta f_\theta(x_i) \nabla_\theta f_\theta(x_j)^\top \in \mathbb{R}^{n \times n}
+		\underbrace{\Theta(\theta)}_{\text{NTK}} \in \mathbb{R}^{n\times n}, \quad \Theta(\theta)_{i,j}:= \nabla_\theta f_\theta(x_i)^\top \nabla_\theta f_\theta(x_j) 
 		\]
-		\small
-		\textbf{Crucial Property}: \(\Theta(\theta^{(0)}) \to \Theta^{\infty}\) as width \(\to \infty\)
+		
+		\item \textbf{Asymptotic Property}: \(\Theta(\theta^{(0)}) \to \Theta^{\infty}\) as width \(\to \infty\)
 		
 	\end{itemize}
 	
@@ -96,15 +95,18 @@ subsubsectionstyle=show/shaded/hide]
 \end{frame}
 
 %-------------------------------------------------
-\begin{frame}{Modern Perspective}
+\begin{frame}{Regression Case}
+	\[
+	\partial_t f_t = -\Theta^\infty(f_t - y) \quad (\text{grad flow ODE})
+	\]
+	\[
+	f_t = e^{-\Theta^\infty t} f_0 + \left(I - e^{-\Theta^\infty t}\right) y,
+	\]
+	
 	\begin{itemize}
 		\item \textbf{Feature Learning Gap}: NTK regime \(\neq\) real NNs (finite-width trains via \(\nabla\Theta \neq 0\))
 		\item \textbf{Deep vs Shallow}: Depth induces \textbf{spectral bias} (eigenvalue decay of \(\Theta^\infty\))
 	\end{itemize}
-	
-	\[
-	\partial_t f_t = -\Theta^\infty(f_t - y) \quad (\text{grad flow ODE})
-	\]
 	
 	\vspace{1em}
 	\begin{columns}
@@ -135,8 +137,8 @@ subsubsectionstyle=show/shaded/hide]
 		\item Least Squares Regression \(C(W):=\frac{1}{2}\sum_{i=1}^{n}(y_i - f_{\mathbf{W},\mathbf{a}}(\mathbf{x}_i))\)
 		\item Resulting NTK gram matrix:
 		\begin{align}
-		\mathbf{H}_{ij}^\infty &= \E{\mathbf{w} \sim \mathcal{N}(0,\mathbf{I})}\left[ \mathbf{x}_i^\top \mathbf{x}_j\mathbb{I}\left\{\mathbf{w}^\top \mathbf{x}_i \ge 0, \mathbf{w}^\top \mathbf{x}_j \ge 0\right\}\right] \\
-		&= \frac{\mathbf{x}_i^\top\mathbf{x}_j\left(\pi - \arccos(\mathbf{x}_i^\top\mathbf{x}_j)\right)}{2\pi}, \quad \forall i, j\in[n].
+			\mathbf{H}_{ij}^\infty &= \E{\mathbf{w} \sim \mathcal{N}(0,\mathbf{I})}\left[ \mathbf{x}_i^\top \mathbf{x}_j\mathbb{I}\left\{\mathbf{w}^\top \mathbf{x}_i \ge 0, \mathbf{w}^\top \mathbf{x}_j \ge 0\right\}\right] \\
+			&= \frac{\mathbf{x}_i^\top\mathbf{x}_j\left(\pi - \arccos(\mathbf{x}_i^\top\mathbf{x}_j)\right)}{2\pi}, \quad \forall i, j\in[n].
 		\end{align}
 		\item  If \(H^\infty\) is positive
 		definite \(\lambda_0 := \lambda_{\min}(H^{\infty})>0\) , GD converges to \(0\) training loss if \(m\) is sufficiently large \(\Omega(\frac{n^6}{\lambda_0^4})\).
@@ -149,46 +151,46 @@ subsubsectionstyle=show/shaded/hide]
 %  Eigen-decomposition setup
 
 \begin{frame}
-\begin{itemize}
-
+	\begin{itemize}
+		
 		\item Eigen-decomposition $H^\infty\;=\; \sum_{i=1}^n \lambda_i\,v_i\,v_i^\top,$.
-
-%----------------------------------------------------
-%  Theorem 4.1
-
-\item Suppose $\lambda_0 = \lambda_{\min}(H^\infty) \;>\; 0$, 
-	\(
-	\kappa \;=\; O\!\biggl(\frac{\varepsilon_0\,\delta}{\sqrt{n}}\biggr),
-	\quad
-	m \;=\; \Omega\!\Bigl(\frac{n^7}{\lambda_0^4\,\kappa^2\,\delta^4\,\varepsilon^2}\Bigr),
-	\quad
-	\eta \;=\; O\!\Bigl(\frac{\lambda_0}{n^2}\Bigr).
-	\)
-	Then with probability at least $1 - \delta$ over the random initialization, 
-	for all $k = 0,1,2,\dots$ we have
-	\[
-	\|y \;-\; u(k)\|_2 
-	\;=\;
-	\sqrt{\;\sum_{i=1}^n \Bigl(1 \;-\; \eta\,\lambda_i\Bigr)^{2k}\,\bigl(v_i^\top y\bigr)^2}
-	\;\;\pm\;\;\varepsilon.
-	\tag{8}
-	\]
-
-
-%----------------------------------------------------
-%  Definition 5.1
-
-\item 
-	A distribution $D$ over $\mathbb{R}^d \times \mathbb{R}$ is called 
-	$(\lambda_0,\delta,n)$\emph{-non-degenerate} 
-	if for $n$ i.i.d.\ samples $\{(x_i,y_i)\}_{i=1}^n$ from $D$, 
-	with probability at least $1 - \delta$ we have
-	\[
-	\lambda_{\min}\bigl(H^\infty\bigr) \;\;\ge\;\; \lambda_0 \;>\; 0.
-	\]
-
-\end{itemize}
-
+		
+		%----------------------------------------------------
+		%  Theorem 4.1
+		
+		\item Suppose $\lambda_0 = \lambda_{\min}(H^\infty) \;>\; 0$, 
+		\(
+		\kappa \;=\; O\!\biggl(\frac{\varepsilon_0\,\delta}{\sqrt{n}}\biggr),
+		\quad
+		m \;=\; \Omega\!\Bigl(\frac{n^7}{\lambda_0^4\,\kappa^2\,\delta^4\,\varepsilon^2}\Bigr),
+		\quad
+		\eta \;=\; O\!\Bigl(\frac{\lambda_0}{n^2}\Bigr).
+		\)
+		Then with probability at least $1 - \delta$ over the random initialization, 
+		for all $k = 0,1,2,\dots$ we have
+		\[
+		\|y \;-\; u(k)\|_2 
+		\;=\;
+		\sqrt{\;\sum_{i=1}^n \Bigl(1 \;-\; \eta\,\lambda_i\Bigr)^{2k}\,\bigl(v_i^\top y\bigr)^2}
+		\;\;\pm\;\;\varepsilon.
+		\tag{8}
+		\]
+		
+		
+		%----------------------------------------------------
+		%  Definition 5.1
+		
+		\item 
+		A distribution $D$ over $\mathbb{R}^d \times \mathbb{R}$ is called 
+		$(\lambda_0,\delta,n)$\emph{-non-degenerate} 
+		if for $n$ i.i.d.\ samples $\{(x_i,y_i)\}_{i=1}^n$ from $D$, 
+		with probability at least $1 - \delta$ we have
+		\[
+		\lambda_{\min}\bigl(H^\infty\bigr) \;\;\ge\;\; \lambda_0 \;>\; 0.
+		\]
+		
+	\end{itemize}
+	
 \end{frame}
 
 
@@ -239,7 +241,7 @@ subsubsectionstyle=show/shaded/hide]
 	O\!\Bigl(\sqrt{\tfrac{\log\!\bigl(\tfrac{n}{\lambda_0\,\delta}\bigr)}{n}}\Bigr).
 	\tag{9}
 	\]
-
+	
 \end{frame}
 
 \section{Closer Look \& Motivation}
@@ -248,8 +250,8 @@ subsubsectionstyle=show/shaded/hide]
 	\begin{itemize}
 		\item We can see that the bound depends on:
 		\begin{itemize}
-		
-			 \item Distribution \((x,y) \sim \mathcal{D}\) such that,
+			
+			\item Distribution \((x,y) \sim \mathcal{D}\) such that,
 			\item \(\mathbf{y}^\top H^\infty \mathbf{y} \leq \|(H^\infty)^{-1}\| \|\mathbf{y}\|_2 = \lambda_{\min}(H^{\infty}) \|\mathbf{y}\|_2 \)
 		\end{itemize}  
 		
@@ -258,11 +260,13 @@ subsubsectionstyle=show/shaded/hide]
 		
 		\item The paper mentions the case of \(y=g(x)\) for some function \(g\).
 		
-		\item So we focus on bounding \(\lambda_{\min}(H^{\infty}) \text{ and } \|\mathbf{y}\|_2\)
+		\item We focus on bounding \(\lambda_{\min}(H^{\infty}) \text{ and } \|\mathbf{y}\|_2\)
 		
 	\end{itemize}
-
+	
 \end{frame}
+
+
 
 
 \section{Bounds on Minimum Eigenvalue}
