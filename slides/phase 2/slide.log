@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.12)  5 FEB 2025 08:27
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.10.12)  5 FEB 2025 12:18
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -1301,7 +1301,35 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [2
 
-] (./slide.toc)
+]
+LaTeX Font Info:    Trying to load font information for FML+futmi on input line 95.
+ (c:/texlive/2023/texmf-dist/tex/latex/fourier/fmlfutmi.fd
+File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
+)
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 95.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 95.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 95.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 95.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 95.
+ (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 10.07397pt on input line 95.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 7.63599pt on input line 95.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 5.51999pt on input line 95.
+LaTeX Font Info:    Trying to load font information for U+lasy on input line 95.
+ (c:/texlive/2023/texmf-dist/tex/latex/base/ulasy.fd
+File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
+)
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1309,43 +1337,6 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [3
 
 ]
-LaTeX Font Info:    Trying to load font information for FML+futmi on input line 96.
- (c:/texlive/2023/texmf-dist/tex/latex/fourier/fmlfutmi.fd
-File: fmlfutmi.fd 2004/10/30 Fontinst v1.926 font definitions for FML/futmi.
-)
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 96.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 96.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 96.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 96.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsa.fd
-File: umsa.fd 2013/01/14 v3.01 AMS symbols A
-)
-LaTeX Font Info:    Trying to load font information for U+msb on input line 96.
- (c:/texlive/2023/texmf-dist/tex/latex/amsfonts/umsb.fd
-File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 10.07397pt on input line 96.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 7.63599pt on input line 96.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 5.51999pt on input line 96.
-LaTeX Font Info:    Trying to load font information for U+lasy on input line 96.
- (c:/texlive/2023/texmf-dist/tex/latex/base/ulasy.fd
-File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
-)
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 96.
-LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 96.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 9.19998pt on input line 96.
-LaTeX Font Info:    Font shape `U/futm/m/n' will be
-(Font)              scaled to size 6.99199pt on input line 96.
-
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1359,7 +1350,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [5
 
-] (./slide.toc)
+]
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1374,6 +1365,15 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [7
 
 ]
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 267.
+LaTeX Font Info:    Font shape `FMX/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 267.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 9.19998pt on input line 267.
+LaTeX Font Info:    Font shape `U/futm/m/n' will be
+(Font)              scaled to size 6.99199pt on input line 267.
+
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1387,7 +1387,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [9
 
-] (./slide.toc)
+]
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1401,7 +1401,14 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [11
 
-] (./slide.toc)
+]
+File: pic/gresh.jpg Graphic file (type bmp)
+<pic/gresh.jpg>
+
+Overfull \vbox (7.74663pt too high) detected at line 350
+ []
+
+
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1429,7 +1436,7 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
 [15
 
-] (./slide.toc)
+]
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
@@ -1437,60 +1444,11 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 [16
 
 ]
-File: pic/gresh.jpg Graphic file (type bmp)
-<pic/gresh.jpg>
-
-Overfull \vbox (7.74663pt too high) detected at line 346
- []
-
-
 Overfull \hbox (20.78085pt too wide) has occurred while \output is active
  [][]  \T1/futs/m/n/6 (Sharif 
  []
 
 [17
-
-]
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[18
-
-]
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[19
-
-]
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[20
-
-]
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[21
-
-]
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[22
-
-] (./slide.toc)
-Overfull \hbox (20.78085pt too wide) has occurred while \output is active
- [][]  \T1/futs/m/n/6 (Sharif 
- []
-
-[23
 
 ]
 \tf@nav=\write6
@@ -1504,15 +1462,15 @@ Overfull \hbox (20.78085pt too wide) has occurred while \output is active
 
  (./slide.aux)
 Package rerunfilecheck Info: File `slide.out' has not changed.
-(rerunfilecheck)             Checksum: 30201BD0F23040D438CC5EA55AE5AD13;1020.
+(rerunfilecheck)             Checksum: 39B65C1F4D341FD84BE805F9AEDF4AA5;927.
  ) 
 Here is how much of TeX's memory you used:
- 39943 strings out of 476683
- 924266 string characters out of 5807574
- 1868012 words of memory out of 5000000
- 59407 multiletter control sequences out of 15000+600000
+ 39904 strings out of 476683
+ 923649 string characters out of 5807574
+ 1865012 words of memory out of 5000000
+ 59380 multiletter control sequences out of 15000+600000
  611939 words of font info for 93 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
  99i,20n,104p,806b,827s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on slide.xdv (23 pages, 674716 bytes).
+Output written on slide.xdv (17 pages, 402656 bytes).
