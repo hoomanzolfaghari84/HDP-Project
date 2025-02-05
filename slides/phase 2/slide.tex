@@ -1,0 +1,439 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% A Beamer template for University of Wollongong     %
+% Based on THU beamer theme                          %
+% Author: Qiuyu Lu                                   %
+% Date: July 2024                                    %
+% LPPL Licensed.                                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Customized for Sharif University of Technology     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\documentclass[serif, aspectratio=169]{beamer}
+%\documentclass[serif]{beamer}  % for 4:3 ratio
+\usepackage[T1]{fontenc} 
+\usepackage{fourier} % see "http://faq.ktug.org/wiki/uploads/MathFonts.pdf" for other options
+\usepackage{hyperref}
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs,calligra}
+\usepackage{graphicx,pstricks,listings,stackengine}
+\usepackage{lipsum}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric} % Add this to include ellipse shapes
+\usepackage{amsmath,amsthm}
+\usepackage{pgfplots}  % For plots
+\usepackage{amsmath}   % For equations
+\usepackage{array}     % For tables
+\pgfplotsset{compat=1.16}
+
+% \usetikzlibrary{positioning}
+
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{definition}{Definition}
+%\newtheorem{remark}{Remark}
+
+
+\newcommand{\relu}{\text{ReLU}}
+\newcommand{\E}{\mathbb{E}}
+
+
+\author{Hooman Zolfaghari - Abdollah Zohrabi - Amirreza Velae}
+\title{Neural Tangent Kernel}
+\subtitle{High-Dimensional Probability Analysis}
+\institute{
+    Sharif University of Technology
+}
+%\date{\small \today}
+% \usepackage{UoWstyle}
+\usepackage{SUTstyle}
+
+% defs
+\def\cmd#1{\texttt{\color{red}\footnotesize $\backslash$#1}}
+\def\env#1{\texttt{\color{blue}\footnotesize #1}}
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{RGB}{153,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},    % Custom highlighting style
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+    \vspace*{-0.6cm}
+    \begin{figure}[htpb]
+        \begin{center}
+            \includegraphics[keepaspectratio, scale=0.25]{pic/sharif-main-logo.png}
+        \end{center}
+    \end{figure}
+\end{frame}
+
+\begin{frame}    
+\tableofcontents[sectionstyle=show,
+subsectionstyle=show/shaded/hide,
+subsubsectionstyle=show/shaded/hide]
+\end{frame}
+
+% ============================ Introduction ============================ 
+\section{Introduction}
+
+%-------------------------------------------------
+\begin{frame}{Key Idea}
+	\begin{itemize}
+		\item \textbf{Dynamics} of training infinitely wide NNs \(\approx\)
+		\item \textbf{convex optimization} in RKHS
+		
+		\vspace{0.5em}
+		\item For \(f_\theta: \mathbb{R}^d \to \mathbb{R}\) (NN), GD training induces:
+		\[
+		\underbrace{\Theta(\theta)_{i,j}}_{\text{NTK}} := \nabla_\theta f_\theta(x_i) \nabla_\theta f_\theta(x_j)^\top \in \mathbb{R}^{n \times n}
+		\]
+		\small
+		\textbf{Crucial Property}: \(\Theta(\theta^{(0)}) \to \Theta^{\infty}\) as width \(\to \infty\)
+		
+	\end{itemize}
+	
+	
+\end{frame}
+
+%-------------------------------------------------
+\begin{frame}{Modern Perspective}
+	\begin{itemize}
+		\item \textbf{Feature Learning Gap}: NTK regime \(\neq\) real NNs (finite-width trains via \(\nabla\Theta \neq 0\))
+		\item \textbf{Deep vs Shallow}: Depth induces \textbf{spectral bias} (eigenvalue decay of \(\Theta^\infty\))
+	\end{itemize}
+	
+	\[
+	\partial_t f_t = -\Theta^\infty(f_t - y) \quad (\text{grad flow ODE})
+	\]
+	
+	\vspace{1em}
+	\begin{columns}
+		\begin{column}{0.5\textwidth}
+			\textbf{Good News}:
+			\begin{itemize}
+				\item Global convergence
+				\item Linear rate for \(\lambda_{\min}(\Theta^\infty) > 0\)
+			\end{itemize}
+		\end{column}
+		\begin{column}{0.5\textwidth}
+			\textbf{Bad News}:
+			\begin{itemize}
+				\item No feature learning
+				\item Fails for transformers/attention
+			\end{itemize}
+		\end{column}
+	\end{columns}
+\end{frame}
+
+\section{Analysis of Convergence and Generalization}
+
+\begin{frame}
+	\begin{itemize}
+		\item Research focused on more practical assumptions.
+		\item Two-layer ReLU network \(f_{\mathbf{W},\mathbf{a}}(\mathbf{x}) = \frac{1}{\sqrt{m}}\sum_{r=1}^{m} a_r \relu(\mathbf{w}_r^\top \mathbf{x})
+		\)
+		\item Least Squares Regression \(C(W):=\frac{1}{2}\sum_{i=1}^{n}(y_i - f_{\mathbf{W},\mathbf{a}}(\mathbf{x}_i))\)
+		\item Resulting NTK gram matrix:
+		\begin{align}
+		\mathbf{H}_{ij}^\infty &= \E{\mathbf{w} \sim \mathcal{N}(0,\mathbf{I})}\left[ \mathbf{x}_i^\top \mathbf{x}_j\mathbb{I}\left\{\mathbf{w}^\top \mathbf{x}_i \ge 0, \mathbf{w}^\top \mathbf{x}_j \ge 0\right\}\right] \\
+		&= \frac{\mathbf{x}_i^\top\mathbf{x}_j\left(\pi - \arccos(\mathbf{x}_i^\top\mathbf{x}_j)\right)}{2\pi}, \quad \forall i, j\in[n].
+		\end{align}
+		\item  If \(H^\infty\) is positive
+		definite \(\lambda_0 := \lambda_{\min}(H^{\infty})>0\) , GD converges to \(0\) training loss if \(m\) is sufficiently large \(\Omega(\frac{n^6}{\lambda_0^4})\).
+	\end{itemize}
+\end{frame}
+
+
+
+%----------------------------------------------------
+%  Eigen-decomposition setup
+
+\begin{frame}
+\begin{itemize}
+
+		\item Eigen-decomposition $H^\infty\;=\; \sum_{i=1}^n \lambda_i\,v_i\,v_i^\top,$.
+
+%----------------------------------------------------
+%  Theorem 4.1
+
+\item Suppose $\lambda_0 = \lambda_{\min}(H^\infty) \;>\; 0$, 
+	\(
+	\kappa \;=\; O\!\biggl(\frac{\varepsilon_0\,\delta}{\sqrt{n}}\biggr),
+	\quad
+	m \;=\; \Omega\!\Bigl(\frac{n^7}{\lambda_0^4\,\kappa^2\,\delta^4\,\varepsilon^2}\Bigr),
+	\quad
+	\eta \;=\; O\!\Bigl(\frac{\lambda_0}{n^2}\Bigr).
+	\)
+	Then with probability at least $1 - \delta$ over the random initialization, 
+	for all $k = 0,1,2,\dots$ we have
+	\[
+	\|y \;-\; u(k)\|_2 
+	\;=\;
+	\sqrt{\;\sum_{i=1}^n \Bigl(1 \;-\; \eta\,\lambda_i\Bigr)^{2k}\,\bigl(v_i^\top y\bigr)^2}
+	\;\;\pm\;\;\varepsilon.
+	\tag{8}
+	\]
+
+
+%----------------------------------------------------
+%  Definition 5.1
+
+\item 
+	A distribution $D$ over $\mathbb{R}^d \times \mathbb{R}$ is called 
+	$(\lambda_0,\delta,n)$\emph{-non-degenerate} 
+	if for $n$ i.i.d.\ samples $\{(x_i,y_i)\}_{i=1}^n$ from $D$, 
+	with probability at least $1 - \delta$ we have
+	\[
+	\lambda_{\min}\bigl(H^\infty\bigr) \;\;\ge\;\; \lambda_0 \;>\; 0.
+	\]
+
+\end{itemize}
+
+\end{frame}
+
+
+%----------------------------------------------------
+%  Remark 5.1
+%
+%\begin{remark}[Remark 5.1]
+%	\label{rem:5.1}
+%	Note that as long as no two $x_i$ and $x_j$ are parallel to each other, 
+%	we have $\lambda_{\min}\bigl(H^\infty\bigr) > 0$. 
+%	For most real-world distributions, any two training inputs are not parallel.
+%\end{remark}
+
+%----------------------------------------------------
+%  Theorem 5.1
+
+\begin{frame}
+	
+	\label{thm:5.1}
+	Fix a failure probability $\delta \in (0,1)$. 
+	Suppose our data $S = \{(x_i,y_i)\}_{i=1}^n$ are i.i.d.\ samples 
+	from a $(\lambda_0,\delta/3,n)$-non-degenerate distribution $D$, 
+	and let 
+	\[
+	\kappa \;=\; O\!\Bigl(\tfrac{\lambda_0\,\delta}{n}\Bigr),
+	\quad
+	m \;\ge\; \kappa^{-2}\,\mathrm{poly}\bigl(n,\,\lambda_0^{-1},\,\delta^{-1}\bigr).
+	\]
+	Consider any loss function 
+	$\ell:\mathbb{R}\times\mathbb{R}\to[0,1]$ 
+	that is 1-Lipschitz in its first argument and satisfies $\ell(y,y)=0$. 
+	Then with probability at least $1 - \delta$ 
+	(over the random initialization \emph{and} the training samples), 
+	the two-layer neural network $f_{\mathbf{W}(k),a}$ 
+	trained by gradient descent for 
+	\[
+	k \;\ge\; \Omega\!\Bigl(\tfrac{1}{\eta\,\lambda_0}\,\log\tfrac{n}{\delta}\Bigr)
+	\quad\text{iterations}
+	\]
+	has population loss
+	\[
+	L_D\bigl(f_{\mathbf{W}(k),a}\bigr)
+	\;=\;
+	\mathbb{E}_{(x,y)\sim D}\bigl[\ell\bigl(f_{\mathbf{W}(k),a}(x),\,y\bigr)\bigr]
+	\;\le\;
+	\sqrt{\frac{2\,y^\top \bigl(H^\infty\bigr)^{-1}\,y}{n}}
+	\;+\;
+	O\!\Bigl(\sqrt{\tfrac{\log\!\bigl(\tfrac{n}{\lambda_0\,\delta}\bigr)}{n}}\Bigr).
+	\tag{9}
+	\]
+
+\end{frame}
+
+\section{Closer Look \& Motivation}
+
+\begin{frame}
+	\begin{itemize}
+		\item We can see that the bound depends on:
+		\begin{itemize}
+		
+			 \item Distribution \((x,y) \sim \mathcal{D}\) such that,
+			\item \(\mathbf{y}^\top H^\infty \mathbf{y} \leq \|(H^\infty)^{-1}\| \|\mathbf{y}\|_2 = \lambda_{\min}(H^{\infty}) \|\mathbf{y}\|_2 \)
+		\end{itemize}  
+		
+		
+		\item To be able to \text{provably} learn (e.g. PAC-Learning), the bound must converge to \(0\) as \(n \to \infty\).
+		
+		\item The paper mentions the case of \(y=g(x)\) for some function \(g\).
+		
+		\item So we focus on bounding \(\lambda_{\min}(H^{\infty}) \text{ and } \|\mathbf{y}\|_2\)
+		
+	\end{itemize}
+
+\end{frame}
+
+
+\section{Bounds on Minimum Eigenvalue}
+
+
+\begin{frame}
+\begin{itemize}
+	\item Data scaling assumption.
+		The data distribution $P_X$ satisfies the following properties:
+		\begin{enumerate}
+			\item $\displaystyle \int \|x\|_{2}\, dP_X(x) \;=\; \Theta(\sqrt{d}).$
+			\item $\displaystyle \int \|x\|_{2}^{2}\, dP_X(x) \;=\; \Theta(d).$
+			\item $\displaystyle \int \bigl\|x \;-\; \int x' \, dP_X(x')\bigr\|_{2}^{2}\, dP_X(x) 
+			\;=\; \Omega(d).$
+		\end{enumerate}
+		\item These are just scaling conditions on the data vector $x$ or its centered 
+		counterpart $x - \mathbb{E}x$. We remark that the data can have any scaling, 
+		but in this paper we fix it to be of order $d$ for convenience. We further 
+		assume the following condition on the data distribution.
+	
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+	\begin{itemize}
+			\item Lipschitz concentration assumption.
+		The data distribution $P_X$ satisfies the Lipschitz concentration property. 
+		Namely, for every Lipschitz continuous function 
+		$f : \mathbb{R}^d \to \mathbb{R}$, there exists an absolute constant $c > 0$ 
+		such that, for all $t > 0$,
+		\[
+		\mathbb{P}\Bigl(\bigl|f(x) - \int f(x')\,dP_X(x')\bigr| \;>\; t\Bigr)
+		\;\;\le\;\; 2\,e^{-\,c\,t^2\,/\,\|f\|_{\mathrm{Lip}}^2}.
+		\]
+		\item In general, this assumption covers the whole family of distributions that satisfy 
+		the log-Sobolev inequality with a dimension-independent constant (or distributions
+		with log-concave densities).
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\begin{theorem}[Smallest eigenvalue of limiting NTK]
+		\label{thm:smallest-eig-NTK}
+		Let $\{x_i\}_{i=1}^N$ be a set of i.i.d.\ data points from $P_X$, where $P_X$ has 
+		zero mean and satisfies Assumptions~2.1 and~2.2. Let $K^{(L)}$ be the limiting 
+		NTK recursively defined in (9). Then, for any even integer constant $r \ge 2$, 
+		we have with probability at least 
+		\[
+		1 - N\,e^{-\Omega(d)} \;-\; N^2\,e^{-\Omega\bigl(d\,N^{-2/(\,r - 0.5\,)}\bigr)}
+		\]
+		that
+		\[
+		\mathrm{LO}(d) 
+		\;\;\ge\;\;
+		\lambda_{\min}\bigl(K^{(L)}\bigr) 
+		\;\;\ge\;\;
+		\mu_{r}(\sigma)^{2}\;\Omega(d),
+		\]
+		where $\mu_{r}(\sigma)$ is the $r$-th Hermite coefficient of the ReLU function 
+		given by (8).
+	\end{theorem}
+\end{frame}
+
+
+\section{Our Results and Observations}
+
+\begin{frame}
+\begin{itemize}
+	  \item Most papers and our main reference assume \(\|x\|=1\) and \(|y|\leq 1\), for simplicity.
+	
+	\item Therefore, the diagonal \(H^\infty_{ii} = \frac{1}{1}\).
+	\item Now denote \(\rho = \max_{i,j\neq i} |x_i^\top x_j| \). since \(f(x)=\frac{x(\pi-\arccos(x))}{2\pi}\), is as below, we get:
+	\[
+	H^\infty_{i,j\neq i} \leq \frac{\rho(\pi-\arccos(\rho))}{2\pi} \leq \frac{1}{2}
+	\]
+	\item We can use the \textbf{Gershgorin circle} theorem and get
+	\[
+	| \lambda_{\min}(H^\infty) - \frac{1}{2} | \leq (n-1)\frac{\rho(\pi-\arccos(\rho))}{2\pi}
+	\]
+	\item Thus, the bound depends on the maximum "correlation" between two distinct i.i.d \(x_i\) in a sample of size \(n\). This will depend on the distribution of \(x\) on \(S^{d-1}\).
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+	\begin{itemize}
+
+	\item So the bound is good when \(x_i\) are almost orthogonal with high probability. We can show the following examples:
+	
+	\item \(x_i \sim \text{Unif}(S^{d-1})\):
+	\[
+	\max_{1 \le i < j \le n}
+	\Bigl|\langle X_i,\;X_j\rangle\Bigr|
+	\;\;\le\;
+	C\,
+	\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
+	\,.
+	\]
+	
+	\item \(x_i\) are isotropic, mean-zero, sub-Gaussian vectors:
+	\[
+	\max_{1 \le i < j \le n}
+	\bigl|\langle X_i,\;X_j\rangle\bigr|
+	\;\;\le\;
+	C\,
+	\sqrt{\frac{\log\!\bigl(\tfrac{n}{\delta}\bigr)}{d}}
+	\;\;\max_{1\le i\le n}\|X_i\|\ .
+	\]
+	\end{itemize}
+	
+\end{frame}
+
+
+\begin{frame}
+	 Bernstein Result
+\end{frame}
+
+
+
+
+%%-------------------------------------------------
+%\begin{frame}{Advanced Implications}
+%	\begin{itemize}
+%		\item \textbf{Phase Transitions}: \(\exists\) critical widths where NTK/feature learning dominates
+%		\item \textbf{Quantum Analog}: NTK \(\leftrightarrow\) quantum metric tensor (geometry of NN L2 space)
+%		\item \textbf{Diffusion Approx}: SGD noise \(\propto \Theta_\infty^{-1}\) (implicit regularization)
+%	\end{itemize}
+%	
+%	\vspace{1em}
+%	\textbf{Open Problems}:
+%	\begin{itemize}
+%		\item NTK for \textbf{dynamical} architectures (RNNs, SSMs)
+%		\item \textbf{Non-Gaussian} initialization limits
+%	\end{itemize}
+%\end{frame}
+
+%-------------------------------------------------
+
+
+\section{References}
+
+
+
+
+%\begin{frame}{Contributions}
+%\textbf{These slides are authored by:}
+%    \begin{itemize}
+%        \item Hooman Zolfaghari
+%    \end{itemize}
+%    
+%\end{frame}
+
+
+\begin{frame}[allowframebreaks]
+   \bibliographystyle{ieeetr} % Place the style before bibliography
+   \bibliography{ref.bib} % Point to your .bib file
+   \nocite{*} % Include all references even if not cited
+\end{frame}
+
+
+\end{document}

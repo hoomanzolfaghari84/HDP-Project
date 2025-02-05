@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{Introduction}{3}{0}{1}
+\beamer@sectionintoc {2}{Analysis of Convergence and Generalization}{6}{0}{2}
+\beamer@sectionintoc {3}{Closer Look \& Motivation}{10}{0}{3}
+\beamer@sectionintoc {4}{Bounds on Minimum Eigenvalue}{12}{0}{4}
+\beamer@sectionintoc {5}{Our Results and Observations}{16}{0}{5}
+\beamer@sectionintoc {6}{References}{20}{0}{6}
